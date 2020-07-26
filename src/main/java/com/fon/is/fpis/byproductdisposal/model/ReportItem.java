@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -19,11 +20,7 @@ public class ReportItem {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_item_id")
     private Long id;
 
-    @Column(name = "item_number")
-    @EqualsAndHashCode.Include
-    private Long number;
-
-    private BigDecimal quantity;
+    private BigDecimal quantityForDisposal;
 
     @ManyToOne
     @JoinColumn(name = "byproduct_id")

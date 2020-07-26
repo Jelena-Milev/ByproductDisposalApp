@@ -5,11 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
@@ -42,4 +44,12 @@ public class Report {
 
     @OneToMany(mappedBy = "report", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<ReportItem> items;
+
+    public void addItem(ReportItem item){
+        if(this.items == null){
+            this.items = new ArrayList<>();
+        }
+        this.items.add(item);
+        item.setReport(this);
+    }
 }

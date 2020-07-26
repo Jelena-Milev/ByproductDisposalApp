@@ -1,0 +1,39 @@
+package com.fon.is.fpis.byproductdisposal.service.impl;
+
+import com.fon.is.fpis.byproductdisposal.dto.ReportDto;
+import com.fon.is.fpis.byproductdisposal.dto.ReportInfoDto;
+import com.fon.is.fpis.byproductdisposal.mapper.ReportMapper;
+import com.fon.is.fpis.byproductdisposal.model.Report;
+import com.fon.is.fpis.byproductdisposal.repository.ReportRepository;
+import com.fon.is.fpis.byproductdisposal.service.ReportService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.UUID;
+
+@Service
+public class ReportServiceImpl implements ReportService {
+
+    private final ReportMapper mapper;
+    private final ReportRepository repository;
+
+    @Autowired
+    public ReportServiceImpl(ReportMapper mapper, ReportRepository reportRepository) {
+        this.mapper = mapper;
+        this.repository = reportRepository;
+    }
+
+    @Override
+    public ReportInfoDto save(ReportDto dto) {
+        final Report report = mapper.mapToEntity(dto);
+        report.setNumber(generateReportNumber());
+        final Report savedReport = repository.save(report);
+        return mapper.mapToDto(savedReport);
+    }
+
+
+    private String generateReportNumber(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+}
