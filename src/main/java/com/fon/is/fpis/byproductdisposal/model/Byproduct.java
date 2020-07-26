@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Builder
+@Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "byproduct")
@@ -23,7 +24,9 @@ public class Byproduct {
     private String name;
 
     private BigDecimal quantity;
-    private BigDecimal weight_per_um;
+
+    @Column(name = "weight_per_um")
+    private BigDecimal weightPerUM;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id")

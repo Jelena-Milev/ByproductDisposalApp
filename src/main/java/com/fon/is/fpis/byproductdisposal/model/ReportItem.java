@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 public class ReportItem {
 
     @Id
-    @SequenceGenerator(name = "report_item_ids", sequenceName = "report_item_id", allocationSize = 1)
+    @SequenceGenerator(name = "report_item_seq_id", sequenceName = "report_item_seq_id", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_item_id")
     private Long id;
 

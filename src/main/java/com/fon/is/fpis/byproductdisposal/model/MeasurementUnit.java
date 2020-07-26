@@ -19,4 +19,6 @@ public class MeasurementUnit {
 
     @EqualsAndHashCode.Include
     private String name;
+
+    private String abbreviation;
 }
