@@ -27,7 +27,7 @@ public class MeasurementUnitServiceImpl implements MeasurementUnitService {
     public List<MeasurementUnitDto> getAll() {
         List<MeasurementUnit> measurementUnits = repository.findAll();
         List<MeasurementUnitDto> measurementUnitDtos = new ArrayList<>(measurementUnits.size());
-        measurementUnits.forEach(byproduct -> measurementUnitDtos.add(mapper.mapToDto(byproduct)));
+        measurementUnits.forEach(unit -> measurementUnitDtos.add(mapper.mapToDto(unit)));
         return measurementUnitDtos;
     }
 }
