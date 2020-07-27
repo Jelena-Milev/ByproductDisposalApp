@@ -8,5 +8,5 @@ public interface ReportMapper {
 
     Report mapToEntity(ReportDto dto);
 
-    ReportInfoDto mapToDto(Report savedReport);
+    ReportInfoDto mapToDto(Report report);
 }

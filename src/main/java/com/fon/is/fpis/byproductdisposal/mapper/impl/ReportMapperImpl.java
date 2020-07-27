@@ -53,19 +53,19 @@ public class ReportMapperImpl implements ReportMapper {
     }
 
     @Override
-    public ReportInfoDto mapToDto(Report savedReport) {
-        final WarehouseDto warehouseDto = warehouseMapper.mapToDto(savedReport.getWarehouse());
-        final EmployeeDto employeeDto = employeeMapper.mapToDto(savedReport.getEmployee());
+    public ReportInfoDto mapToDto(Report report) {
+        final WarehouseDto warehouseDto = warehouseMapper.mapToDto(report.getWarehouse());
+        final EmployeeDto employeeDto = employeeMapper.mapToDto(report.getEmployee());
         ReportInfoDto.ReportInfoDtoBuilder builder = ReportInfoDto.builder();
         builder
-                .id(savedReport.getId())
-                .date(savedReport.getDate())
-                .number(savedReport.getNumber())
-                .utilizationRate(savedReport.getUtilizationRate())
-                .note(savedReport.getNote())
+                .id(report.getId())
+                .date(report.getDate())
+                .number(report.getNumber())
+                .utilizationRate(report.getUtilizationRate())
+                .note(report.getNote())
                 .warehouseDto(warehouseDto)
                 .employeeDto(employeeDto)
-                .items(getReportItemsDtos(savedReport));
+                .items(getReportItemsDtos(report));
         final ReportInfoDto dto = builder.build();
         return dto;
     }
