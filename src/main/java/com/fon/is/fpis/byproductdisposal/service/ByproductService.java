@@ -1,17 +1,17 @@
 package com.fon.is.fpis.byproductdisposal.service;
 
-import com.fon.is.fpis.byproductdisposal.dto.ByproductDto;
-import com.fon.is.fpis.byproductdisposal.dto.ByproductInfoDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductResponseDto;
 
 import java.util.List;
 
 public interface ByproductService {
 
-    ByproductInfoDto save(ByproductDto byproductDto);
+    ByproductResponseDto save(ByproductRequestDto byproductRequestDto);
 
-    ByproductInfoDto update(Long id, ByproductDto byproductInfoDto);
+    ByproductResponseDto update(Long id, ByproductRequestDto byproductInfoDto);
 
-    List<ByproductInfoDto> getAll();
+    List<ByproductResponseDto> getAll();
 
-    ByproductInfoDto get(Long id);
+    ByproductResponseDto get(Long id);
 }

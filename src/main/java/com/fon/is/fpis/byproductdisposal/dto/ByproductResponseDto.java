@@ -11,13 +11,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Builder
-public class ByproductDto {
+public class ByproductResponseDto {
 
     private Long id;
     private String name;
-    private BigDecimal weightPerUM;
-    private Long measurementUnitId;
-    private Long warehouseId;
     private BigDecimal quantity;
-
+    private BigDecimal weightPerUM;
+    private WarehouseDto warehouse;
+    private MeasurementUnitDto measurementUnit;
 }

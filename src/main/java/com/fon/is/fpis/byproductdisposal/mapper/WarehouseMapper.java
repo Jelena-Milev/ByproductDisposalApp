@@ -2,10 +2,22 @@ package com.fon.is.fpis.byproductdisposal.mapper;
 
 import com.fon.is.fpis.byproductdisposal.dto.WarehouseDto;
 import com.fon.is.fpis.byproductdisposal.model.Warehouse;
+import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
 import org.mapstruct.Mapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Mapper(componentModel = "spring")
-public interface WarehouseMapper {
+public abstract class WarehouseMapper {
 
-    WarehouseDto mapToDto(Warehouse measurementUnit);
+    @Autowired
+    protected WarehouseRepository repository;
+
+    public abstract WarehouseDto mapToDto(Warehouse measurementUnit);
+
+    public Warehouse mapToEntity(Long warehouseId){
+        if(warehouseId == null){
+            return null;
+        }
+        return repository.findById(warehouseId).get();
+    }
 }

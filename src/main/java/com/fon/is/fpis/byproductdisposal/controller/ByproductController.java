@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.controller;
 
-import com.fon.is.fpis.byproductdisposal.dto.ByproductInfoDto;
-import com.fon.is.fpis.byproductdisposal.dto.ByproductDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductResponseDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductRequestDto;
 import com.fon.is.fpis.byproductdisposal.service.ByproductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,26 +24,26 @@ public class ByproductController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<ByproductInfoDto>> getAll() {
-        List<ByproductInfoDto> result = service.getAll();
+    public ResponseEntity<List<ByproductResponseDto>> getAll() {
+        List<ByproductResponseDto> result = service.getAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ByproductInfoDto> get(@PathVariable final Long id) {
-        ByproductInfoDto result = service.get(id);
+    public ResponseEntity<ByproductResponseDto> get(@PathVariable final Long id) {
+        ByproductResponseDto result = service.get(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ByproductInfoDto> save(@RequestBody ByproductDto byproductDto) {
-        ByproductInfoDto result = service.save(byproductDto);
+    public ResponseEntity<ByproductResponseDto> save(@RequestBody ByproductRequestDto byproductRequestDto) {
+        ByproductResponseDto result = service.save(byproductRequestDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @PatchMapping(path = "{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ByproductInfoDto> update(@PathVariable final Long id, @RequestBody final ByproductDto byproductDto) {
-        ByproductInfoDto result = service.update(id, byproductDto);
+    public ResponseEntity<ByproductResponseDto> update(@PathVariable final Long id, @RequestBody final ByproductRequestDto byproductRequestDto) {
+        ByproductResponseDto result = service.update(id, byproductRequestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

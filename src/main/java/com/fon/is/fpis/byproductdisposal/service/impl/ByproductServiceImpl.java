@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
-import com.fon.is.fpis.byproductdisposal.dto.ByproductDto;
-import com.fon.is.fpis.byproductdisposal.dto.ByproductInfoDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.ByproductResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.ByproductMapper;
 import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import com.fon.is.fpis.byproductdisposal.model.MeasurementUnit;
@@ -34,38 +34,28 @@ public class ByproductServiceImpl implements ByproductService {
 
 
     @Override
-    public List<ByproductInfoDto> getAll() {
+    public List<ByproductResponseDto> getAll() {
         List<Byproduct> byproducts = repository.findAll();
-        List<ByproductInfoDto> byproductInfoDtos = new ArrayList<>(byproducts.size());
-        byproducts.forEach(byproduct -> byproductInfoDtos.add(mapper.mapToDto(byproduct)));
-        return byproductInfoDtos;
+        return mapper.mapToDtos(byproducts);
     }
 
     @Override
-    public ByproductInfoDto get(Long id) {
+    public ByproductResponseDto get(Long id) {
         final Byproduct byproduct = repository.findById(id).get();
         return mapper.mapToDto(byproduct);
     }
 
     @Override
-    public ByproductInfoDto save(ByproductDto byproductDto) {
-        final Byproduct byproductToSave = mapper.map(byproductDto);
-        final MeasurementUnit measurementUnit = measurementUnitRepository.findById(byproductDto.getMeasurementUnitId()).get();
-        byproductToSave.setMeasurementUnit(measurementUnit);
+    public ByproductResponseDto save(ByproductRequestDto byproductRequestDto) {
+        final Byproduct byproductToSave = mapper.map(byproductRequestDto);
         final Byproduct byproduct = repository.save(byproductToSave);
         return mapper.mapToDto(byproduct);
     }
 
     @Override
-    public ByproductInfoDto update(Long id, ByproductDto byproductDto) {
+    public ByproductResponseDto update(Long id, ByproductRequestDto byproductRequestDto) {
         final Byproduct byproductToUpdate = repository.findById(id).get();
-        byproductToUpdate.setName(byproductDto.getName());
-        byproductToUpdate.setQuantity(byproductDto.getQuantity());
-        byproductToUpdate.setWeightPerUM(byproductDto.getWeightPerUM());
-        final MeasurementUnit measurementUnit = measurementUnitRepository.findById(byproductDto.getMeasurementUnitId()).get();
-        final Warehouse warehouse = warehouseRepository.findById(byproductDto.getWarehouseId()).get();
-        byproductToUpdate.setMeasurementUnit(measurementUnit);
-        byproductToUpdate.setWarehouse(warehouse);
+        mapper.updateByproduct(byproductRequestDto, byproductToUpdate);
         final Byproduct byproduct = repository.save(byproductToUpdate);
         return mapper.mapToDto(byproduct);
     }
