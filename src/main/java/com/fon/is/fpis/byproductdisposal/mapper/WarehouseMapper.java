@@ -1,6 +1,6 @@
 package com.fon.is.fpis.byproductdisposal.mapper;
 
-import com.fon.is.fpis.byproductdisposal.dto.WarehouseDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.WarehouseResponseDto;
 import com.fon.is.fpis.byproductdisposal.model.Warehouse;
 import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
 import org.mapstruct.Mapper;
@@ -14,7 +14,7 @@ public abstract class WarehouseMapper {
     @Autowired
     protected WarehouseRepository repository;
 
-    public abstract WarehouseDto mapToDto(Warehouse measurementUnit);
+    public abstract WarehouseResponseDto mapToDto(Warehouse measurementUnit);
 
     public Warehouse mapToEntity(Long warehouseId){
         if(warehouseId == null){
@@ -23,5 +23,5 @@ public abstract class WarehouseMapper {
         return repository.findById(warehouseId).get();
     }
 
-    public abstract List<WarehouseDto> mapToDtos(List<Warehouse> warehouses);
+    public abstract List<WarehouseResponseDto> mapToDtos(List<Warehouse> warehouses);
 }

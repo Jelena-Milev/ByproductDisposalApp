@@ -1,6 +1,6 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
-import com.fon.is.fpis.byproductdisposal.dto.MeasurementUnitDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.MeasurementUnitResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.MeasurementUnitMapper;
 import com.fon.is.fpis.byproductdisposal.model.MeasurementUnit;
 import com.fon.is.fpis.byproductdisposal.repository.MeasurementUnitRepository;
@@ -23,7 +23,7 @@ public class MeasurementUnitServiceImpl implements MeasurementUnitService {
     }
 
     @Override
-    public List<MeasurementUnitDto> getAll() {
+    public List<MeasurementUnitResponseDto> getAll() {
         List<MeasurementUnit> measurementUnits = repository.findAll();
         return mapper.mapToDtos(measurementUnits);
     }

@@ -1,4 +1,4 @@
-package com.fon.is.fpis.byproductdisposal.dto;
+package com.fon.is.fpis.byproductdisposal.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,13 +11,12 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Builder
-public class ByproductRequestDto {
+public class ByproductResponseDto {
 
     private Long id;
     private String name;
-    private BigDecimal weightPerUM;
-    private Long measurementUnitId;
-    private Long warehouseId;
     private BigDecimal quantity;
-
+    private BigDecimal weightPerUM;
+    private WarehouseResponseDto warehouse;
+    private MeasurementUnitResponseDto measurementUnit;
 }

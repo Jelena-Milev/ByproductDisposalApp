@@ -1,6 +1,6 @@
 package com.fon.is.fpis.byproductdisposal.mapper;
 
-import com.fon.is.fpis.byproductdisposal.dto.MeasurementUnitDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.MeasurementUnitResponseDto;
 import com.fon.is.fpis.byproductdisposal.model.MeasurementUnit;
 import com.fon.is.fpis.byproductdisposal.repository.MeasurementUnitRepository;
 import org.mapstruct.Mapper;
@@ -14,11 +14,11 @@ public abstract class MeasurementUnitMapper {
     @Autowired
     protected MeasurementUnitRepository repository;
 
-    public abstract MeasurementUnitDto mapToDto(MeasurementUnit measurementUnit);
+    public abstract MeasurementUnitResponseDto mapToDto(MeasurementUnit measurementUnit);
 
     public MeasurementUnit mapToEntity(Long measurementUnitId){
         return repository.findById(measurementUnitId).get();
     }
 
-    public abstract List<MeasurementUnitDto> mapToDtos(List<MeasurementUnit> measurementUnits);
+    public abstract List<MeasurementUnitResponseDto> mapToDtos(List<MeasurementUnit> measurementUnits);
 }

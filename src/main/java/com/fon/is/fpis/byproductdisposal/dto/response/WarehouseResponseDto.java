@@ -1,4 +1,4 @@
-package com.fon.is.fpis.byproductdisposal.dto;
+package com.fon.is.fpis.byproductdisposal.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Builder
-public class WarehouseDto {
+public class WarehouseResponseDto {
 
     private Long id;
     private String name;

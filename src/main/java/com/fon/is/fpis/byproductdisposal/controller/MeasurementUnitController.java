@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.controller;
 
 import static org.springframework.http.MediaType.*;
-import com.fon.is.fpis.byproductdisposal.dto.MeasurementUnitDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.MeasurementUnitResponseDto;
 import com.fon.is.fpis.byproductdisposal.service.MeasurementUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,8 +24,8 @@ public class MeasurementUnitController {
     }
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<MeasurementUnitDto>> getAll(){
-        List<MeasurementUnitDto> result = service.getAll();
+    public ResponseEntity<List<MeasurementUnitResponseDto>> getAll(){
+        List<MeasurementUnitResponseDto> result = service.getAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -1,15 +1,15 @@
 package com.fon.is.fpis.byproductdisposal.service;
 
-import com.fon.is.fpis.byproductdisposal.dto.ReportDto;
-import com.fon.is.fpis.byproductdisposal.dto.ReportInfoDto;
+import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.ReportResponseDto;
 
 import java.util.List;
 
 public interface ReportService {
 
-    ReportInfoDto save(ReportDto dto);
+    ReportResponseDto save(ReportRequestDto dto);
 
-    ReportInfoDto find(String number);
+    ReportResponseDto findById(Long id);
 
-    List<String> getReportNumbers();
+    List<String> getReportIds();
 }

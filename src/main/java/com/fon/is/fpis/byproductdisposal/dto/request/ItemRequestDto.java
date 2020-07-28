@@ -1,4 +1,4 @@
-package com.fon.is.fpis.byproductdisposal.dto;
+package com.fon.is.fpis.byproductdisposal.dto.request;
 
 import lombok.*;
 
@@ -9,8 +9,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Builder
-public class ReportItemInfoDto {
-    private Long id;
-    private String byproductName;
+public class ItemRequestDto {
+    private Long byproductId;
     private BigDecimal quantityForDisposal;
 }

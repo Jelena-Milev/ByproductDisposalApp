@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.controller;
 
-import com.fon.is.fpis.byproductdisposal.dto.response.WarehouseResponseDto;
-import com.fon.is.fpis.byproductdisposal.service.WarehouseService;
+import com.fon.is.fpis.byproductdisposal.dto.response.EmployeeResponseDto;
+import com.fon.is.fpis.byproductdisposal.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,20 +14,19 @@ import java.util.List;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping(path = "warehouse")
-public class WarehouseController {
+@RequestMapping(path = "employee")
+public class EmployeeController {
 
-    private final WarehouseService service;
+    private final EmployeeService service;
 
     @Autowired
-    public WarehouseController(WarehouseService service) {
+    public EmployeeController(EmployeeService service) {
         this.service = service;
     }
 
-
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<WarehouseResponseDto>> getAll() {
-        List<WarehouseResponseDto> result = service.getAll();
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity getAll(){
+        final List<EmployeeResponseDto> result = service.getAll();
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

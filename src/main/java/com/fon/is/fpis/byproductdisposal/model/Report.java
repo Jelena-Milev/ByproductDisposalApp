@@ -12,20 +12,15 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
 @Table(name = "capacity_utilization_report")
 public class Report {
 
     @Id
-    @SequenceGenerator(name = "report_seq_ids", sequenceName = "report_seq_id", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_seq_id")
+    @SequenceGenerator(name = "report_ids", sequenceName = "report_ids", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_ids")
     private Long id;
-
-    @Column(name = "report_number")
-    @EqualsAndHashCode.Include
-    private String number;
 
     private LocalDate date;
 

@@ -1,4 +1,4 @@
-package com.fon.is.fpis.byproductdisposal.dto;
+package com.fon.is.fpis.byproductdisposal.dto.request;
 
 import lombok.*;
 
@@ -11,11 +11,11 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-public class ReportDto {
+public class ReportRequestDto {
     private LocalDate date;
     private BigDecimal utilizationRate;
     private String note;
     private Long warehouseId;
     private Long employeeId;
-    private List<ReportItemDto> items;
+    private List<ItemRequestDto> items;
 }

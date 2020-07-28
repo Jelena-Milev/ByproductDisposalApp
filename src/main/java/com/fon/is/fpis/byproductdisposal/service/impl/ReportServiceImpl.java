@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
-import com.fon.is.fpis.byproductdisposal.dto.ReportDto;
-import com.fon.is.fpis.byproductdisposal.dto.ReportInfoDto;
+import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.ReportResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.ReportMapper;
 import com.fon.is.fpis.byproductdisposal.model.Report;
 import com.fon.is.fpis.byproductdisposal.repository.ReportRepository;
@@ -9,7 +9,6 @@ import com.fon.is.fpis.byproductdisposal.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 @Service
@@ -25,28 +24,21 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportInfoDto save(ReportDto dto) {
+    public ReportResponseDto save(ReportRequestDto dto) {
         final Report report = mapper.mapToEntity(dto);
-        report.setNumber(generateReportNumber(report));
         final Report savedReport = repository.save(report);
         return mapper.mapToDto(savedReport);
     }
 
     @Override
-    public ReportInfoDto find(String number) {
-        final Report report = repository.findByNumber(number);
+    public ReportResponseDto findById(Long id) {
+        final Report report = repository.findById(id).get();
         return mapper.mapToDto(report);
     }
 
     @Override
-    public List<String> getReportNumbers() {
-        return repository.getNumber();
+    public List<String> getReportIds() {
+        return repository.getIds();
     }
 
-
-    private String generateReportNumber(Report report){
-        SimpleDateFormat format = new SimpleDateFormat("dd.MM.yyyy");
-        String date = format.format(report.getDate());
-        return "IzvestajOPopunjenostiKapaciteta - "+date;
-    }
 }

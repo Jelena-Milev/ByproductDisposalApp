@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.controller;
 
-import com.fon.is.fpis.byproductdisposal.dto.ReportDto;
-import com.fon.is.fpis.byproductdisposal.dto.ReportInfoDto;
+import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.ReportResponseDto;
 import com.fon.is.fpis.byproductdisposal.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,20 +23,20 @@ public class ReportController {
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReportInfoDto> save(@RequestBody final ReportDto reportDto){
-        final ReportInfoDto result = service.save(reportDto);
+    public ResponseEntity<ReportResponseDto> save(@RequestBody final ReportRequestDto reportRequestDto){
+        final ReportResponseDto result = service.save(reportRequestDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReportInfoDto> find(@RequestParam final String number){
-        final ReportInfoDto result = service.find(number);
+    @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReportResponseDto> find(@PathVariable final Long id){
+        final ReportResponseDto result = service.findById(id);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(path = "numbers", produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String >> getAllNumbers(){
-        final List<String> result = service.getReportNumbers();
+        final List<String> result = service.getReportIds();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

@@ -1,6 +1,6 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
-import com.fon.is.fpis.byproductdisposal.dto.WarehouseDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.WarehouseResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.WarehouseMapper;
 import com.fon.is.fpis.byproductdisposal.model.Warehouse;
 import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
@@ -23,7 +23,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public List<WarehouseDto> getAll() {
+    public List<WarehouseResponseDto> getAll() {
         List<Warehouse> warehouses = repository.findAll();
         return mapper.mapToDtos(warehouses);
     }

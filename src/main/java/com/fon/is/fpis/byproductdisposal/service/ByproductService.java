@@ -1,7 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.service;
 
-import com.fon.is.fpis.byproductdisposal.dto.ByproductRequestDto;
-import com.fon.is.fpis.byproductdisposal.dto.ByproductResponseDto;
+import com.fon.is.fpis.byproductdisposal.dto.request.ByproductRequestDto;
+import com.fon.is.fpis.byproductdisposal.dto.response.ByproductResponseDto;
 
 import java.util.List;
 
