@@ -4,31 +4,22 @@ import com.fon.is.fpis.byproductdisposal.dto.ByproductRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.ByproductResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.ByproductMapper;
 import com.fon.is.fpis.byproductdisposal.model.Byproduct;
-import com.fon.is.fpis.byproductdisposal.model.MeasurementUnit;
-import com.fon.is.fpis.byproductdisposal.model.Warehouse;
 import com.fon.is.fpis.byproductdisposal.repository.ByproductRepository;
-import com.fon.is.fpis.byproductdisposal.repository.MeasurementUnitRepository;
-import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
 import com.fon.is.fpis.byproductdisposal.service.ByproductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ByproductServiceImpl implements ByproductService {
 
     private final ByproductRepository repository;
-    private final MeasurementUnitRepository measurementUnitRepository;
-    private final WarehouseRepository warehouseRepository;
     private final ByproductMapper mapper;
 
     @Autowired
-    public ByproductServiceImpl(ByproductRepository repository, MeasurementUnitRepository measurementUnitRepository, WarehouseRepository warehouseRepository, ByproductMapper mapper) {
+    public ByproductServiceImpl(ByproductRepository repository, ByproductMapper mapper) {
         this.repository = repository;
-        this.measurementUnitRepository = measurementUnitRepository;
-        this.warehouseRepository = warehouseRepository;
         this.mapper = mapper;
     }
 
