@@ -8,7 +8,6 @@ import com.fon.is.fpis.byproductdisposal.service.MeasurementUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,8 +25,6 @@ public class MeasurementUnitServiceImpl implements MeasurementUnitService {
     @Override
     public List<MeasurementUnitDto> getAll() {
         List<MeasurementUnit> measurementUnits = repository.findAll();
-        List<MeasurementUnitDto> measurementUnitDtos = new ArrayList<>(measurementUnits.size());
-        measurementUnits.forEach(unit -> measurementUnitDtos.add(mapper.mapToDto(unit)));
-        return measurementUnitDtos;
+        return mapper.mapToDtos(measurementUnits);
     }
 }

@@ -1,6 +1,5 @@
 package com.fon.is.fpis.byproductdisposal.controller;
 
-import com.fon.is.fpis.byproductdisposal.dto.MeasurementUnitDto;
 import com.fon.is.fpis.byproductdisposal.dto.WarehouseDto;
 import com.fon.is.fpis.byproductdisposal.service.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,8 @@ public class WarehouseController {
 
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<WarehouseDto>> getAll(){
+    public ResponseEntity<List<WarehouseDto>> getAll() {
         List<WarehouseDto> result = service.getAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
 }

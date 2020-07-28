@@ -6,6 +6,8 @@ import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
 import org.mapstruct.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public abstract class WarehouseMapper {
 
@@ -20,4 +22,6 @@ public abstract class WarehouseMapper {
         }
         return repository.findById(warehouseId).get();
     }
+
+    public abstract List<WarehouseDto> mapToDtos(List<Warehouse> warehouses);
 }
