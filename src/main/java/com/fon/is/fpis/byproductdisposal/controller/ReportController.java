@@ -22,10 +22,10 @@ public class ReportController {
         this.service = service;
     }
 
-    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReportResponseDto> save(@RequestBody final ReportRequestDto reportRequestDto){
-        final ReportResponseDto result = service.save(reportRequestDto);
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    @GetMapping(path = "numbers", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<String >> getAllNumbers(){
+        final List<String> result = service.getReportIds();
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
@@ -34,9 +34,15 @@ public class ReportController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping(path = "numbers", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String >> getAllNumbers(){
-        final List<String> result = service.getReportIds();
+    @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReportResponseDto> save(@RequestBody final ReportRequestDto reportRequestDto){
+        final ReportResponseDto result = service.save(reportRequestDto);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
+    }
+
+    @PatchMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<ReportResponseDto> update(@RequestBody final ReportRequestDto reportRequestDto, @PathVariable final Long id){
+        final ReportResponseDto result = service.update(id, reportRequestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }

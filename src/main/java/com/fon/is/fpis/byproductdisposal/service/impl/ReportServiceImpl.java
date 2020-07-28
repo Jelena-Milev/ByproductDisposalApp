@@ -3,6 +3,7 @@ package com.fon.is.fpis.byproductdisposal.service.impl;
 import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.response.ReportResponseDto;
 import com.fon.is.fpis.byproductdisposal.mapper.ReportMapper;
+import com.fon.is.fpis.byproductdisposal.mapper.ReportUpdateMapper;
 import com.fon.is.fpis.byproductdisposal.model.Report;
 import com.fon.is.fpis.byproductdisposal.repository.ReportRepository;
 import com.fon.is.fpis.byproductdisposal.service.ReportService;
@@ -15,11 +16,13 @@ import java.util.List;
 public class ReportServiceImpl implements ReportService {
 
     private final ReportMapper mapper;
+    private final ReportUpdateMapper updateMapper;
     private final ReportRepository repository;
 
     @Autowired
-    public ReportServiceImpl(ReportMapper mapper, ReportRepository reportRepository) {
+    public ReportServiceImpl(ReportMapper mapper, ReportUpdateMapper updateMapper, ReportRepository reportRepository) {
         this.mapper = mapper;
+        this.updateMapper = updateMapper;
         this.repository = reportRepository;
     }
 
@@ -39,6 +42,14 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<String> getReportIds() {
         return repository.getIds();
+    }
+
+    @Override
+    public ReportResponseDto update(Long id, ReportRequestDto dto) {
+        final Report reportToUpdate = repository.findById(id).get();
+        updateMapper.updateReport(dto, reportToUpdate);
+        final Report updatedReport = repository.save(reportToUpdate);
+        return mapper.mapToDto(updatedReport);
     }
 
 }

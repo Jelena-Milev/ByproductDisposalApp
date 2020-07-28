@@ -47,4 +47,8 @@ public class Report {
         this.items.add(item);
         item.setReport(this);
     }
+
+    public void removeItems(List<ReportItem> itemsToDelete) {
+        this.items.removeAll(itemsToDelete);
+    }
 }

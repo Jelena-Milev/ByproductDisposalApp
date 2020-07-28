@@ -24,10 +24,10 @@ public class ReportItem {
 
     @ManyToOne
     @JoinColumn(name = "byproduct_id")
+    @EqualsAndHashCode.Include
     private Byproduct byproduct;
 
     @ManyToOne
     @JoinColumn(name = "report_id")
-    @EqualsAndHashCode.Include
     private Report report;
 }

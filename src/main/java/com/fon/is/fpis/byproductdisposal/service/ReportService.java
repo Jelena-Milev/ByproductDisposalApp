@@ -12,4 +12,6 @@ public interface ReportService {
     ReportResponseDto findById(Long id);
 
     List<String> getReportIds();
+
+    ReportResponseDto update(Long id, ReportRequestDto dto);
 }
