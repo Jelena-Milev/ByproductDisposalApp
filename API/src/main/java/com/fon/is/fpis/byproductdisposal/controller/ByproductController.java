@@ -35,6 +35,7 @@ public class ByproductController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @CrossOrigin()
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ByproductResponseDto> save(@RequestBody ByproductRequestDto byproductRequestDto) {
         ByproductResponseDto result = service.save(byproductRequestDto);
