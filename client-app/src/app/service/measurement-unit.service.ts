@@ -10,7 +10,7 @@ import { MeasurementUnit } from '../model/measurementUnit.model';
 export class MeasurementUnitService {
   private _measurementUnits = new BehaviorSubject<MeasurementUnit[]>([]);
 
-  getMeasurementUnits(): Observable<MeasurementUnit[]> {
+  get measurementUnits(): Observable<MeasurementUnit[]> {
     return this._measurementUnits.asObservable();
   }
 
@@ -24,7 +24,6 @@ export class MeasurementUnitService {
       .pipe(
         tap(res=>{
           this._measurementUnits.next(res);
-          console.log(this._measurementUnits);
         })
       );
   }

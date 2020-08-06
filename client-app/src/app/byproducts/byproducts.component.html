@@ -8,9 +8,9 @@
     </mat-form-field>
     <mat-form-field color="accent" appereance="standard" appearance="outline">
       <mat-label>Količina po jedinici mere</mat-label>
-      <input matInput type="number" formControlName="quantityByUM">
-      <mat-error *ngIf="newByproductForm.get('quantityByUM').hasError('required')">Morate uneti količinu po jedinici mere.</mat-error>
-      <mat-error *ngIf="!newByproductForm.get('quantityByUM').hasError('required')">Količina po jedinici mere mora biti minimum 1.</mat-error>
+      <input matInput type="number" formControlName="weightByUM">
+      <mat-error *ngIf="newByproductForm.get('weightByUM').hasError('required')">Morate uneti količinu po jedinici mere.</mat-error>
+      <mat-error *ngIf="!newByproductForm.get('weightByUM').hasError('required')">Količina po jedinici mere mora biti minimum 1.</mat-error>
     </mat-form-field>
     <mat-form-field color="accent">
       <mat-label>Jedinica mere</mat-label>
