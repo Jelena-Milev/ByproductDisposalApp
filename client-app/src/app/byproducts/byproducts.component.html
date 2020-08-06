@@ -1,1 +1,25 @@
-<p>byproducts works!</p>
+<div class="content">
+  <section >
+    <form [formGroup]="newByproductForm" (ngSubmit)="addByproduct()" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="30px">
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label>Naziv</mat-label>
+      <input matInput type="text" formControlName="name"/>
+      <mat-error>Morate uneti naziv nusproizvoda</mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent" appereance="standard" appearance="outline">
+      <mat-label>Količina po jedinici mere</mat-label>
+      <input matInput type="number" formControlName="quantityByUM">
+      <mat-error *ngIf="newByproductForm.get('quantityByUM').hasError('required')">Morate uneti količinu po jedinici mere.</mat-error>
+      <mat-error *ngIf="!newByproductForm.get('quantityByUM').hasError('required')">Količina po jedinici mere mora biti minimum 1.</mat-error>
+    </mat-form-field>
+    <mat-form-field color="accent">
+      <mat-label>Jedinica mere</mat-label>
+      <mat-select matInput formControlName="measurementUnit">
+        <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{um.name}}</mat-option>
+      </mat-select>
+      <mat-error>Morate izbrati jedinicu mere.</mat-error>
+    </mat-form-field>
+    <button type="submit" mat-raised-button color="accent" [disabled]="newByproductForm.invalid">Dodaj nusproizvod</button>
+  </form>
+  </section>
+</div>

@@ -1,0 +1,8 @@
+.spacer {
+  flex: auto;
+}
+
+.button-group button{
+  margin-right: 6px;
+  background-color: transparent;
+}
