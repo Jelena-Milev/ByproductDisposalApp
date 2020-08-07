@@ -52,11 +52,13 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     this.measurementUnitsSub = this.umService.measurementUnits.subscribe(
       (um) => {
         this.measurementUnits = um;
+
       }
     );
     this.byproductsSub = this.byproductService.byproducts.subscribe(
       (byproducts) => {
         this.byproducts = byproducts;
+        this.dataSource.data = byproducts;
       }
     );
     this.umService.fetchMeasurementUnits().subscribe(() => {
@@ -64,7 +66,6 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     });
     this.byproductService.fetchByproducts().subscribe(() => {
       console.log(this.byproducts);
-      this.dataSource.data = this.byproducts;
     });
   }
 
@@ -84,6 +85,9 @@ export class ByproductsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         console.log('add byproduct');
         console.log(this.byproducts);
+        this.newByproductForm.reset();
+        this.newByproductForm.markAsPristine();
+        this.newByproductForm.markAsUntouched();
       });
   }
 

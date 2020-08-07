@@ -2,7 +2,6 @@
   <section>
     <form
       [formGroup]="newByproductForm"
-      (ngSubmit)="addByproduct()"
       fxLayout="row"
       fxLayout.lt-md="column"
       fxLayoutAlign="center center"
@@ -35,9 +34,10 @@
         <mat-error>Morate izbrati jedinicu mere.</mat-error>
       </mat-form-field>
       <button
-        type="submit"
+        type="button"
         mat-raised-button
         color="accent"
+        (click)="addByproduct()"
         [disabled]="newByproductForm.invalid"
       >
         Dodaj nusproizvod
