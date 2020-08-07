@@ -35,7 +35,7 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     'warehouse',
     'quantity',
     'edit',
-    'delete',
+    // 'delete',
   ];
   dataSource = new MatTableDataSource<Byproduct>();
 
@@ -91,5 +91,7 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onDeleteByproduct(byproduct: Byproduct) {}
+  onDeleteByproduct(byproduct: Byproduct) {
+    this.byproductService.deleteByproduct(byproduct.id).subscribe();
+  }
 }

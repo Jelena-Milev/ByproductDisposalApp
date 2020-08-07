@@ -6,3 +6,6 @@ table{
   width: 80%;
 }
 
+.mat-column-name {
+  padding-right: 15px;
+}
