@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -11,13 +11,15 @@ import { ByproductService } from '../service/byproduct.service';
 import { MeasurementUnit } from '../model/measurementUnit.model';
 import { Byproduct } from '../model/byproduct.model';
 import { ByproductModalComponent } from './byproduct-modal/byproduct-modal.component';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-byproducts',
   templateUrl: './byproducts.component.html',
   styleUrls: ['./byproducts.component.css'],
 })
-export class ByproductsComponent implements OnInit, OnDestroy {
+export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
   measurementUnits: MeasurementUnit[] = [];
   byproducts: Byproduct[] = [];
 
@@ -39,6 +41,9 @@ export class ByproductsComponent implements OnInit, OnDestroy {
   ];
   dataSource = new MatTableDataSource<Byproduct>();
 
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   private measurementUnitsSub: Subscription;
   private byproductsSub: Subscription;
 
@@ -47,6 +52,7 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     private umService: MeasurementUnitService,
     private byproductService: ByproductService
   ) {}
+
 
   ngOnInit(): void {
     this.measurementUnitsSub = this.umService.measurementUnits.subscribe(
@@ -62,6 +68,11 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     );
     this.umService.fetchMeasurementUnits().subscribe(() => {});
     this.byproductService.fetchByproducts().subscribe(() => {});
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
   ngOnDestroy(): void {

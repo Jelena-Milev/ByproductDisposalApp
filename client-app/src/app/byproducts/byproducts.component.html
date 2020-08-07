@@ -44,15 +44,15 @@
       </button>
     </form>
   </section>
-  <section fxLayout = "row" fxLayoutAlign = "center center">
-    <mat-table [dataSource]="dataSource" fxFlex>
+  <section fxLayout = "column">
+    <mat-table [dataSource]="dataSource" fxFlex matSort>
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
         <mat-cell *matCellDef="let element">{{ element.id | number}}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>Naziv</mat-header-cell>
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
         <mat-cell mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
       </ng-container>
 
@@ -74,7 +74,7 @@
       </ng-container>
 
       <ng-container matColumnDef="quantity">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>Količina</mat-header-cell>
+        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Količina</mat-header-cell>
         <mat-cell mat-cell *matCellDef="let element">{{ element.quantity | number }}</mat-cell>
       </ng-container>
 
@@ -99,5 +99,7 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
+
+    <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 15]" showFirstLastButtons></mat-paginator>
   </section>
 </div>
