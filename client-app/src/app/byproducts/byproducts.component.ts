@@ -2,11 +2,15 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+
 import { MeasurementUnitService } from '../service/measurement-unit.service';
 import { ByproductService } from '../service/byproduct.service';
+
 import { MeasurementUnit } from '../model/measurementUnit.model';
 import { Byproduct } from '../model/byproduct.model';
-import { MatTableDataSource } from '@angular/material/table';
+import { ByproductModalComponent } from './byproduct-modal/byproduct-modal.component';
 
 @Component({
   selector: 'app-byproducts',
@@ -39,6 +43,7 @@ export class ByproductsComponent implements OnInit, OnDestroy {
   private byproductsSub: Subscription;
 
   constructor(
+    private dialog: MatDialog,
     private umService: MeasurementUnitService,
     private byproductService: ByproductService
   ) {}
@@ -85,6 +90,13 @@ export class ByproductsComponent implements OnInit, OnDestroy {
   onEditByproduct(byproduct: Byproduct) {
     console.log('edit byproduct');
     console.log(byproduct);
+    const dialogRef = this.dialog.open(ByproductModalComponent, {
+      width: '40%',
+      data: byproduct
+    });
+    dialogRef.afterClosed().subscribe(result=>{
+      console.log('edit dialog closed');
+    })
   }
 
   onDeleteByproduct(byproduct: Byproduct) {}

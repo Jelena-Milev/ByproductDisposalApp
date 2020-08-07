@@ -10,11 +10,11 @@ import { MeasurementUnit } from '../model/measurementUnit.model';
 export class MeasurementUnitService {
   private _measurementUnits = new BehaviorSubject<MeasurementUnit[]>([]);
 
+  constructor(private http: HttpClient) {}
+
   get measurementUnits(): Observable<MeasurementUnit[]> {
     return this._measurementUnits.asObservable();
   }
-
-  constructor(private http: HttpClient) {}
 
   fetchMeasurementUnits(){
     return this.http

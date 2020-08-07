@@ -1,3 +1,7 @@
 export class MeasurementUnit {
-  constructor(id: number, name: string, abbreviation: string) {}
+  constructor(
+    public id: number,
+    public name: string,
+    public abbreviation: string
+  ) {}
 }
