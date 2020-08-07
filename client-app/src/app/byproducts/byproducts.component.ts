@@ -6,6 +6,7 @@ import { MeasurementUnitService } from '../service/measurement-unit.service';
 import { ByproductService } from '../service/byproduct.service';
 import { MeasurementUnit } from '../model/measurementUnit.model';
 import { Byproduct } from '../model/byproduct.model';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-byproducts',
@@ -22,6 +23,18 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     measurementUnit: new FormControl(null, Validators.required),
   });
 
+  displayedColumns: String[] = [
+    'id',
+    'name',
+    'weight',
+    'measurementUnit',
+    'warehouse',
+    'quantity',
+    'edit',
+    'delete',
+  ];
+  dataSource = new MatTableDataSource<Byproduct>();
+
   private measurementUnitsSub: Subscription;
   private byproductsSub: Subscription;
 
@@ -36,16 +49,17 @@ export class ByproductsComponent implements OnInit, OnDestroy {
         this.measurementUnits = um;
       }
     );
-    this.byproductsSub = this.byproductService.byproducts
-      .subscribe(
+    this.byproductsSub = this.byproductService.byproducts.subscribe(
       (byproducts) => {
         this.byproducts = byproducts;
-      });
+      }
+    );
     this.umService.fetchMeasurementUnits().subscribe(() => {
       console.log(this.measurementUnits);
     });
     this.byproductService.fetchByproducts().subscribe(() => {
       console.log(this.byproducts);
+      this.dataSource.data = this.byproducts;
     });
   }
 
@@ -67,4 +81,11 @@ export class ByproductsComponent implements OnInit, OnDestroy {
         console.log(this.byproducts);
       });
   }
+
+  onEditByproduct(byproduct: Byproduct) {
+    console.log('edit byproduct');
+    console.log(byproduct);
+  }
+
+  onDeleteByproduct(byproduct: Byproduct) {}
 }

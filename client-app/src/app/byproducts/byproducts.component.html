@@ -1,25 +1,103 @@
 <div class="content">
-  <section >
-    <form [formGroup]="newByproductForm" (ngSubmit)="addByproduct()" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="center center" fxLayoutGap="30px">
-    <mat-form-field color="accent" appearance="outline">
-      <mat-label>Naziv</mat-label>
-      <input matInput type="text" formControlName="name"/>
-      <mat-error>Morate uneti naziv nusproizvoda</mat-error>
-    </mat-form-field>
-    <mat-form-field color="accent" appereance="standard" appearance="outline">
-      <mat-label>Količina po jedinici mere</mat-label>
-      <input matInput type="number" formControlName="weightByUM">
-      <mat-error *ngIf="newByproductForm.get('weightByUM').hasError('required')">Morate uneti količinu po jedinici mere.</mat-error>
-      <mat-error *ngIf="!newByproductForm.get('weightByUM').hasError('required')">Količina po jedinici mere mora biti minimum 1.</mat-error>
-    </mat-form-field>
-    <mat-form-field color="accent">
-      <mat-label>Jedinica mere</mat-label>
-      <mat-select matInput formControlName="measurementUnit">
-        <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{um.name}}</mat-option>
-      </mat-select>
-      <mat-error>Morate izbrati jedinicu mere.</mat-error>
-    </mat-form-field>
-    <button type="submit" mat-raised-button color="accent" [disabled]="newByproductForm.invalid">Dodaj nusproizvod</button>
-  </form>
+  <section>
+    <form
+      [formGroup]="newByproductForm"
+      (ngSubmit)="addByproduct()"
+      fxLayout="row"
+      fxLayout.lt-md="column"
+      fxLayoutAlign="center center"
+      fxLayoutGap="30px"
+    >
+      <mat-form-field color="accent" appearance="outline">
+        <mat-label>Naziv</mat-label>
+        <input matInput type="text" formControlName="name" />
+        <mat-error>Morate uneti naziv nusproizvoda</mat-error>
+      </mat-form-field>
+      <mat-form-field color="accent" appereance="standard" appearance="outline">
+        <mat-label>Količina po jedinici mere</mat-label>
+        <input matInput type="number" formControlName="weightByUM" />
+        <mat-error
+          *ngIf="newByproductForm.get('weightByUM').hasError('required')"
+          >Morate uneti količinu po jedinici mere.</mat-error
+        >
+        <mat-error
+          *ngIf="!newByproductForm.get('weightByUM').hasError('required')"
+          >Količina po jedinici mere mora biti minimum 1.</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field color="accent">
+        <mat-label>Jedinica mere</mat-label>
+        <mat-select matInput formControlName="measurementUnit">
+          <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{
+            um.name
+          }}</mat-option>
+        </mat-select>
+        <mat-error>Morate izbrati jedinicu mere.</mat-error>
+      </mat-form-field>
+      <button
+        type="submit"
+        mat-raised-button
+        color="accent"
+        [disabled]="newByproductForm.invalid"
+      >
+        Dodaj nusproizvod
+      </button>
+    </form>
+  </section>
+  <section fxLayout = "row" fxLayoutAlign = "center center">
+    <table mat-table [dataSource]="dataSource" fxFlex>
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id | number}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Naziv</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="weight">
+        <th mat-header-cell *matHeaderCellDef>Težina po jed. mere</th>
+        <td mat-cell *matCellDef="let element">{{ element.weightPerUM | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="measurementUnit">
+        <th mat-header-cell *matHeaderCellDef>Jedinica mere</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.measurementUnit.name }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="warehouse">
+        <th mat-header-cell *matHeaderCellDef>Skladište</th>
+        <td mat-cell *matCellDef="let element">{{ element.warehouse?.name }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Količina</th>
+        <td mat-cell *matCellDef="let element">{{ element.quantity | number }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="edit">
+        <th mat-header-cell *matHeaderCellDef>Izmeni</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="onEditByproduct(element)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef>Obriši</th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="onDeleteByproduct(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
   </section>
 </div>
