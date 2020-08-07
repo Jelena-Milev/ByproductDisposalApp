@@ -28,11 +28,11 @@ public class Byproduct {
     @Column(name = "weight_per_um")
     private BigDecimal weightPerUM;
 
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "warehouse_id")
     private Warehouse warehouse;
 
-    @ManyToOne
+    @ManyToOne(cascade={CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "measurement_unit_id")
     private MeasurementUnit measurementUnit;
 }

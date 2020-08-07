@@ -14,4 +14,6 @@ public interface ByproductService {
     List<ByproductResponseDto> getAll();
 
     ByproductResponseDto get(Long id);
+
+    void delete(Long id);
 }

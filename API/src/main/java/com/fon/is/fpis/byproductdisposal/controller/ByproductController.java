@@ -48,4 +48,11 @@ public class ByproductController {
         ByproductResponseDto result = service.update(id, byproductRequestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @CrossOrigin()
+    @DeleteMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity delete(@PathVariable final Long id){
+        service.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

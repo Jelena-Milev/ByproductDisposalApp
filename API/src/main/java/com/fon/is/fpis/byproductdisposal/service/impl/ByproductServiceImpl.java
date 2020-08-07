@@ -51,4 +51,9 @@ public class ByproductServiceImpl implements ByproductService {
         return mapper.mapToDto(byproduct);
     }
 
+    @Override
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
+
 }
