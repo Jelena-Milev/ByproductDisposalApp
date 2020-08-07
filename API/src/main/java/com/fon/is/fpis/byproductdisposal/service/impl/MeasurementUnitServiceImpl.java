@@ -27,4 +27,10 @@ public class MeasurementUnitServiceImpl implements MeasurementUnitService {
         List<MeasurementUnit> measurementUnits = repository.findAll();
         return mapper.mapToDtos(measurementUnits);
     }
+
+    @Override
+    public MeasurementUnitResponseDto get(Long id) {
+        final MeasurementUnit measurementUnit = repository.findById(id).get();
+        return mapper.mapToDto(measurementUnit);
+    }
 }
