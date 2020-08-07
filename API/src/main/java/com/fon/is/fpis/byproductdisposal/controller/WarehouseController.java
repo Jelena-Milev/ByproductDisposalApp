@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -29,5 +30,11 @@ public class WarehouseController {
     public ResponseEntity<List<WarehouseResponseDto>> getAll() {
         List<WarehouseResponseDto> result = service.getAll();
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping(path = "{id}", produces = APPLICATION_JSON_VALUE)
+    public ResponseEntity<WarehouseResponseDto> getById(@PathVariable final Long id) {
+        WarehouseResponseDto result = service.get(id);
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

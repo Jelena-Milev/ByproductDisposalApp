@@ -27,4 +27,10 @@ public class WarehouseServiceImpl implements WarehouseService {
         List<Warehouse> warehouses = repository.findAll();
         return mapper.mapToDtos(warehouses);
     }
+
+    @Override
+    public WarehouseResponseDto get(Long id) {
+        Warehouse warehouse = repository.findById(id).get();
+        return mapper.mapToDto(warehouse);
+    }
 }

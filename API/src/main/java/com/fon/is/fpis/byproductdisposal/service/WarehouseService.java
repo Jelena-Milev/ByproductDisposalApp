@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface WarehouseService {
     List<WarehouseResponseDto> getAll();
+
+    WarehouseResponseDto get(Long id);
 }

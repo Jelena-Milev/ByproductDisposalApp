@@ -14,7 +14,7 @@ public abstract class WarehouseMapper {
     @Autowired
     protected WarehouseRepository repository;
 
-    public abstract WarehouseResponseDto mapToDto(Warehouse measurementUnit);
+    public abstract WarehouseResponseDto mapToDto(Warehouse warehouse);
 
     public Warehouse mapToEntity(Long warehouseId){
         if(warehouseId == null){
