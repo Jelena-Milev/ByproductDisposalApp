@@ -46,4 +46,30 @@ export class ByproductService {
       })
     )
   }
+
+  editByproduct(
+    id:number,
+    name: string,
+    quantity: number,
+    weightPerUM: number,
+    warehouseId: number,
+    measurementUnitId: number
+  ){
+    let newByproduct:Byproduct;
+    return this.http.patch<Byproduct>(`http://localhost:8888/byproduct-disposal/byproduct/${id}`, {
+      name, quantity, weightPerUM, warehouseId, measurementUnitId
+    }).pipe(
+      switchMap(res=>{
+        newByproduct = res;
+        return this.byproducts;
+      }),
+      take(1),
+      tap(byproducts=>{
+        const alteredByproductIndex = byproducts.findIndex(b => b.id === id);
+        const alteredByproducts = [...byproducts];
+        alteredByproducts[alteredByproductIndex] = newByproduct;
+        this._byproducts.next(alteredByproducts);
+      })
+    );
+  }
 }

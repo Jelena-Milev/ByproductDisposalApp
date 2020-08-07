@@ -25,4 +25,8 @@ export class WarehouseService {
         })
       );
   }
+
+  fetchById(id: number) {
+    return this.http.get<Warehouse>(`http://localhost:8888/byproduct-disposal/warehouse/${id}`);
+  }
 }

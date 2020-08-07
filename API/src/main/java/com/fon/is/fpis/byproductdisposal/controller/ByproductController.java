@@ -42,6 +42,7 @@ public class ByproductController {
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
+    @CrossOrigin()
     @PatchMapping(path = "{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<ByproductResponseDto> update(@PathVariable final Long id, @RequestBody final ByproductRequestDto byproductRequestDto) {
         ByproductResponseDto result = service.update(id, byproductRequestDto);

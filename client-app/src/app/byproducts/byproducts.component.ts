@@ -52,7 +52,6 @@ export class ByproductsComponent implements OnInit, OnDestroy {
     this.measurementUnitsSub = this.umService.measurementUnits.subscribe(
       (um) => {
         this.measurementUnits = um;
-
       }
     );
     this.byproductsSub = this.byproductService.byproducts.subscribe(
@@ -61,12 +60,8 @@ export class ByproductsComponent implements OnInit, OnDestroy {
         this.dataSource.data = byproducts;
       }
     );
-    this.umService.fetchMeasurementUnits().subscribe(() => {
-      console.log(this.measurementUnits);
-    });
-    this.byproductService.fetchByproducts().subscribe(() => {
-      console.log(this.byproducts);
-    });
+    this.umService.fetchMeasurementUnits().subscribe(() => {});
+    this.byproductService.fetchByproducts().subscribe(() => {});
   }
 
   ngOnDestroy(): void {
@@ -83,8 +78,6 @@ export class ByproductsComponent implements OnInit, OnDestroy {
         this.newByproductForm.get('measurementUnit').value
       )
       .subscribe(() => {
-        console.log('add byproduct');
-        console.log(this.byproducts);
         this.newByproductForm.reset();
         this.newByproductForm.markAsPristine();
         this.newByproductForm.markAsUntouched();
@@ -92,15 +85,10 @@ export class ByproductsComponent implements OnInit, OnDestroy {
   }
 
   onEditByproduct(byproduct: Byproduct) {
-    console.log('edit byproduct');
-    console.log(byproduct);
-    const dialogRef = this.dialog.open(ByproductModalComponent, {
+     const dialogRef = this.dialog.open(ByproductModalComponent, {
       width: '40%',
-      data: byproduct
+      data: byproduct,
     });
-    dialogRef.afterClosed().subscribe(result=>{
-      console.log('edit dialog closed');
-    })
   }
 
   onDeleteByproduct(byproduct: Byproduct) {}

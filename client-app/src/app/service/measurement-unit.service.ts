@@ -16,15 +16,21 @@ export class MeasurementUnitService {
     return this._measurementUnits.asObservable();
   }
 
-  fetchMeasurementUnits(){
+  fetchMeasurementUnits() {
     return this.http
       .get<MeasurementUnit[]>(
         'http://localhost:8888/byproduct-disposal/measurement-unit'
       )
       .pipe(
-        tap(res=>{
+        tap((res) => {
           this._measurementUnits.next(res);
         })
       );
+  }
+
+  fetchById(id: number) {
+    return this.http.get<MeasurementUnit>(
+      `http://localhost:8888/byproduct-disposal/measurement-unit/${id}`
+    );
   }
 }
