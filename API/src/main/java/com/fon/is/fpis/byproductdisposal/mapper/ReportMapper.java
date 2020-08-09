@@ -19,8 +19,6 @@ public interface ReportMapper {
     @Mapping(source = "dto.warehouseId", target = "warehouse")
     Report mapToEntity(ReportRequestDto dto);
 
-    @Mapping(source = "report.warehouse", target = "warehouseResponseDto")
-    @Mapping(source = "report.employee", target = "employeeResponseDto")
     ReportResponseDto mapToDto(Report report);
 
     @Mapping(source = "dto.byproductId", target = "byproduct")

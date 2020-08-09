@@ -16,7 +16,7 @@ public class ReportResponseDto {
     private LocalDate date;
     private BigDecimal utilizationRate;
     private String note;
-    private WarehouseResponseDto warehouseResponseDto;
-    private EmployeeResponseDto employeeResponseDto;
+    private WarehouseResponseDto warehouse;
+    private EmployeeResponseDto employee;
     private List<ItemResponseDto> items;
 }

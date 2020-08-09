@@ -1,1 +1,102 @@
-<p>reports works!</p>
+<form
+  class="content"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="20px"
+  [formGroup]="reportForm"
+>
+  <section class="full-width">
+    <mat-form-field appearance="fill">
+      <mat-label>Izaberite broj izveštaja</mat-label>
+      <mat-select matInput>
+        <mat-option
+          *ngFor="let number of reportsNumbers"
+          [value]="number"
+          (click)="onReportNumberSelected(number)"
+          >{{ number }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <section
+    *ngIf="isLoaded"
+    class="row"
+    fxLayout="row"
+    fxLayoutAlign="space-between end"
+    fxLayoutGap="10%"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Datum</mat-label>
+      <input
+        matInput
+        [matDatepicker]="date"
+        formControlName="date"
+        [disabled]="readonly"
+      />
+      <mat-datepicker-toggle [for]="date" matSuffix></mat-datepicker-toggle>
+      <mat-datepicker #date></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Procenat popunjenosti</mat-label>
+      <input
+        type="number"
+        matInput
+        formControlName="utilizationRate"
+        [readonly]="readonly"
+      />
+    </mat-form-field>
+  </section>
+  <section
+    *ngIf="isLoaded"
+    class="row"
+    fxLayout="row"
+    fxLayoutAlign="space-between end"
+    fxLayoutGap="10%"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Skladište</mat-label>
+      <mat-select matInput formControlName="warehouse" [disabled]="readonly">
+        <mat-option
+          *ngFor="let warehouse of warehouses"
+          [value]="warehouse.id"
+          >{{ warehouse.name }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Zaposleni</mat-label>
+      <mat-select matInput formControlName="employee" [disabled]="readonly">
+        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{
+          employee.firstName + " " + employee.lastName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+  <section class="full-width" *ngIf="isLoaded">
+    <mat-form-field appearance="fill">
+      <mat-label>Napomena</mat-label>
+      <textarea rows="2" matInput formControlName="note" [readonly]="readonly"></textarea>
+    </mat-form-field>
+  </section>
+  <section class="full-width" *ngIf="isLoaded">
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{element.id}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="byproductName">
+        <mat-header-cell *matHeaderCellDef>Nusproizvod</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{element.byproductName}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="quantityForDisposal">
+        <mat-header-cell *matHeaderCellDef>Količina za odlaganje</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{element.quantityForDisposal}}</mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator #paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10]" showFirstLastButtons></mat-paginator>
+  </section>
+</form>

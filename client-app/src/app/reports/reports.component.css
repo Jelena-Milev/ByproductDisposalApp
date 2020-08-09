@@ -1,0 +1,17 @@
+.content{
+  margin: 20px;
+}
+
+.row{
+  width:40%;
+}
+
+
+.full-width{
+  width:40%;
+  flex: 1;
+}
+
+.full-width>mat-form-field{
+  display: block;
+}

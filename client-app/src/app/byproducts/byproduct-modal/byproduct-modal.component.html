@@ -2,17 +2,17 @@
 <mat-dialog-content>
 <form [formGroup]="editByproductForm" fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="20px">
 
-  <mat-form-field appearance="fill" color="accent">
+  <mat-form-field appearance="fill">
     <mat-label>Naziv</mat-label>
     <input matInput type="text" formControlName="name"/>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" color="accent">
+  <mat-form-field appearance="fill">
     <mat-label>Težina po jed. mere</mat-label>
     <input matInput type="text" formControlName="weightPerUM"/>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" color="accent">
+  <mat-form-field appearance="fill">
     <mat-label>Jedinica mere</mat-label>
     <mat-select formControlName="measurementUnitId">
       <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{
@@ -21,14 +21,14 @@
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" color="accent">
+  <mat-form-field appearance="fill">
     <mat-label>Skladište</mat-label>
     <mat-select formControlName="warehouseId">
       <mat-option *ngFor="let warehouse of warehouses" [value]="warehouse.id">{{warehouse.name}}</mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="fill" color="accent">
+  <mat-form-field appearance="fill">
     <mat-label>Količina</mat-label>
     <input matInput type="text" formControlName="quantity" />
   </mat-form-field>

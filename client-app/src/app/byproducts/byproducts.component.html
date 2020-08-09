@@ -7,12 +7,12 @@
       fxLayoutAlign="center center"
       fxLayoutGap="30px"
     >
-      <mat-form-field color="accent" appearance="outline">
+      <mat-form-field appearance="outline">
         <mat-label>Naziv</mat-label>
         <input matInput type="text" formControlName="name" />
         <mat-error>Morate uneti naziv nusproizvoda</mat-error>
       </mat-form-field>
-      <mat-form-field color="accent" appereance="standard" appearance="outline">
+      <mat-form-field appereance="standard" appearance="outline">
         <mat-label>Količina po jedinici mere</mat-label>
         <input matInput type="number" formControlName="weightByUM" />
         <mat-error
@@ -24,7 +24,7 @@
           >Količina po jedinici mere mora biti minimum 1.</mat-error
         >
       </mat-form-field>
-      <mat-form-field color="accent">
+      <mat-form-field >
         <mat-label>Jedinica mere</mat-label>
         <mat-select matInput formControlName="measurementUnit">
           <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{
@@ -36,7 +36,6 @@
       <button
         type="button"
         mat-raised-button
-        color="accent"
         (click)="addByproduct()"
         [disabled]="newByproductForm.invalid"
       >

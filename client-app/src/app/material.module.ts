@@ -10,6 +10,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatIconModule,
     MatDialogModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   imports: [
     MatToolbarModule,
@@ -35,7 +39,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatIconModule,
     MatDialogModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
 })
 export class MaterialModule {}
