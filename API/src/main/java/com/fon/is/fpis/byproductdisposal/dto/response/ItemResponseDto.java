@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 @Builder
 public class ItemResponseDto {
     private Long id;
-    private String byproductName;
+    private ByproductResponseDto byproduct;
     private BigDecimal quantityForDisposal;
 }

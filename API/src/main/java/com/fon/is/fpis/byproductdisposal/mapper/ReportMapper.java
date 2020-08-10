@@ -24,6 +24,5 @@ public interface ReportMapper {
     @Mapping(source = "dto.byproductId", target = "byproduct")
     ReportItem mapItemDtoToEntity(ItemRequestDto dto);
 
-    @Mapping(source = "item.byproduct.name", target = "byproductName")
     ItemResponseDto mapItemEntityToDto(ReportItem item);
 }
