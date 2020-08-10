@@ -23,8 +23,8 @@ public class ReportController {
     }
 
     @GetMapping(path = "numbers", produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<String >> getAllNumbers(){
-        final List<String> result = service.getReportIds();
+    public ResponseEntity<List<Long>> getAllNumbers(){
+        final List<Long> result = service.getReportIds();
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

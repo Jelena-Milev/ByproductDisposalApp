@@ -40,7 +40,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<String> getReportIds() {
+    public List<Long> getReportIds() {
         return repository.getIds();
     }
 

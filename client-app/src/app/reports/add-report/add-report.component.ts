@@ -169,10 +169,6 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
         this.snackBar.open('Uspešno sačuvan izveštaj', '', {
           duration: 2000,
         });
-        this.itemForm.reset();
-        this.itemForm.markAsPristine();
-        this.itemForm.markAsUntouched();
-
         this.reportForm.reset();
         this.reportForm.markAsPristine();
         this.reportForm.markAsUntouched();

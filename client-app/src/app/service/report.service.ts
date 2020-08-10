@@ -13,7 +13,7 @@ class ReportItemDto {
   providedIn: 'root',
 })
 export class ReportService {
-  private _reports = new BehaviorSubject<string[]>([]);
+  private _reports = new BehaviorSubject<number[]>([]);
 
   constructor(private http: HttpClient) {}
 
@@ -23,7 +23,7 @@ export class ReportService {
 
   fetchReportsNumbers() {
     return this.http
-      .get<string[]>('http://localhost:8888/byproduct-disposal/report/numbers')
+      .get<number[]>('http://localhost:8888/byproduct-disposal/report/numbers')
       .pipe(
         tap((res) => {
           this._reports.next(res);

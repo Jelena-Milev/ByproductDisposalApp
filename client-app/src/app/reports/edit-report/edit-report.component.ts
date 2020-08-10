@@ -29,12 +29,12 @@ class ReportItemDto {
 @Component({
   selector: 'app-edit-report',
   templateUrl: './edit-report.component.html',
-  styleUrls: ['./edit-report.component.css']
+  styleUrls: ['./edit-report.component.css'],
 })
 export class EditReportComponent implements OnInit, OnDestroy {
   warehouses: Warehouse[] = [];
   employees: Employee[] = [];
-  reportsNumbers: string[] = [];
+  reportsNumbers: number[] = [];
   byproducts: Byproduct[] = [];
 
   readonly: boolean;
@@ -50,7 +50,10 @@ export class EditReportComponent implements OnInit, OnDestroy {
 
   itemForm: FormGroup = new FormGroup({
     byproduct: new FormControl(null, Validators.required),
-    quantityForDisposal: new FormControl('', [Validators.required, Validators.min(0.001)]),
+    quantityForDisposal: new FormControl('', [
+      Validators.required,
+      Validators.min(0.001),
+    ]),
   });
 
   private warehouseSub: Subscription;
@@ -94,6 +97,15 @@ export class EditReportComponent implements OnInit, OnDestroy {
       .fetchReportsNumbers()
       .subscribe((res) => {
         this.reportsNumbers = res;
+        this.reportsNumbers.sort((a:number, b:number) => {
+          if (a < b) {
+            return -1;
+          }
+          if (a > b) {
+            return 1;
+          }
+          return 0;
+        });
       });
 
     this.warehouseSub = this.warehouseService
@@ -211,9 +223,9 @@ export class EditReportComponent implements OnInit, OnDestroy {
       .subscribe((report) => {
         this.selectedReport = report;
         this.dataSource.data = report.items;
-        this.snackBar.open("Uspešno izmenjen izveštaj", "", {
-          duration:2000
-        })
+        this.snackBar.open('Uspešno izmenjen izveštaj', '', {
+          duration: 2000,
+        });
       });
   }
 }

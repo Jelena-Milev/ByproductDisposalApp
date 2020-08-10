@@ -80,6 +80,7 @@
           byproduct.name + " " + "(" + byproduct.measurementUnit.name + ")"
         }}</mat-option>
       </mat-select>
+      <mat-error>Morate izabrati nusproizvod</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Količina za odlaganje</mat-label>
@@ -88,6 +89,7 @@
         type="number"
         formControlName='quantity'
       />
+      <mat-error>Morate uneti količinu veću od 0</mat-error>
     </mat-form-field>
     <button mat-raised-button (click)="onAddItem()" [disabled]="itemForm.invalid">Dodaj stavku</button>
   </form>

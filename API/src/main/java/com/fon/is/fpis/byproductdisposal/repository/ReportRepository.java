@@ -9,5 +9,5 @@ import java.util.List;
 public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("select report.id from Report report")
-    List<String> getIds();
+    List<Long> getIds();
 }
