@@ -154,8 +154,8 @@
       </ng-container>
       <ng-container matColumnDef="edit">
         <mat-header-cell *matHeaderCellDef>Izmena</mat-header-cell>
-        <mat-cell *matCellDef>
-          <button mat-icon-button [disabled]="readonly">
+        <mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="onUpdateItem(element)" [disabled]="readonly">
             <mat-icon>edit</mat-icon>
           </button>
         </mat-cell>
@@ -179,5 +179,8 @@
       [pageSizeOptions]="[3, 5, 10]"
       showFirstLastButtons
     ></mat-paginator>
+  </section>
+  <section class="full-width" *ngIf="isLoaded" fxLayout="row" fxLayoutAlign="end">
+    <button mat-raised-button (click)="onUpdateReport()" [disabled]="readonly">Sačuvaj izveštaj</button>
   </section>
 </div>

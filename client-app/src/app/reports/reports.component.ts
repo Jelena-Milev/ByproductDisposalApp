@@ -18,6 +18,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Byproduct } from '../model/byproduct.model';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportItemModalComponent } from './report-item-modal/report-item-modal.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+class ReportItemDto {
+  constructor(public byproductId: number, public quantityForDisposal: number) {}
+}
 
 @Component({
   selector: 'app-reports',
@@ -63,6 +70,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
   private paginator: MatPaginator;
 
   constructor(
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private warehouseService: WarehouseService,
     private employeeService: EmployeeService,
     private reportService: ReportService,
@@ -150,6 +159,9 @@ export class ReportsComponent implements OnInit, OnDestroy {
       ].quantityForDisposal += quantityForDisposal;
     }
     this.dataSource.data = this.selectedReport.items;
+    this.itemForm.reset();
+    this.itemForm.markAsPristine();
+    this.itemForm.markAllAsTouched();
   }
 
   onDeleteItem(element: ReportItem) {
@@ -158,5 +170,52 @@ export class ReportsComponent implements OnInit, OnDestroy {
     );
     this.selectedReport.items.splice(itemIndex, 1);
     this.dataSource.data = this.selectedReport.items;
+  }
+
+  onUpdateItem(element: ReportItem) {
+    const dialogRef = this.dialog.open(ReportItemModalComponent, {
+      width: '40%',
+      data: element,
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      this.dataSource.data = this.selectedReport.items;
+    });
+  }
+
+  onUpdateReport() {
+    const id: string = this.selectedReport.id;
+    const date: Date = this.reportForm.get('date').value;
+    const utilizationRate: number = this.reportForm.get('utilizationRate')
+      .value;
+    const note: string = this.reportForm.get('note').value;
+    const warehouseId: number = this.reportForm.get('warehouse').value;
+    const employeeId: number = this.reportForm.get('employee').value;
+    const items: ReportItemDto[] = [];
+    this.selectedReport.items.forEach((item) => {
+      const itemDto = new ReportItemDto(
+        item.byproduct.id,
+        item.quantityForDisposal
+      );
+      items.push(itemDto);
+    });
+    console.log(items);
+
+    this.reportService
+      .updateReport(
+        id,
+        date,
+        utilizationRate,
+        note,
+        warehouseId,
+        employeeId,
+        items
+      )
+      .subscribe((report) => {
+        this.selectedReport = report;
+        this.dataSource.data = report.items;
+        this.snackBar.open("Uspešno izmenjen izveštaj", "", {
+          duration:2000
+        })
+      });
   }
 }

@@ -3,7 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import {Report} from '../model/report.model';
+import { Report } from '../model/report.model';
+
+class ReportItemDto {
+  constructor(public byproductId: number, public quantityForDisposal: number) {}
+}
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +31,26 @@ export class ReportService {
       );
   }
 
-  fetchByNumber(number:string){
-    return this.http.get<Report>(`http://localhost:8888/byproduct-disposal/report/${number}`);
+  fetchByNumber(number: string) {
+    return this.http.get<Report>(
+      `http://localhost:8888/byproduct-disposal/report/${number}`
+    );
+  }
+
+  updateReport(
+    id: string,
+    date: Date,
+    utilizationRate: number,
+    note: string,
+    warehouseId: number,
+    employeeId: number,
+    items: ReportItemDto[]
+  ) {
+    console.log({
+      date, utilizationRate, note, warehouseId, employeeId, items
+    });
+    return this.http.patch<Report>(`http://localhost:8888/byproduct-disposal/report/${id}`, {
+      date, utilizationRate, note, warehouseId, employeeId, items
+    });
   }
 }

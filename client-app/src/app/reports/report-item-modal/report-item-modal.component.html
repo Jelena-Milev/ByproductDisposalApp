@@ -1,1 +1,23 @@
-<p>report-item-modal works!</p>
+<h2 mat-dialog-title>Izmena stavke</h2>
+<mat-dialog-content>
+  <form
+    [formGroup]="updateItemForm"
+    fxLayout="column"
+    fxLayoutAlign="center center"
+    fxLayoutGap="20px"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Nusproizvod</mat-label>
+      <input matInput [readonly]="true" formControlName="byproductName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Količina za preuzimanje</mat-label>
+      <input matInput type="number" min="0" formControlName="quantity" />
+      <mat-error>Količina mora biti veća od nule</mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <button mat-raised-button mat-dialog-close>Poništi</button>
+  <button mat-raised-button (click)="onUpdate()" [disabled]="updateItemForm.invalid">Sačuvaj</button>
+</mat-dialog-actions>

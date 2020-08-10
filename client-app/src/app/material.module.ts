@@ -12,6 +12,7 @@ import { MatSortModule } from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSortModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
   imports: [
     MatToolbarModule,
@@ -41,7 +43,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSortModule,
     MatPaginatorModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatSnackBarModule
   ],
 })
 export class MaterialModule {}
