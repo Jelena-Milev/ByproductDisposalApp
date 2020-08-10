@@ -3,7 +3,7 @@
 }
 
 .row{
-  width:40%;
+  width:80%;
 }
 
 
@@ -14,4 +14,8 @@
 
 .full-width>mat-form-field{
   display: block;
+}
+
+.mat-column-byproductName {
+  padding-right: 25px;
 }

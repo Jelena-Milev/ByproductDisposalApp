@@ -6,6 +6,6 @@ table{
   width: 80%;
 }
 
-.mat-column-name {
+mat-header-cell.mat-column-byproductName, mat-cell.mat-column-byproductName{
   padding-right: 15px;
 }

@@ -12,6 +12,7 @@ import { ByproductsComponent } from './byproducts/byproducts.component';
 import { ReportsComponent } from './reports/reports.component';
 import { HeaderComponent } from './header/header.component';
 import { ByproductModalComponent } from './byproducts/byproduct-modal/byproduct-modal.component';
+import { ReportItemModalComponent } from './reports/report-item-modal/report-item-modal.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { ByproductModalComponent } from './byproducts/byproduct-modal/byproduct-
     ReportsComponent,
     HeaderComponent,
     ByproductModalComponent,
+    ReportItemModalComponent,
   ],
   imports: [
     BrowserModule,

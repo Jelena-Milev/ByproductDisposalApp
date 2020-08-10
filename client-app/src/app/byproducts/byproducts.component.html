@@ -51,35 +51,35 @@
       </ng-container>
 
       <ng-container matColumnDef="name">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Naziv</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.name }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="weight">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>Težina po JM</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{ element.weightPerUM | number }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef>Težina po JM</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.weightPerUM | number }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="measurementUnit">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>JM</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">
+        <mat-header-cell *matHeaderCellDef>JM</mat-header-cell>
+        <mat-cell  *matCellDef="let element">
           {{ element.measurementUnit.name }}
         </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="warehouse">
         <mat-header-cell mat-header-cell *matHeaderCellDef>Skladište</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{ element.warehouse?.name }}</mat-cell>
+        <mat-cell *matCellDef="let element">{{ element.warehouse?.name }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="quantity">
-        <mat-header-cell mat-header-cell *matHeaderCellDef mat-sort-header>Količina</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{ element.quantity | number }}</mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Količina</mat-header-cell>
+        <mat-cell *matCellDef="let element">{{ element.quantity | number }}</mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="edit">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">
+        <mat-header-cell *matHeaderCellDef>Izmeni</mat-header-cell>
+        <mat-cell *matCellDef="let element">
           <button mat-icon-button (click)="onEditByproduct(element)">
             <mat-icon>edit</mat-icon>
           </button>
@@ -87,8 +87,8 @@
       </ng-container>
 
       <ng-container matColumnDef="delete">
-        <mat-header-cell mat-header-cell *matHeaderCellDef>Obriši</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">
+        <mat-header-cell *matHeaderCellDef>Obriši</mat-header-cell>
+        <mat-cell *matCellDef="let element">
           <button mat-icon-button (click)="onDeleteByproduct(element)">
             <mat-icon>delete</mat-icon>
           </button>

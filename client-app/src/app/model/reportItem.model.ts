@@ -1,7 +1,9 @@
+import { Byproduct } from './byproduct.model';
+
 export class ReportItem {
   constructor(
-    public id: number,
-    public byproductName: string,
-    public quantityForDisposal: number
+    public byproduct: Byproduct,
+    public quantityForDisposal: number,
+    public id?: number
   ) {}
 }
