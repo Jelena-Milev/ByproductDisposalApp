@@ -9,19 +9,25 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ByproductsComponent } from './byproducts/byproducts.component';
-import { ReportsComponent } from './reports/reports.component';
 import { HeaderComponent } from './header/header.component';
 import { ByproductModalComponent } from './byproducts/byproduct-modal/byproduct-modal.component';
 import { ReportItemModalComponent } from './reports/report-item-modal/report-item-modal.component';
+import { AddReportComponent } from './reports/add-report/add-report.component';
+import { EditReportComponent } from './reports/edit-report/edit-report.component';
+import { ReportHeaderComponent } from './reports/report-header/report-header.component';
+import { AddItemComponent } from './reports/add-item/add-item.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ByproductsComponent,
-    ReportsComponent,
     HeaderComponent,
     ByproductModalComponent,
     ReportItemModalComponent,
+    AddReportComponent,
+    EditReportComponent,
+    ReportHeaderComponent,
+    AddItemComponent,
   ],
   imports: [
     BrowserModule,

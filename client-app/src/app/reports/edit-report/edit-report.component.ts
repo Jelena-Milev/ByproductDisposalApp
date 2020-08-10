@@ -5,33 +5,33 @@ import {
   ViewChild,
   AfterViewInit,
 } from '@angular/core';
-import { WarehouseService } from '../service/warehouse.service';
-import { EmployeeService } from '../service/employee.service';
-import { ReportService } from '../service/report.service';
-import { ByproductService } from '../service/byproduct.service';
-import { Warehouse } from '../model/warehouse.model';
-import { Employee } from '../model/employee.model';
-import { Report } from '../model/report.model';
-import { ReportItem } from '../model/reportItem.model';
+import { WarehouseService } from '../../service/warehouse.service';
+import { EmployeeService } from '../../service/employee.service';
+import { ReportService } from '../../service/report.service';
+import { ByproductService } from '../../service/byproduct.service';
+import { Warehouse } from '../../model/warehouse.model';
+import { Employee } from '../../model/employee.model';
+import { Report } from '../../model/report.model';
+import { ReportItem } from '../../model/reportItem.model';
+import { Byproduct } from '../../model/byproduct.model';
 import { Subscription } from 'rxjs';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Byproduct } from '../model/byproduct.model';
 import { MatDialog } from '@angular/material/dialog';
-import { ReportItemModalComponent } from './report-item-modal/report-item-modal.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ReportItemModalComponent } from '../report-item-modal/report-item-modal.component';
 
 class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
 }
 
 @Component({
-  selector: 'app-reports',
-  templateUrl: './reports.component.html',
-  styleUrls: ['./reports.component.css'],
+  selector: 'app-edit-report',
+  templateUrl: './edit-report.component.html',
+  styleUrls: ['./edit-report.component.css']
 })
-export class ReportsComponent implements OnInit, OnDestroy {
+export class EditReportComponent implements OnInit, OnDestroy {
   warehouses: Warehouse[] = [];
   employees: Employee[] = [];
   reportsNumbers: string[] = [];
@@ -49,8 +49,8 @@ export class ReportsComponent implements OnInit, OnDestroy {
   });
 
   itemForm: FormGroup = new FormGroup({
-    byproduct: new FormControl(),
-    quantityForDisposal: new FormControl(),
+    byproduct: new FormControl(null, Validators.required),
+    quantityForDisposal: new FormControl('', [Validators.required, Validators.min(0.001)]),
   });
 
   private warehouseSub: Subscription;
@@ -198,8 +198,6 @@ export class ReportsComponent implements OnInit, OnDestroy {
       );
       items.push(itemDto);
     });
-    console.log(items);
-
     this.reportService
       .updateReport(
         id,

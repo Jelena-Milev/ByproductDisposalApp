@@ -124,7 +124,7 @@
         formControlName="quantityForDisposal"
       />
     </mat-form-field>
-    <button mat-raised-button (click)="onAddItem()">Dodaj stavku</button>
+    <button mat-raised-button (click)="onAddItem()" [disabled]="itemForm.invalid">Dodaj stavku</button>
   </form>
   <section class="full-width" *ngIf="isLoaded">
     <mat-table [dataSource]="dataSource">

@@ -12,4 +12,5 @@ export class Report {
     public employee: Employee,
     public items: ReportItem[]
   ) {}
+
 }

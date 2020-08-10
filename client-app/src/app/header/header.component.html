@@ -11,12 +11,23 @@
     >
       Nusproizvodi
     </button>
-    <button
+    <button mat-flat-button [matMenuTriggerFor]="menu">Izveštaji</button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/reports/add']" routerLinkActive="router-link-active">Dodavanje</button>
+      <button
+        mat-menu-item
+        [routerLink]="['/reports/edit']"
+        routerLinkActive="router-link-active"
+      >
+        Izmena
+      </button>
+    </mat-menu>
+    <!-- <button
       mat-flat-button
       [routerLink]="['/reports']"
       routerLinkActive="router-link-active"
     >
       Izveštaji
-    </button>
+    </button> -->
   </div>
 </mat-toolbar>

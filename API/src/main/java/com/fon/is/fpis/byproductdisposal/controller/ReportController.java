@@ -34,14 +34,14 @@ public class ReportController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @CrossOrigin
+    @CrossOrigin()
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ReportResponseDto> save(@RequestBody final ReportRequestDto reportRequestDto){
         final ReportResponseDto result = service.save(reportRequestDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
-    @CrossOrigin
+    @CrossOrigin()
     @PatchMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
     public ResponseEntity<ReportResponseDto> update(@RequestBody final ReportRequestDto reportRequestDto, @PathVariable final Long id){
         final ReportResponseDto result = service.update(id, reportRequestDto);

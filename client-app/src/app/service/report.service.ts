@@ -53,4 +53,20 @@ export class ReportService {
       date, utilizationRate, note, warehouseId, employeeId, items
     });
   }
+
+  saveReport(
+    date: Date,
+    utilizationRate: number,
+    note: string,
+    warehouseId: number,
+    employeeId: number,
+    items: ReportItemDto[]
+  ) {
+    console.log({
+      date, utilizationRate, note, warehouseId, employeeId, items
+    });
+    return this.http.post<Report>(`http://localhost:8888/byproduct-disposal/report`, {
+      date, utilizationRate, note, warehouseId, employeeId, items
+    });
+  }
 }

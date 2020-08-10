@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { ByproductsComponent } from './byproducts/byproducts.component';
-import { ReportsComponent } from './reports/reports.component';
+import { AddReportComponent } from './reports/add-report/add-report.component';
+import { EditReportComponent } from './reports/edit-report/edit-report.component';
 
 const routes: Routes = [
   {
@@ -15,8 +16,17 @@ const routes: Routes = [
     component: ByproductsComponent,
   },
   {
-    path: 'reports',
-    component: ReportsComponent,
+    path:'reports',
+    redirectTo:'reports/add',
+    pathMatch:'full'
+  },
+  {
+    path: 'reports/add',
+    component: AddReportComponent
+  },
+  {
+    path:'reports/edit',
+    component: EditReportComponent
   }
 ];
 
