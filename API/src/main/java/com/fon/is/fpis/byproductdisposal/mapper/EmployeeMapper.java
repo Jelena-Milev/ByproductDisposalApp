@@ -1,6 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.mapper;
 
 import com.fon.is.fpis.byproductdisposal.dto.response.EmployeeResponseDto;
+import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.model.Employee;
 import com.fon.is.fpis.byproductdisposal.repository.EmployeeRepository;
 import org.mapstruct.Mapper;
@@ -20,7 +21,7 @@ public abstract class EmployeeMapper {
         if(employeeId == null){
             return null;
         }
-        return repository.findById(employeeId).get();
+        return repository.findById(employeeId).orElseThrow(()-> new EntityNotFoundException("Zaposleni", employeeId));
     }
 
     public abstract List<EmployeeResponseDto> mapToDtos(List<Employee> employees);

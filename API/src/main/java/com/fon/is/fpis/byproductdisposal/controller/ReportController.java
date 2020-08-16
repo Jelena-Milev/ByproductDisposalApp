@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -36,14 +37,14 @@ public class ReportController {
 
     @CrossOrigin()
     @PostMapping(consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReportResponseDto> save(@RequestBody final ReportRequestDto reportRequestDto){
+    public ResponseEntity<ReportResponseDto> save(@RequestBody @Valid final ReportRequestDto reportRequestDto){
         final ReportResponseDto result = service.save(reportRequestDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @CrossOrigin()
     @PatchMapping(path = "{id}", consumes = APPLICATION_JSON_VALUE, produces = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ReportResponseDto> update(@RequestBody final ReportRequestDto reportRequestDto, @PathVariable final Long id){
+    public ResponseEntity<ReportResponseDto> update(@RequestBody @Valid final ReportRequestDto reportRequestDto, @PathVariable final Long id){
         final ReportResponseDto result = service.update(id, reportRequestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

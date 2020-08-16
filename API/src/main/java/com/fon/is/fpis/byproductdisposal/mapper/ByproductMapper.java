@@ -2,6 +2,7 @@ package com.fon.is.fpis.byproductdisposal.mapper;
 
 import com.fon.is.fpis.byproductdisposal.dto.response.ByproductResponseDto;
 import com.fon.is.fpis.byproductdisposal.dto.request.ByproductRequestDto;
+import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import com.fon.is.fpis.byproductdisposal.repository.ByproductRepository;
 import org.mapstruct.Mapper;
@@ -35,6 +36,6 @@ public abstract class ByproductMapper {
         if(byproductId == null){
             return null;
         }
-        return repository.findById(byproductId).get();
+        return repository.findById(byproductId).orElseThrow(()-> new EntityNotFoundException("Nusproizvod", byproductId));
     }
 }

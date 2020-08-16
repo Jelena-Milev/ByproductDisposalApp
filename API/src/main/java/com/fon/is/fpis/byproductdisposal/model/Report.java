@@ -22,15 +22,18 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "report_ids")
     private Long id;
 
+    @EqualsAndHashCode.Include
     private LocalDate date;
 
     @Column(name = "utilization_rate")
+    @EqualsAndHashCode.Include
     private BigDecimal utilizationRate;
 
     private String note;
 
     @ManyToOne
     @JoinColumn(name = "warehouse_id")
+    @EqualsAndHashCode.Include
     private Warehouse warehouse;
 
     @ManyToOne
@@ -38,6 +41,7 @@ public class Report {
     private Employee employee;
 
     @OneToMany(mappedBy = "report", orphanRemoval = true, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @EqualsAndHashCode.Include
     private List<ReportItem> items;
 
     public void addItem(ReportItem item){

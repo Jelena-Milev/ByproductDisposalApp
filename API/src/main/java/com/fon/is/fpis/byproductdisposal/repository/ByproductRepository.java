@@ -4,4 +4,6 @@ import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ByproductRepository extends JpaRepository<Byproduct, Long> {
+
+    boolean existsByName(String name);
 }

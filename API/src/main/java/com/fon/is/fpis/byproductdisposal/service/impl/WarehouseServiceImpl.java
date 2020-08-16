@@ -1,6 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
 import com.fon.is.fpis.byproductdisposal.dto.response.WarehouseResponseDto;
+import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.mapper.WarehouseMapper;
 import com.fon.is.fpis.byproductdisposal.model.Warehouse;
 import com.fon.is.fpis.byproductdisposal.repository.WarehouseRepository;
@@ -30,7 +31,7 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Override
     public WarehouseResponseDto get(Long id) {
-        Warehouse warehouse = repository.findById(id).get();
+        Warehouse warehouse = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Skladiste", id));
         return mapper.mapToDto(warehouse);
     }
 }

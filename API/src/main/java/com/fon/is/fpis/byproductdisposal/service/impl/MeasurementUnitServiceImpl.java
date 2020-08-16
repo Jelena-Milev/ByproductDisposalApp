@@ -1,6 +1,7 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
 import com.fon.is.fpis.byproductdisposal.dto.response.MeasurementUnitResponseDto;
+import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.mapper.MeasurementUnitMapper;
 import com.fon.is.fpis.byproductdisposal.model.MeasurementUnit;
 import com.fon.is.fpis.byproductdisposal.repository.MeasurementUnitRepository;
@@ -30,7 +31,7 @@ public class MeasurementUnitServiceImpl implements MeasurementUnitService {
 
     @Override
     public MeasurementUnitResponseDto get(Long id) {
-        final MeasurementUnit measurementUnit = repository.findById(id).get();
+        final MeasurementUnit measurementUnit = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Merna jedinica", id));
         return mapper.mapToDto(measurementUnit);
     }
 }

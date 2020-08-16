@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static org.springframework.http.MediaType.*;
 
 import java.util.List;
@@ -37,14 +39,14 @@ public class ByproductController {
 
     @CrossOrigin()
     @PostMapping(produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ByproductResponseDto> save(@RequestBody ByproductRequestDto byproductRequestDto) {
+    public ResponseEntity<ByproductResponseDto> save(@RequestBody @Valid ByproductRequestDto byproductRequestDto) {
         ByproductResponseDto result = service.save(byproductRequestDto);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @CrossOrigin()
     @PatchMapping(path = "{id}", produces = APPLICATION_JSON_VALUE, consumes = APPLICATION_JSON_VALUE)
-    public ResponseEntity<ByproductResponseDto> update(@PathVariable final Long id, @RequestBody final ByproductRequestDto byproductRequestDto) {
+    public ResponseEntity<ByproductResponseDto> update(@PathVariable final Long id, @RequestBody @Valid final ByproductRequestDto byproductRequestDto) {
         ByproductResponseDto result = service.update(id, byproductRequestDto);
         return new ResponseEntity<>(result, HttpStatus.OK);
     }

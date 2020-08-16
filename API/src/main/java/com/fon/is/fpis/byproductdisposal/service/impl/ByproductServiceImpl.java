@@ -2,6 +2,8 @@ package com.fon.is.fpis.byproductdisposal.service.impl;
 
 import com.fon.is.fpis.byproductdisposal.dto.request.ByproductRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.response.ByproductResponseDto;
+import com.fon.is.fpis.byproductdisposal.exception.EntityAlreadyExistsException;
+import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.mapper.ByproductMapper;
 import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import com.fon.is.fpis.byproductdisposal.repository.ByproductRepository;
@@ -32,12 +34,14 @@ public class ByproductServiceImpl implements ByproductService {
 
     @Override
     public ByproductResponseDto get(Long id) {
-        final Byproduct byproduct = repository.findById(id).get();
+        final Byproduct byproduct = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Nusproizvod", id));
         return mapper.mapToDto(byproduct);
     }
 
     @Override
     public ByproductResponseDto save(ByproductRequestDto byproductRequestDto) {
+        if(repository.existsByName(byproductRequestDto.getName()))
+            throw new EntityAlreadyExistsException("Nusproizvod");
         final Byproduct byproductToSave = mapper.map(byproductRequestDto);
         final Byproduct byproduct = repository.save(byproductToSave);
         return mapper.mapToDto(byproduct);
@@ -45,7 +49,9 @@ public class ByproductServiceImpl implements ByproductService {
 
     @Override
     public ByproductResponseDto update(Long id, ByproductRequestDto byproductRequestDto) {
-        final Byproduct byproductToUpdate = repository.findById(id).get();
+        final Byproduct byproductToUpdate = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Nusproizvod", byproductRequestDto.getId()));
+        if(repository.existsByName(byproductRequestDto.getName()) && !byproductRequestDto.getName().equals(byproductToUpdate.getName()))
+            throw new EntityAlreadyExistsException("Nusproizvod");
         mapper.updateByproduct(byproductRequestDto, byproductToUpdate);
         final Byproduct byproduct = repository.save(byproductToUpdate);
         return mapper.mapToDto(byproduct);
