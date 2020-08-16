@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  AfterViewInit,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +19,7 @@ import { Byproduct } from '../model/byproduct.model';
 import { ByproductModalComponent } from './byproduct-modal/byproduct-modal.component';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
+import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-byproducts',
@@ -25,7 +32,10 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   newByproductForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    weightByUM: new FormControl(null, [Validators.required, Validators.min(1)]),
+    weightByUM: new FormControl(null, [
+      Validators.required,
+      Validators.min(0.00001),
+    ]),
     measurementUnit: new FormControl(null, Validators.required),
   });
 
@@ -37,12 +47,12 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
     'warehouse',
     'quantity',
     'edit',
-    // 'delete',
+    'delete',
   ];
   dataSource = new MatTableDataSource<Byproduct>();
 
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   private measurementUnitsSub: Subscription;
   private byproductsSub: Subscription;
@@ -52,7 +62,6 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
     private umService: MeasurementUnitService,
     private byproductService: ByproductService
   ) {}
-
 
   ngOnInit(): void {
     this.measurementUnitsSub = this.umService.measurementUnits.subscribe(
@@ -88,21 +97,39 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
         this.newByproductForm.get('weightByUM').value,
         this.newByproductForm.get('measurementUnit').value
       )
-      .subscribe(() => {
-        this.newByproductForm.reset();
-        this.newByproductForm.markAsPristine();
-        this.newByproductForm.markAsUntouched();
-      });
+      .subscribe(
+        () => {
+          this.newByproductForm.reset();
+          this.newByproductForm.markAsPristine();
+          this.newByproductForm.markAsUntouched();
+        },
+        (error) => {
+          this.dialog.open(ErrorDialogComponent, {
+            width: '40%',
+            data: error.error.message,
+          });
+          console.log(error);
+        }
+      );
   }
 
   onEditByproduct(byproduct: Byproduct) {
-     const dialogRef = this.dialog.open(ByproductModalComponent, {
+    const dialogRef = this.dialog.open(ByproductModalComponent, {
       width: '40%',
       data: byproduct,
     });
   }
 
   onDeleteByproduct(byproduct: Byproduct) {
-    this.byproductService.deleteByproduct(byproduct.id).subscribe();
+    this.byproductService.deleteByproduct(byproduct.id).subscribe(
+      () => {},
+      (error) => {
+        this.dialog.open(ErrorDialogComponent, {
+          width: '40%',
+          data: "Nije moguce obrisati nusproizvod koji je zaveden u izvestaju",
+        });
+        console.log(error);
+      }
+    );
   }
 }

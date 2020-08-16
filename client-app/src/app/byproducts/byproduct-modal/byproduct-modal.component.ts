@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { Subscription } from 'rxjs';
@@ -12,6 +12,7 @@ import { Byproduct } from 'src/app/model/byproduct.model';
 import { MeasurementUnit } from 'src/app/model/measurementUnit.model';
 import { mergeMap } from 'rxjs/operators';
 import { ByproductService } from 'src/app/service/byproduct.service';
+import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-byproduct-modal',
@@ -29,7 +30,7 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
     name: new FormControl(this.data.name, Validators.required),
     weightPerUM: new FormControl(this.data.weightPerUM, [
       Validators.required,
-      Validators.min(1),
+      Validators.min(0.00001),
     ]),
     measurementUnitId: new FormControl(
       this.data.measurementUnit.id,
@@ -38,11 +39,12 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
     warehouseId: new FormControl(this.data.warehouse?.id, Validators.required),
     quantity: new FormControl(this.data.quantity, [
       Validators.required,
-      Validators.min(0),
+      Validators.min(0.00001),
     ]),
   });
 
   constructor(
+    private dialog: MatDialog,
     private measurementUnitService: MeasurementUnitService,
     private warehouseService: WarehouseService,
     private byproductService: ByproductService,
@@ -90,6 +92,12 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         this.dialogRef.close();
+      }, (error) => {
+        this.dialog.open(ErrorDialogComponent, {
+          width: '40%',
+          data: error.error.message,
+        });
+        console.log(error);
       });
   }
 }

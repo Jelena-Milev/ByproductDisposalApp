@@ -13,16 +13,9 @@
         <mat-error>Morate uneti naziv nusproizvoda</mat-error>
       </mat-form-field>
       <mat-form-field appereance="standard" appearance="outline">
-        <mat-label>Količina po jedinici mere</mat-label>
+        <mat-label>Težina po jed. mere</mat-label>
         <input matInput type="number" formControlName="weightByUM" />
-        <mat-error
-          *ngIf="newByproductForm.get('weightByUM').hasError('required')"
-          >Morate uneti količinu po jedinici mere.</mat-error
-        >
-        <mat-error
-          *ngIf="!newByproductForm.get('weightByUM').hasError('required')"
-          >Količina po jedinici mere mora biti minimum 1.</mat-error
-        >
+        <mat-error>Morate uneti težinu po jedinici mere veću od 0.</mat-error>
       </mat-form-field>
       <mat-form-field >
         <mat-label>Jedinica mere</mat-label>
@@ -99,6 +92,6 @@
       <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
     </mat-table>
 
-    <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 15]" showFirstLastButtons></mat-paginator>
+    <mat-paginator [pageSize]='5' [pageSizeOptions]="[5, 10, 15, 20]" showFirstLastButtons></mat-paginator>
   </section>
 </div>
