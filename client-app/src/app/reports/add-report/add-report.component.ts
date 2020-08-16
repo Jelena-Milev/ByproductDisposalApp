@@ -18,6 +18,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
@@ -31,13 +33,14 @@ class ReportItemDto {
 export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
   reportForm: FormGroup = new FormGroup({
     date: new FormControl(Validators.required),
-    utilizationRate: new FormControl([
+    utilizationRate: new FormControl('', [
       Validators.required,
       Validators.min(0.001),
+      Validators.max(100)
     ]),
     note: new FormControl(),
-    warehouse: new FormControl(Validators.required),
-    employee: new FormControl(Validators.required),
+    warehouse: new FormControl(null, Validators.required),
+    employee: new FormControl(null, Validators.required),
   });
 
   itemForm: FormGroup = new FormGroup({
@@ -66,6 +69,7 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
   private paginator: MatPaginator;
 
   constructor(
+    private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private warehouseService: WarehouseService,
     private employeeService: EmployeeService,
@@ -172,6 +176,13 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
         this.reportForm.reset();
         this.reportForm.markAsPristine();
         this.reportForm.markAsUntouched();
+      },
+      (error) => {
+        this.dialog.open(ErrorDialogComponent, {
+          width: '40%',
+          data: error.error.message,
+        });
+        console.log(error);
       });
   }
 }

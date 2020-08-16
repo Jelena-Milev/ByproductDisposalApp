@@ -20,6 +20,7 @@
       />
       <mat-datepicker-toggle [for]="date" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #date></mat-datepicker>
+      <mat-error>Morate uneti datum izvestaja</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Procenat popunjenosti</mat-label>
@@ -28,6 +29,7 @@
         matInput
         formControlName="utilizationRate"
       />
+      <mat-error>Morate uneti procenat popunjenosti (0-100).</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Skladište</mat-label>
@@ -38,6 +40,7 @@
           >{{ warehouse.name }}</mat-option
         >
       </mat-select>
+      <mat-error>Morate izbrati skladište.</mat-error>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Zaposleni</mat-label>
@@ -46,6 +49,7 @@
           employee.firstName + " " + employee.lastName
         }}</mat-option>
       </mat-select>
+      <mat-error>Morate izbrati zaposlenog.</mat-error>
     </mat-form-field>
   </section>
   <section class="full-width">
@@ -89,7 +93,7 @@
         type="number"
         formControlName='quantity'
       />
-      <mat-error>Morate uneti količinu veću od 0</mat-error>
+      <mat-error>Morate uneti količinu za odlaganje veću od 0</mat-error>
     </mat-form-field>
     <button mat-raised-button (click)="onAddItem()" [disabled]="itemForm.invalid">Dodaj stavku</button>
   </form>
@@ -141,6 +145,6 @@
     ></mat-paginator>
   </section>
   <section class="full-width" fxLayout="row" fxLayoutAlign="end">
-    <button mat-raised-button (click)="onSaveReport()" [disabled]="reportForm.invalid">Sačuvaj izveštaj</button>
+    <button mat-raised-button (click)="onSaveReport()" [disabled]="reportForm.invalid || items.length===0">Sačuvaj izveštaj</button>
   </section>
 </div>

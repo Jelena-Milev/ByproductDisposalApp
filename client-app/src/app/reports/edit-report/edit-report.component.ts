@@ -21,6 +21,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ReportItemModalComponent } from '../report-item-modal/report-item-modal.component';
+import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 
 class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
@@ -41,11 +42,15 @@ export class EditReportComponent implements OnInit, OnDestroy {
   isLoaded: boolean;
 
   reportForm: FormGroup = new FormGroup({
-    date: new FormControl(),
-    utilizationRate: new FormControl(),
+    date: new FormControl('', Validators.required),
+    utilizationRate: new FormControl('', [
+      Validators.required,
+      Validators.min(0.00001),
+      Validators.max(100),
+    ]),
     note: new FormControl(),
-    warehouse: new FormControl(),
-    employee: new FormControl(),
+    warehouse: new FormControl(null, Validators.required),
+    employee: new FormControl(null, Validators.required),
   });
 
   itemForm: FormGroup = new FormGroup({
@@ -97,7 +102,7 @@ export class EditReportComponent implements OnInit, OnDestroy {
       .fetchReportsNumbers()
       .subscribe((res) => {
         this.reportsNumbers = res;
-        this.reportsNumbers.sort((a:number, b:number) => {
+        this.reportsNumbers.sort((a: number, b: number) => {
           if (a < b) {
             return -1;
           }
@@ -171,9 +176,9 @@ export class EditReportComponent implements OnInit, OnDestroy {
       ].quantityForDisposal += quantityForDisposal;
     }
     this.dataSource.data = this.selectedReport.items;
-    this.itemForm.reset();
-    this.itemForm.markAsPristine();
-    this.itemForm.markAllAsTouched();
+    // this.itemForm.reset();
+    // this.itemForm.markAsPristine();
+    // this.itemForm.markAllAsTouched();
   }
 
   onDeleteItem(element: ReportItem) {
@@ -220,12 +225,21 @@ export class EditReportComponent implements OnInit, OnDestroy {
         employeeId,
         items
       )
-      .subscribe((report) => {
-        this.selectedReport = report;
-        this.dataSource.data = report.items;
-        this.snackBar.open('Uspešno izmenjen izveštaj', '', {
-          duration: 2000,
-        });
-      });
+      .subscribe(
+        (report) => {
+          this.selectedReport = report;
+          this.dataSource.data = report.items;
+          this.snackBar.open('Uspešno izmenjen izveštaj', '', {
+            duration: 2000,
+          });
+        },
+        (error) => {
+          this.dialog.open(ErrorDialogComponent, {
+            width: '40%',
+            data: error.error.message,
+          });
+          console.log(error);
+        }
+      );
   }
 }
