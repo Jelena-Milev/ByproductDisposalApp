@@ -18,6 +18,7 @@ import { ReportHeaderComponent } from './reports/report-header/report-header.com
 import { AddItemComponent } from './reports/add-item/add-item.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-byproduct-form.component';
+import { ByproductsTableComponent } from './byproducts/byproducts-table/byproducts-table.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-b
     AddItemComponent,
     ErrorDialogComponent,
     AddByproductFormComponent,
+    ByproductsTableComponent,
   ],
   imports: [
     BrowserModule,
