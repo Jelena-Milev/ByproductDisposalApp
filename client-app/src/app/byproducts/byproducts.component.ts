@@ -27,17 +27,7 @@ import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
   styleUrls: ['./byproducts.component.css'],
 })
 export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
-  measurementUnits: MeasurementUnit[] = [];
   byproducts: Byproduct[] = [];
-
-  newByproductForm: FormGroup = new FormGroup({
-    name: new FormControl('', Validators.required),
-    weightByUM: new FormControl(null, [
-      Validators.required,
-      Validators.min(0.00001),
-    ]),
-    measurementUnit: new FormControl(null, Validators.required),
-  });
 
   displayedColumns: String[] = [
     'id',
@@ -54,28 +44,20 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
-  private measurementUnitsSub: Subscription;
   private byproductsSub: Subscription;
 
   constructor(
     private dialog: MatDialog,
-    private umService: MeasurementUnitService,
     private byproductService: ByproductService
   ) {}
 
   ngOnInit(): void {
-    this.measurementUnitsSub = this.umService.measurementUnits.subscribe(
-      (um) => {
-        this.measurementUnits = um;
-      }
-    );
     this.byproductsSub = this.byproductService.byproducts.subscribe(
       (byproducts) => {
         this.byproducts = byproducts;
         this.dataSource.data = byproducts;
       }
     );
-    this.umService.fetchMeasurementUnits().subscribe(() => {});
     this.byproductService.fetchByproducts().subscribe(() => {});
   }
 
@@ -85,32 +67,7 @@ export class ByproductsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.measurementUnitsSub.unsubscribe();
     this.byproductsSub.unsubscribe();
-  }
-
-  addByproduct() {
-    console.log(this.newByproductForm);
-    this.byproductService
-      .addByproduct(
-        this.newByproductForm.get('name').value,
-        this.newByproductForm.get('weightByUM').value,
-        this.newByproductForm.get('measurementUnit').value
-      )
-      .subscribe(
-        () => {
-          this.newByproductForm.reset();
-          this.newByproductForm.markAsPristine();
-          this.newByproductForm.markAsUntouched();
-        },
-        (error) => {
-          this.dialog.open(ErrorDialogComponent, {
-            width: '40%',
-            data: error.error.message,
-          });
-          console.log(error);
-        }
-      );
   }
 
   onEditByproduct(byproduct: Byproduct) {

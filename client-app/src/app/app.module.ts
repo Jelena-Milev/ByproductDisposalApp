@@ -17,6 +17,7 @@ import { EditReportComponent } from './reports/edit-report/edit-report.component
 import { ReportHeaderComponent } from './reports/report-header/report-header.component';
 import { AddItemComponent } from './reports/add-item/add-item.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-byproduct-form.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     ReportHeaderComponent,
     AddItemComponent,
     ErrorDialogComponent,
+    AddByproductFormComponent,
   ],
   imports: [
     BrowserModule,

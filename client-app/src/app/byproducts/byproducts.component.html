@@ -1,5 +1,5 @@
 <div class="content">
-  <section>
+  <!-- <section>
     <form
       [formGroup]="newByproductForm"
       fxLayout="row"
@@ -35,7 +35,8 @@
         Dodaj nusproizvod
       </button>
     </form>
-  </section>
+  </section> -->
+  <app-add-byproduct-form></app-add-byproduct-form>
   <section fxLayout = "column">
     <mat-table [dataSource]="dataSource" fxFlex matSort>
       <ng-container matColumnDef="id">
