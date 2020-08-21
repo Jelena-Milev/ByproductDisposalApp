@@ -1,0 +1,25 @@
+<div
+  class="content"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="20px"
+>
+  <section
+    class="row"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="10%"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Izaberite broj izveštaja</mat-label>
+      <mat-select matInput>
+        <mat-option
+          *ngFor="let number of reportsNumbers"
+          [value]="number"
+          (click)="onReportNumberSelected(number)"
+          >{{ number }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+  </section>
+</div>

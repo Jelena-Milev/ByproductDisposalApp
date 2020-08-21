@@ -35,7 +35,7 @@ class ReportItemDto {
 export class EditReportComponent implements OnInit, OnDestroy {
   warehouses: Warehouse[] = [];
   employees: Employee[] = [];
-  reportsNumbers: number[] = [];
+  // reportsNumbers: number[] = [];
   byproducts: Byproduct[] = [];
 
   readonly: boolean;
@@ -63,7 +63,7 @@ export class EditReportComponent implements OnInit, OnDestroy {
 
   private warehouseSub: Subscription;
   private employeeSub: Subscription;
-  private reportSub: Subscription;
+  // private reportSub: Subscription;
 
   selectedReport: Report;
   dataSource = new MatTableDataSource<ReportItem>();
@@ -98,20 +98,20 @@ export class EditReportComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.readonly = true;
     this.isLoaded = false;
-    this.reportSub = this.reportService
-      .fetchReportsNumbers()
-      .subscribe((res) => {
-        this.reportsNumbers = res;
-        this.reportsNumbers.sort((a: number, b: number) => {
-          if (a < b) {
-            return -1;
-          }
-          if (a > b) {
-            return 1;
-          }
-          return 0;
-        });
-      });
+    // this.reportSub = this.reportService
+    //   .fetchReportsNumbers()
+    //   .subscribe((res) => {
+    //     this.reportsNumbers = res;
+    //     this.reportsNumbers.sort((a: number, b: number) => {
+    //       if (a < b) {
+    //         return -1;
+    //       }
+    //       if (a > b) {
+    //         return 1;
+    //       }
+    //       return 0;
+    //     });
+    //   });
 
     this.warehouseSub = this.warehouseService
       .fetchWarehouses()
@@ -126,30 +126,43 @@ export class EditReportComponent implements OnInit, OnDestroy {
       });
   }
 
+  onReportSelected(selectedReport: Report) {
+    this.selectedReport = selectedReport;
+    this.dataSource.data = this.selectedReport.items;
+    this.dataSource.paginator = this.paginator;
+    this.reportForm.get('date').setValue(this.selectedReport.date);
+    this.reportForm
+      .get('utilizationRate')
+      .setValue(this.selectedReport.utilizationRate);
+    this.reportForm.get('note').setValue(this.selectedReport.note);
+    this.reportForm.get('warehouse').setValue(this.selectedReport.warehouse.id);
+    this.reportForm.get('employee').setValue(this.selectedReport.employee.id);
+  }
+
   ngOnDestroy(): void {
     this.warehouseSub.unsubscribe();
     this.employeeSub.unsubscribe();
-    this.reportSub.unsubscribe();
+    // this.reportSub.unsubscribe();
   }
 
-  onReportNumberSelected(number: string) {
-    this.readonly = true;
-    this.reportService.fetchByNumber(number).subscribe((res) => {
-      this.selectedReport = res;
-      this.dataSource.data = this.selectedReport.items;
-      this.dataSource.paginator = this.paginator;
-      this.reportForm.get('date').setValue(this.selectedReport.date);
-      this.reportForm
-        .get('utilizationRate')
-        .setValue(this.selectedReport.utilizationRate);
-      this.reportForm.get('note').setValue(this.selectedReport.note);
-      this.reportForm
-        .get('warehouse')
-        .setValue(this.selectedReport.warehouse.id);
-      this.reportForm.get('employee').setValue(this.selectedReport.employee.id);
-      this.isLoaded = true;
-    });
-  }
+  // onReportNumberSelected(number: string) {
+  //   this.readonly = true;
+  //   this.reportService.fetchByNumber(number).subscribe((res) => {
+  //     this.selectedReport = res;
+  //     this.dataSource.data = this.selectedReport.items;
+  //     this.dataSource.paginator = this.paginator;
+  //     this.reportForm.get('date').setValue(this.selectedReport.date);
+  //     this.reportForm
+  //       .get('utilizationRate')
+  //       .setValue(this.selectedReport.utilizationRate);
+  //     this.reportForm.get('note').setValue(this.selectedReport.note);
+  //     this.reportForm
+  //       .get('warehouse')
+  //       .setValue(this.selectedReport.warehouse.id);
+  //     this.reportForm.get('employee').setValue(this.selectedReport.employee.id);
+  //     this.isLoaded = true;
+  //   });
+  // }
 
   onChangeReport() {
     this.readonly = false;

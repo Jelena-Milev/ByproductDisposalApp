@@ -1,3 +1,4 @@
+<app-search-reports (selectedReport)="onReportSelected($event)"></app-search-reports>
 <form
   class="content"
   fxLayout="column"
@@ -11,9 +12,9 @@
     fxLayoutAlign="center center"
     fxLayoutGap="10%"
   >
-    <mat-form-field appearance="fill">
+    <!-- <mat-form-field appearance="fill">
       <mat-label>Izaberite broj izveštaja</mat-label>
-      <mat-select matInput>
+      <mat-select matInput #reportNumber>
         <mat-option
           *ngFor="let number of reportsNumbers"
           [value]="number"
@@ -21,13 +22,12 @@
           >{{ number }}</mat-option
         >
       </mat-select>
-    </mat-form-field>
-    <button mat-raised-button *ngIf="isLoaded" (click)="onChangeReport()">
+    </mat-form-field> -->
+    <!-- <button mat-raised-button [disabled]="reportNumber.value===null" (click)="onChangeReport()">
       Izmenite izveštaj
-    </button>
+    </button> -->
   </section>
   <section
-    *ngIf="isLoaded"
     class="row"
     fxLayout="row"
     fxLayoutAlign="space-between end"
@@ -55,14 +55,7 @@
       />
       <mat-error>Morate uneti procenat popunjenosti (0-100).</mat-error>
     </mat-form-field>
-    <!-- </section>
-  <section
-    *ngIf="isLoaded"
-    class="row"
-    fxLayout="row"
-    fxLayoutAlign="space-between end"
-    fxLayoutGap="10%"
-  > -->
+
     <mat-form-field appearance="fill">
       <mat-label>Skladište</mat-label>
       <mat-select matInput formControlName="warehouse" [disabled]="readonly">
@@ -84,7 +77,7 @@
       <mat-error>Morate izbrati zaposlenog.</mat-error>
     </mat-form-field>
   </section>
-  <section class="full-width" *ngIf="isLoaded">
+  <section class="full-width">
     <mat-form-field appearance="fill">
       <mat-label>Napomena</mat-label>
       <textarea
@@ -132,7 +125,7 @@
     </mat-form-field>
     <button mat-raised-button (click)="onAddItem()" [disabled]="itemForm.invalid">Dodaj stavku</button>
   </form>
-  <section class="full-width" *ngIf="isLoaded">
+  <section class="full-width">
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
@@ -186,7 +179,7 @@
       showFirstLastButtons
     ></mat-paginator>
   </section>
-  <section class="full-width" *ngIf="isLoaded" fxLayout="row" fxLayoutAlign="end">
+  <section class="full-width" fxLayout="row" fxLayoutAlign="end">
     <button mat-raised-button (click)="onUpdateReport()" [disabled]="readonly || reportForm.invalid || selectedReport.items.length===0">Sačuvaj izveštaj</button>
   </section>
 </div>

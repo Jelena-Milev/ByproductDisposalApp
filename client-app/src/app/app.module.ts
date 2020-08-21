@@ -14,11 +14,11 @@ import { ByproductModalComponent } from './byproducts/byproduct-modal/byproduct-
 import { ReportItemModalComponent } from './reports/report-item-modal/report-item-modal.component';
 import { AddReportComponent } from './reports/add-report/add-report.component';
 import { EditReportComponent } from './reports/edit-report/edit-report.component';
-import { ReportHeaderComponent } from './reports/report-header/report-header.component';
-import { AddItemComponent } from './reports/add-item/add-item.component';
+import { AddItemComponent } from './reports/add-report/add-item/add-item.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-byproduct-form.component';
 import { ByproductsTableComponent } from './byproducts/byproducts-table/byproducts-table.component';
+import { SearchReportsComponent } from './reports/edit-report/search-reports/search-reports.component';
 
 @NgModule({
   declarations: [
@@ -29,11 +29,11 @@ import { ByproductsTableComponent } from './byproducts/byproducts-table/byproduc
     ReportItemModalComponent,
     AddReportComponent,
     EditReportComponent,
-    ReportHeaderComponent,
     AddItemComponent,
     ErrorDialogComponent,
     AddByproductFormComponent,
     ByproductsTableComponent,
+    SearchReportsComponent,
   ],
   imports: [
     BrowserModule,
