@@ -19,6 +19,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-byproduct-form.component';
 import { ByproductsTableComponent } from './byproducts/byproducts-table/byproducts-table.component';
 import { SearchReportsComponent } from './reports/edit-report/search-reports/search-reports.component';
+import { ChangeItemsComponent } from './reports/edit-report/change-items/change-items.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { SearchReportsComponent } from './reports/edit-report/search-reports/sea
     AddByproductFormComponent,
     ByproductsTableComponent,
     SearchReportsComponent,
+    ChangeItemsComponent,
   ],
   imports: [
     BrowserModule,

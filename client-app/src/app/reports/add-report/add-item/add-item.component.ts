@@ -76,12 +76,8 @@ export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onAddItem() {
-    console.log('on add item');
-    console.log(this.itemForm);
     const byproduct = this.itemForm.get('byproduct').value;
-    console.log(this.itemForm.get('byproduct').value)
     const quantityForDisposal = this.itemForm.get('quantityForDisposal').value;
-    console.log(this.itemForm.get('quantityForDisposal').value)
     const itemIndex: number = this.items.findIndex(
       (item) => item.byproduct.name === byproduct.name
     );

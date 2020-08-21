@@ -72,7 +72,6 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
           width: '40%',
           data: "Nije moguce obrisati nusproizvod koji je zaveden u izvestaju",
         });
-        console.log(error);
       }
     );
   }

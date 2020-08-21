@@ -1,4 +1,6 @@
-<app-search-reports (selectedReport)="onReportSelected($event)"></app-search-reports>
+<app-search-reports
+  (selectedReport)="onReportSelected($event)"
+></app-search-reports>
 <form
   class="content"
   fxLayout="column"
@@ -12,20 +14,6 @@
     fxLayoutAlign="center center"
     fxLayoutGap="10%"
   >
-    <!-- <mat-form-field appearance="fill">
-      <mat-label>Izaberite broj izveštaja</mat-label>
-      <mat-select matInput #reportNumber>
-        <mat-option
-          *ngFor="let number of reportsNumbers"
-          [value]="number"
-          (click)="onReportNumberSelected(number)"
-          >{{ number }}</mat-option
-        >
-      </mat-select>
-    </mat-form-field> -->
-    <!-- <button mat-raised-button [disabled]="reportNumber.value===null" (click)="onChangeReport()">
-      Izmenite izveštaj
-    </button> -->
   </section>
   <section
     class="row"
@@ -39,7 +27,7 @@
         matInput
         [matDatepicker]="date"
         formControlName="date"
-        [disabled]="readonly"
+        [disabled]="!editModeOn"
       />
       <mat-datepicker-toggle [for]="date" matSuffix></mat-datepicker-toggle>
       <mat-datepicker #date></mat-datepicker>
@@ -51,14 +39,14 @@
         type="number"
         matInput
         formControlName="utilizationRate"
-        [readonly]="readonly"
+        [readonly]="!editModeOn"
       />
       <mat-error>Morate uneti procenat popunjenosti (0-100).</mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Skladište</mat-label>
-      <mat-select matInput formControlName="warehouse" [disabled]="readonly">
+      <mat-select matInput formControlName="warehouse" [disabled]="!editModeOn">
         <mat-option
           *ngFor="let warehouse of warehouses"
           [value]="warehouse.id"
@@ -69,7 +57,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Zaposleni</mat-label>
-      <mat-select matInput formControlName="employee" [disabled]="readonly">
+      <mat-select matInput formControlName="employee" [disabled]="!editModeOn">
         <mat-option *ngFor="let employee of employees" [value]="employee.id">{{
           employee.firstName + " " + employee.lastName
         }}</mat-option>
@@ -84,102 +72,38 @@
         row="1"
         matInput
         formControlName="note"
-        [readonly]="readonly"
+        [readonly]="!editModeOn"
       ></textarea>
     </mat-form-field>
   </section>
 </form>
+<app-change-items
+  [items]="selectedReport?.items"
+  [editModeOn]="editModeOn"
+  (itemChanged)="onItemsChanged($event)"
+></app-change-items>
 <div
   class="content"
   fxLayout="column"
   fxLayoutAlign="center center"
   fxLayoutGap="20px"
-  [formGroup]="reportForm"
 >
-  <form
-    [formGroup]="itemForm"
-    class="row"
-    fxLayout="row"
-    fxLayoutAlign="center center"
-    fxLayoutGap="4%"
-    *ngIf="isLoaded && !readonly"
-  >
-    <mat-form-field appearance="fill">
-      <mat-label>Izaberite nusproizvod</mat-label>
-      <mat-select matInput formControlName="byproduct">
-        <mat-option *ngFor="let byproduct of byproducts" [value]="byproduct">{{
-          byproduct.name + " " + "(" + byproduct.measurementUnit.name + ")"
-        }}</mat-option>
-      </mat-select>
-      <mat-error>Morate izabrati nusproizvod</mat-error>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-      <mat-label>Količina za odlaganje</mat-label>
-      <input
-        matInput
-        type="number"
-        min="0"
-        formControlName="quantityForDisposal"
-      />
-      <mat-error>Morate uneti količinu za odlaganje veću od 0</mat-error>
-    </mat-form-field>
-    <button mat-raised-button (click)="onAddItem()" [disabled]="itemForm.invalid">Dodaj stavku</button>
-  </form>
-  <section class="full-width">
-    <mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="byproductName">
-        <mat-header-cell *matHeaderCellDef>Nusproizvod</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{
-          element.byproduct.name
-        }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="measurementUnit">
-        <mat-header-cell *matHeaderCellDef>JM</mat-header-cell>
-        <mat-cell mat-cell *matCellDef="let element">{{
-          element.byproduct.measurementUnit.name
-        }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="quantityForDisposal">
-        <mat-header-cell *matHeaderCellDef
-          >Količina za odlaganje</mat-header-cell
-        >
-        <mat-cell mat-cell *matCellDef="let element">{{
-          element.quantityForDisposal | number
-        }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="edit">
-        <mat-header-cell *matHeaderCellDef>Izmena</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="onUpdateItem(element)" [disabled]="readonly">
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="delete">
-        <mat-header-cell *matHeaderCellDef>Brisanje</mat-header-cell>
-        <mat-cell *matCellDef="let element">
-          <button mat-icon-button (click)="onDeleteItem(element)" [disabled]="readonly">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-    </mat-table>
-
-    <mat-paginator
-      #paginator
-      [pageSize]="3"
-      [pageSizeOptions]="[3, 5, 10]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </section>
   <section class="full-width" fxLayout="row" fxLayoutAlign="end">
-    <button mat-raised-button (click)="onUpdateReport()" [disabled]="readonly || reportForm.invalid || selectedReport.items.length===0">Sačuvaj izveštaj</button>
+    <button
+      mat-raised-button
+      *ngIf="!editModeOn"
+      (click)="onChangeReport()"
+      [disabled]="selectedReport === null"
+    >
+      Izmenite izveštaj
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="editModeOn"
+      (click)="onUpdateReport()"
+      [disabled]="reportForm.invalid || selectedReport.items.length === 0"
+    >
+      Sačuvaj izveštaj
+    </button>
   </section>
 </div>

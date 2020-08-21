@@ -1,0 +1,104 @@
+<div
+  class="content"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="20px"
+>
+  <form
+    [formGroup]="itemForm"
+    class="row"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+    fxLayoutGap="4%"
+    *ngIf="editModeOn"
+  >
+    <mat-form-field appearance="fill">
+      <mat-label>Izaberite nusproizvod</mat-label>
+      <mat-select matInput formControlName="byproduct">
+        <mat-option *ngFor="let byproduct of byproducts" [value]="byproduct">{{
+          byproduct.name + " " + "(" + byproduct.measurementUnit.name + ")"
+        }}</mat-option>
+      </mat-select>
+      <mat-error>Morate izabrati nusproizvod</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Količina za odlaganje</mat-label>
+      <input
+        matInput
+        type="number"
+        min="0"
+        formControlName="quantityForDisposal"
+      />
+      <mat-error>Morate uneti količinu za odlaganje veću od 0</mat-error>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      (click)="onAddItem()"
+      [disabled]="itemForm.invalid"
+    >
+      Dodaj stavku
+    </button>
+  </form>
+  <section class="full-width">
+    <mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{ element.id }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="byproductName">
+        <mat-header-cell *matHeaderCellDef>Nusproizvod</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{
+          element.byproduct.name
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="measurementUnit">
+        <mat-header-cell *matHeaderCellDef>JM</mat-header-cell>
+        <mat-cell mat-cell *matCellDef="let element">{{
+          element.byproduct.measurementUnit.name
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="quantityForDisposal">
+        <mat-header-cell *matHeaderCellDef
+          >Količina za odlaganje</mat-header-cell
+        >
+        <mat-cell mat-cell *matCellDef="let element">{{
+          element.quantityForDisposal | number
+        }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="edit">
+        <mat-header-cell *matHeaderCellDef>Izmena</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            (click)="onUpdateItem(element)"
+            [disabled]="!editModeOn"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef>Brisanje</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button
+            mat-icon-button
+            (click)="onDeleteItem(element)"
+            [disabled]="!editModeOn"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+
+    <mat-paginator
+      #paginator
+      [pageSize]="3"
+      [pageSizeOptions]="[3, 5, 10]"
+      showFirstLastButtons
+    ></mat-paginator>
+  </section>
+</div>

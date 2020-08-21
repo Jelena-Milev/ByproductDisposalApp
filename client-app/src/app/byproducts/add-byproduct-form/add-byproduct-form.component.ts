@@ -45,7 +45,6 @@ export class AddByproductFormComponent implements OnInit, OnDestroy {
   }
 
   addByproduct() {
-    console.log(this.newByproductForm);
     this.byproductService
       .addByproduct(
         this.newByproductForm.get('name').value,
@@ -63,7 +62,6 @@ export class AddByproductFormComponent implements OnInit, OnDestroy {
             width: '40%',
             data: error.error.message,
           });
-          console.log(error);
         }
       );
   }

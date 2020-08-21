@@ -117,7 +117,6 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
           width: '40%',
           data: error.error.message,
         });
-        console.log(error);
       });
   }
 }
