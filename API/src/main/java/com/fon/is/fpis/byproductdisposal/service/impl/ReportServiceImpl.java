@@ -17,7 +17,9 @@ import com.fon.is.fpis.byproductdisposal.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -38,9 +40,10 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public ReportResponseDto save(ReportRequestDto dto) {
         final Report report = mapper.mapToEntity(dto);
-        if(repository.existsByDateAndWarehouseAndUtilizationRate(report.getDate(), report.getWarehouse(), report.getUtilizationRate()))
+        if (repository.existsByDateAndWarehouseAndUtilizationRate(report.getDate(), report.getWarehouse(), report.getUtilizationRate()))
             throw new EntityAlreadyExistsException("Izvestaj");
         checkItemsQuantity(report);
+        reduceByproductsQuantity(dto.getItems());
         final Report savedReport = repository.save(report);
         return mapper.mapToDto(savedReport);
     }
@@ -55,7 +58,8 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportResponseDto findById(Long id) {
-        final Report report = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Izvestaj", id));;
+        final Report report = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Izvestaj", id));
+        ;
         return mapper.mapToDto(report);
     }
 
@@ -65,10 +69,12 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public ReportResponseDto update(Long id, ReportRequestDto dto) {
-        final Report reportToUpdate = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Izvestaj", id));;
-        updateMapper.updateReport(dto, reportToUpdate);
+    public ReportResponseDto update(Long id, ReportRequestDto reportDto) {
+        final Report reportToUpdate = repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Izvestaj", id));
+        resetByproductsQuantities(reportToUpdate);
         checkItemsQuantity(reportToUpdate);
+        updateMapper.updateReport(reportDto, reportToUpdate);
+        reduceByproductsQuantity(reportDto.getItems());
         final Report updatedReport = repository.save(reportToUpdate);
         return mapper.mapToDto(updatedReport);
     }
@@ -79,4 +85,14 @@ public class ReportServiceImpl implements ReportService {
                 throw new NotEnoughByproductException(item.getByproduct().getName(), item.getByproduct().getQuantity());
         }
     }
+
+    protected void resetByproductsQuantities(Report report) {
+        for (ReportItem item : report.getItems()) {
+            final Byproduct byproduct = item.getByproduct();
+            byproduct.setQuantity(byproduct.getQuantity().add(item.getQuantityForDisposal()));
+            byproductRepository.save(byproduct);
+        }
+    }
+
+
 }

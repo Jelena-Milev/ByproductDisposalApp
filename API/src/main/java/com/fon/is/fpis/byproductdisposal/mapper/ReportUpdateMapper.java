@@ -2,6 +2,7 @@ package com.fon.is.fpis.byproductdisposal.mapper;
 
 import com.fon.is.fpis.byproductdisposal.dto.request.ItemRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
+import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import com.fon.is.fpis.byproductdisposal.model.Report;
 import com.fon.is.fpis.byproductdisposal.model.ReportItem;
 import org.mapstruct.AfterMapping;
@@ -38,7 +39,6 @@ public abstract class ReportUpdateMapper {
                 report.addItem(newItem);
             else
                 updateItem(itemDto, report.getItems().get(index));
-
         }
     }
 
