@@ -3,11 +3,12 @@
 }
 
 .row{
-  width:100%;
+  width:80%;
 }
 
+
 .full-width{
-  width:100%;
+  width:40%;
   flex: 1;
 }
 
