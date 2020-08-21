@@ -1,5 +1,6 @@
 package com.fon.is.fpis.byproductdisposal.service.impl;
 
+import com.fon.is.fpis.byproductdisposal.dto.request.ItemRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.request.ReportRequestDto;
 import com.fon.is.fpis.byproductdisposal.dto.response.ReportResponseDto;
 import com.fon.is.fpis.byproductdisposal.exception.EntityAlreadyExistsException;
@@ -7,8 +8,10 @@ import com.fon.is.fpis.byproductdisposal.exception.EntityNotFoundException;
 import com.fon.is.fpis.byproductdisposal.exception.NotEnoughByproductException;
 import com.fon.is.fpis.byproductdisposal.mapper.ReportMapper;
 import com.fon.is.fpis.byproductdisposal.mapper.ReportUpdateMapper;
+import com.fon.is.fpis.byproductdisposal.model.Byproduct;
 import com.fon.is.fpis.byproductdisposal.model.Report;
 import com.fon.is.fpis.byproductdisposal.model.ReportItem;
+import com.fon.is.fpis.byproductdisposal.repository.ByproductRepository;
 import com.fon.is.fpis.byproductdisposal.repository.ReportRepository;
 import com.fon.is.fpis.byproductdisposal.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +25,14 @@ public class ReportServiceImpl implements ReportService {
     private final ReportMapper mapper;
     private final ReportUpdateMapper updateMapper;
     private final ReportRepository repository;
+    private final ByproductRepository byproductRepository;
 
     @Autowired
-    public ReportServiceImpl(ReportMapper mapper, ReportUpdateMapper updateMapper, ReportRepository reportRepository) {
+    public ReportServiceImpl(ReportMapper mapper, ReportUpdateMapper updateMapper, ReportRepository reportRepository, ByproductRepository byproductRepository) {
         this.mapper = mapper;
         this.updateMapper = updateMapper;
         this.repository = reportRepository;
+        this.byproductRepository = byproductRepository;
     }
 
     @Override
@@ -35,12 +40,17 @@ public class ReportServiceImpl implements ReportService {
         final Report report = mapper.mapToEntity(dto);
         if(repository.existsByDateAndWarehouseAndUtilizationRate(report.getDate(), report.getWarehouse(), report.getUtilizationRate()))
             throw new EntityAlreadyExistsException("Izvestaj");
-        for (ReportItem item : report.getItems()) {
-            if(item.getQuantityForDisposal().compareTo(item.getByproduct().getQuantity()) == 1)
-                throw new NotEnoughByproductException(item.getByproduct().getName(), item.getByproduct().getQuantity());
-        }
+        checkItemsQuantity(report);
         final Report savedReport = repository.save(report);
         return mapper.mapToDto(savedReport);
+    }
+
+    private void reduceByproductsQuantity(List<ItemRequestDto> items) {
+        for (ItemRequestDto item : items) {
+            final Byproduct byproduct = byproductRepository.findById(item.getByproductId()).get();
+            byproduct.setQuantity(byproduct.getQuantity().add(item.getQuantityForDisposal().negate()));
+            byproductRepository.save(byproduct);
+        }
     }
 
     @Override
@@ -58,11 +68,15 @@ public class ReportServiceImpl implements ReportService {
     public ReportResponseDto update(Long id, ReportRequestDto dto) {
         final Report reportToUpdate = repository.findById(id).orElseThrow(()->new EntityNotFoundException("Izvestaj", id));;
         updateMapper.updateReport(dto, reportToUpdate);
-        for (ReportItem item : reportToUpdate.getItems()) {
-            if(item.getQuantityForDisposal().compareTo(item.getByproduct().getQuantity()) == 1)
-                throw new NotEnoughByproductException(item.getByproduct().getName(), item.getByproduct().getQuantity());
-        }
+        checkItemsQuantity(reportToUpdate);
         final Report updatedReport = repository.save(reportToUpdate);
         return mapper.mapToDto(updatedReport);
+    }
+
+    private void checkItemsQuantity(Report report) {
+        for (ReportItem item : report.getItems()) {
+            if (item.getQuantityForDisposal().compareTo(item.getByproduct().getQuantity()) == 1)
+                throw new NotEnoughByproductException(item.getByproduct().getName(), item.getByproduct().getQuantity());
+        }
     }
 }
