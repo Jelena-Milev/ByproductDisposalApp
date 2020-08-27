@@ -105,7 +105,7 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
         this.reportForm.get('note').setValue(report.note);
         this.reportForm.get('warehouse').setValue(report.warehouse.id);
         this.reportForm.get('employee').setValue(report.employee.id);
-        this.snackBar.open('Uspešno sačuvan izveštaj', '', {
+        this.snackBar.open('Uspešno sačuvan izveštaj broj'+report.id, '', {
           duration: 2000,
         });
         this.reportForm.reset();
