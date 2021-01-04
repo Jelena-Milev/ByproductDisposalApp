@@ -20,6 +20,10 @@ import { AddByproductFormComponent } from './byproducts/add-byproduct-form/add-b
 import { ByproductsTableComponent } from './byproducts/byproducts-table/byproducts-table.component';
 import { SearchReportsComponent } from './reports/edit-report/search-reports/search-reports.component';
 import { ChangeItemsComponent } from './reports/edit-report/change-items/change-items.component';
+import { StoreModule } from '@ngrx/store';
+import { reducers, metaReducers } from './reducers';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -46,6 +50,14 @@ import { ChangeItemsComponent } from './reports/edit-report/change-items/change-
     ReactiveFormsModule,
     FlexLayoutModule,
     HttpClientModule,
+    StoreModule.forRoot(reducers, {
+      metaReducers,
+      runtimeChecks: {
+        strictStateImmutability: true,
+        strictActionImmutability: true
+      }
+    }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
