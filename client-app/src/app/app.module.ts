@@ -12,7 +12,6 @@ import { reducers, metaReducers } from './reducers';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ByproductsModule } from './byproducts/byproducts.module';
-import { ReportsModule } from './reports/reports.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -22,7 +21,6 @@ import { ReportsModule } from './reports/reports.module';
     MaterialModule,
     AppRoutingModule,
     ByproductsModule,
-    ReportsModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

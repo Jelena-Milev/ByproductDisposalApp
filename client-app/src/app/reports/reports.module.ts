@@ -7,6 +7,7 @@ import { AddItemComponent } from './add-report/add-item/add-item.component';
 import { SearchReportsComponent } from './edit-report/search-reports/search-reports.component';
 import { ChangeItemsComponent } from './edit-report/change-items/change-items.component';
 import {SharedModule} from '../shared/shared.module';
+import {ReportsRoutingModule} from './reports-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {SharedModule} from '../shared/shared.module';
     ChangeItemsComponent,
   ],
   imports: [
-    SharedModule
+    SharedModule,
+    ReportsRoutingModule
   ],
   exports: [],
 })

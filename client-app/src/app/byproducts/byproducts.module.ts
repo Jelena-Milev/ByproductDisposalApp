@@ -5,6 +5,7 @@ import {ByproductModalComponent} from './byproduct-modal/byproduct-modal.compone
 import {AddByproductFormComponent} from './add-byproduct-form/add-byproduct-form.component';
 import {ByproductsTableComponent} from './byproducts-table/byproducts-table.component';
 import {SharedModule} from '../shared/shared.module';
+import {ByproductRoutingModule} from './byproducts-routing.module';
 
 @NgModule({
     declarations: [
@@ -14,7 +15,8 @@ import {SharedModule} from '../shared/shared.module';
       ByproductsTableComponent,
     ],
     imports: [
-      SharedModule
+      SharedModule,
+      ByproductRoutingModule
     ],
   }
 )
