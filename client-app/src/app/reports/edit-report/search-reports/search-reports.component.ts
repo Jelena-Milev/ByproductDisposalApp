@@ -38,7 +38,7 @@ export class SearchReportsComponent implements OnInit, OnDestroy {
     this.reportSub.unsubscribe();
   }
 
-  onReportNumberSelected(number: string) {
+  onReportNumberSelected(number: string | number) {
     this.reportService.fetchByNumber(number).subscribe((res) => {
       this.report = res;
       this.selectedReport.emit(this.report);

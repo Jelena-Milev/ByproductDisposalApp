@@ -31,7 +31,7 @@ export class ReportService {
       );
   }
 
-  fetchByNumber(number: string) {
+  fetchByNumber(number: string | number) {
     return this.http.get<Report>(
       `http://localhost:8888/byproduct-disposal/report/${number}`
     );
