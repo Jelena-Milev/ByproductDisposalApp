@@ -6,6 +6,8 @@ import {AddByproductFormComponent} from './add-byproduct-form/add-byproduct-form
 import {ByproductsTableComponent} from './byproducts-table/byproducts-table.component';
 import {SharedModule} from '../shared/shared.module';
 import {ByproductRoutingModule} from './byproducts-routing.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromByproducts from './state';
 
 @NgModule({
     declarations: [
@@ -16,7 +18,8 @@ import {ByproductRoutingModule} from './byproducts-routing.module';
     ],
     imports: [
       SharedModule,
-      ByproductRoutingModule
+      ByproductRoutingModule,
+      StoreModule.forFeature(fromByproducts.byproductsFeatureKey, fromByproducts.reducers, )
     ],
   }
 )

@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { StoreModule } from '@ngrx/store';
-import { reducers, metaReducers } from './reducers';
+import { reducers } from './state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ByproductsModule } from './byproducts/byproducts.module';
@@ -22,7 +22,6 @@ import { ByproductsModule } from './byproducts/byproducts.module';
     AppRoutingModule,
     ByproductsModule,
     StoreModule.forRoot(reducers, {
-      metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
         strictActionImmutability: true,
