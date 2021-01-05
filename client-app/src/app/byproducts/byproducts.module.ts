@@ -8,6 +8,9 @@ import {SharedModule} from '../shared/shared.module';
 import {ByproductRoutingModule} from './byproducts-routing.module';
 import { StoreModule } from '@ngrx/store';
 import * as fromByproducts from './state';
+import {EffectsModule} from '@ngrx/effects';
+import {ByproductEffects} from './state/byproduct.effects';
+import {byproductsReducer} from './state';
 
 @NgModule({
     declarations: [
@@ -19,7 +22,8 @@ import * as fromByproducts from './state';
     imports: [
       SharedModule,
       ByproductRoutingModule,
-      StoreModule.forFeature(fromByproducts.byproductsFeatureKey, fromByproducts.reducers, )
+      StoreModule.forFeature(fromByproducts.byproductsFeatureKey, [byproductsReducer]),
+      EffectsModule.forFeature([ByproductEffects])
     ],
   }
 )

@@ -12,6 +12,7 @@ import { reducers } from './state';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ByproductsModule } from './byproducts/byproducts.module';
+import {EffectsModule} from '@ngrx/effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -31,6 +32,7 @@ import { ByproductsModule } from './byproducts/byproducts.module';
       maxAge: 25,
       logOnly: environment.production,
     }),
+    EffectsModule.forRoot([])
   ],
   providers: [],
   bootstrap: [AppComponent],

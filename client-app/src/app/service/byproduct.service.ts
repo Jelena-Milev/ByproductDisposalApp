@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import { tap, switchMap, take } from 'rxjs/operators';
 
 import { Byproduct } from '../model/byproduct.model';
@@ -17,7 +17,7 @@ export class ByproductService {
     return this._byproducts.asObservable();
   }
 
-  fetchByproducts() {
+  fetchByproducts(): Observable<Byproduct[]> {
     return this.http
       .get<Byproduct[]>('http://localhost:8888/byproduct-disposal/byproduct')
       .pipe(
@@ -36,8 +36,8 @@ export class ByproductService {
         measurementUnitId,
       })
       .pipe(
-        switchMap((savedByroduct) => {
-          newByproduct = savedByroduct;
+        switchMap((savedByproduct) => {
+          newByproduct = savedByproduct;
           return this.byproducts;
         }),
         take(1),
