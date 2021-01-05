@@ -1,5 +1,5 @@
-<section fxLayout = "column">
-  <mat-table [dataSource]="dataSource" fxFlex matSort>
+<section fxLayout = "column" *ngIf="byproductsLoaded$ | async">
+  <mat-table [dataSource]="byproducts$ | async" fxFlex matSort>
     <ng-container matColumnDef="id">
       <mat-header-cell *matHeaderCellDef>No.</mat-header-cell>
       <mat-cell *matCellDef="let element">{{ element.id | number}}</mat-cell>

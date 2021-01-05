@@ -23,7 +23,7 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
   byproducts$: Observable<Byproduct[]>;
   byproductsLoaded$: Observable<boolean>;
 
-  byproducts: Byproduct[] = [];
+  // byproducts: Byproduct[] = [];
   displayedColumns: String[] = [
     'id',
     'name',
@@ -52,10 +52,10 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
 
   ngOnInit(): void {
     this.store.dispatch(loadByproducts());
-    this.byproducts$.subscribe(byproducts => {
-      this.byproducts = byproducts;
-      this.dataSource.data = byproducts;
-    })
+    // this.byproducts$.subscribe(byproducts => {
+    //   this.byproducts = byproducts;
+    //   this.dataSource.data = byproducts;
+    // })
     // this.byproductsSub = this.byproductService.byproducts.subscribe(
     //   (byproducts) => {
     //     this.byproducts = byproducts;

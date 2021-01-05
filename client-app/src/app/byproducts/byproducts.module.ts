@@ -22,7 +22,7 @@ import {byproductsReducer} from './state';
     imports: [
       SharedModule,
       ByproductRoutingModule,
-      StoreModule.forFeature(fromByproducts.byproductsFeatureKey, [byproductsReducer]),
+      StoreModule.forFeature(fromByproducts.byproductsFeatureKey, byproductsReducer),
       EffectsModule.forFeature([ByproductEffects])
     ],
   }
