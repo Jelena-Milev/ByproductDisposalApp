@@ -14,6 +14,7 @@ import static org.springframework.http.MediaType.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "byproduct")
 public class ByproductController {

@@ -12,6 +12,8 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+
+@CrossOrigin
 @RestController
 @RequestMapping(path = "report")
 public class ReportController {
