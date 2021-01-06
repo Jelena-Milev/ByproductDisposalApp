@@ -27,24 +27,24 @@ export class ByproductService {
       );
   }
 
-  addByproduct(name: string, weightPerUM: number, measurementUnitId: number) {
+  addByproduct(name: string, weightPerUM: number, measurementUnitId: number): Observable<Byproduct> {
     let newByproduct: Byproduct;
     return this.http
       .post<Byproduct>('http://localhost:8888/byproduct-disposal/byproduct', {
         name,
         weightPerUM,
         measurementUnitId,
-      })
-      .pipe(
-        switchMap((savedByproduct) => {
-          newByproduct = savedByproduct;
-          return this.byproducts;
-        }),
-        take(1),
-        tap((res) => {
-          this._byproducts.next(res.concat(newByproduct));
-        })
-      );
+      });
+      // .pipe(
+      //   switchMap((savedByproduct) => {
+      //     newByproduct = savedByproduct;
+      //     return this.byproducts;
+      //   }),
+      //   take(1),
+      //   tap((res) => {
+      //     this._byproducts.next(res.concat(newByproduct));
+      //   })
+      // );
   }
 
   editByproduct(

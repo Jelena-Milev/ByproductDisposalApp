@@ -22,6 +22,9 @@ export const byproductsReducer = createReducer(
       ...state,
       byproductsLoaded: true,
     });
+  }),
+  on(byproductActions.addByproductSuccess, (state, action) => {
+    return adapter.addOne(action.savedByproduct, { ...state });
   })
 );
 
