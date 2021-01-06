@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 import { Report } from '../model/report.model';
 
-class ReportItemDto {
+export class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
 }
 
@@ -62,9 +62,6 @@ export class ReportService {
     employeeId: number,
     items: ReportItemDto[]
   ) {
-    console.log({
-      date, utilizationRate, note, warehouseId, employeeId, items
-    });
     return this.http.post<Report>(`http://localhost:8888/byproduct-disposal/report`, {
       date, utilizationRate, note, warehouseId, employeeId, items
     });

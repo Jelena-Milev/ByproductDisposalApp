@@ -10,6 +10,6 @@ export const loadWarehouses_AddReport = createAction(
 );
 
 export const loadWarehousesSuccess = createAction(
-  '[Byproduct API] Load Warehouses Success',
+  '[Warehouse API] Load Warehouses Success',
   props<{ warehouses: Warehouse[] }>()
 );

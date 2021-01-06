@@ -8,6 +8,10 @@ import { SearchReportsComponent } from './edit-report/search-reports/search-repo
 import { ChangeItemsComponent } from './edit-report/change-items/change-items.component';
 import {SharedModule} from '../shared/shared.module';
 import {ReportsRoutingModule} from './reports-routing.module';
+import { StoreModule } from '@ngrx/store';
+import * as fromReports from './state';
+import {EffectsModule} from '@ngrx/effects';
+import {ReportEffect} from './state/report.effect';
 
 @NgModule({
   declarations: [
@@ -20,7 +24,9 @@ import {ReportsRoutingModule} from './reports-routing.module';
   ],
   imports: [
     SharedModule,
-    ReportsRoutingModule
+    ReportsRoutingModule,
+    StoreModule.forFeature(fromReports.reportsFeatureKey, fromReports.reducer),
+    EffectsModule.forFeature([ReportEffect])
   ],
   exports: [],
 })
