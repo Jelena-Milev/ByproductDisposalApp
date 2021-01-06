@@ -7,7 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state';
 import {addByproduct} from '../state/byproduct.actions';
-import {loadMeasurementUnits} from '../../state/measurementUnits/measurement-unit.actions';
+import {loadMeasurementUnits_AddBpComp} from '../../state/measurementUnits/measurement-unit.actions';
 import {selectMeasurementUnits} from '../../state/measurementUnits/measurement-unit.selectors';
 
 @Component({
@@ -36,7 +36,7 @@ export class AddByproductFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadMeasurementUnits());
+    this.store.dispatch(loadMeasurementUnits_AddBpComp());
   }
 
   addByproduct() {

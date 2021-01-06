@@ -32,7 +32,7 @@
       <mat-label>Skladište</mat-label>
       <mat-select formControlName="warehouseId">
         <mat-option
-          *ngFor="let warehouse of warehouses"
+          *ngFor="let warehouse of (warehouses$ | async)"
           [value]="warehouse.id"
           >{{ warehouse.name }}</mat-option
         >

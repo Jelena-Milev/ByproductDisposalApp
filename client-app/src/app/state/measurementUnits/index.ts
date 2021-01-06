@@ -11,11 +11,11 @@ export const adapter = createEntityAdapter<MeasurementUnit>();
 
 const initialState = adapter.getInitialState();
 
-export const { selectAll } = adapter.getSelectors();
-
 export const reducer = createReducer(
   initialState,
   on(measurementUnitActions.loadMeasurementUnitsSuccess, (state, action) => {
     return adapter.addAll(action.measurementUnits, { ...state });
   })
 );
+
+export const { selectAll } = adapter.getSelectors();

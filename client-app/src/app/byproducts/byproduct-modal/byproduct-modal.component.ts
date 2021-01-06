@@ -1,34 +1,28 @@
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import {Observable, Subscription} from 'rxjs';
-import { forkJoin } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { WarehouseService } from 'src/app/service/warehouse.service';
-import { MeasurementUnitService } from 'src/app/service/measurement-unit.service';
 import { Warehouse } from 'src/app/model/warehouse.model';
 import { Byproduct } from 'src/app/model/byproduct.model';
 import { MeasurementUnit } from 'src/app/model/measurementUnit.model';
-import { mergeMap } from 'rxjs/operators';
-import { ByproductService } from 'src/app/service/byproduct.service';
-import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 import {editByproduct} from '../state/byproduct.actions';
 import {AppState} from '../../state';
 import {Store} from '@ngrx/store';
-import {loadMeasurementUnits} from '../../state/measurementUnits/measurement-unit.actions';
+import {loadMeasurementUnits_BpModal} from '../../state/measurementUnits/measurement-unit.actions';
 import {selectMeasurementUnits} from '../../state/measurementUnits/measurement-unit.selectors';
+import {selectWarehouses} from '../../state/warehouses/warehouses.selectors';
+import {loadWarehouses} from '../../state/warehouses/warehouses.actions';
 
 @Component({
   selector: 'app-byproduct-modal',
   templateUrl: './byproduct-modal.component.html',
   styleUrls: ['./byproduct-modal.component.css'],
 })
-export class ByproductModalComponent implements OnInit, OnDestroy {
+export class ByproductModalComponent implements OnInit {
   measurementUnits$: Observable<MeasurementUnit[]>;
-  warehouses: Warehouse[];
-
-  private warehousesSub: Subscription;
+  warehouses$: Observable<Warehouse[]>;
 
   editByproductForm: FormGroup = new FormGroup({
     name: new FormControl(this.data.name, Validators.required),
@@ -49,25 +43,17 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private warehouseService: WarehouseService,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ByproductModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Byproduct
   ) {
     this.measurementUnits$ = this.store.select(selectMeasurementUnits);
+    this.warehouses$ = this.store.select(selectWarehouses);
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadMeasurementUnits());
-    this.warehousesSub = this.warehouseService
-      .fetchWarehouses()
-      .subscribe((res) => {
-        this.warehouses = res;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.warehousesSub.unsubscribe();
+    this.store.dispatch(loadMeasurementUnits_BpModal());
+    this.store.dispatch(loadWarehouses());
   }
 
   onCancel() {

@@ -8,7 +8,8 @@ import {switchMap, map} from 'rxjs/operators';
 export class MeasurementUnitEffects {
 
   loadMeasurementUnits$ = createEffect(() => this.actions$.pipe(
-    ofType(measurementUnitActions.loadMeasurementUnits),
+    ofType(measurementUnitActions.loadMeasurementUnits_AddBpComp,
+           measurementUnitActions.loadMeasurementUnits_BpModal),
     switchMap(() => this.measurementUnitsService.fetchMeasurementUnits()),
     map(res => measurementUnitActions.loadMeasurementUnitsSuccess({measurementUnits: res}))
   ));
