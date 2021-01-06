@@ -35,16 +35,6 @@ export class ByproductService {
         weightPerUM,
         measurementUnitId,
       });
-      // .pipe(
-      //   switchMap((savedByproduct) => {
-      //     newByproduct = savedByproduct;
-      //     return this.byproducts;
-      //   }),
-      //   take(1),
-      //   tap((res) => {
-      //     this._byproducts.next(res.concat(newByproduct));
-      //   })
-      // );
   }
 
   editByproduct(
@@ -84,18 +74,18 @@ export class ByproductService {
       );
   }
 
-  deleteByproduct(id: number) {
+  deleteByproduct(id: number | string): Observable<Object> {
     return this.http
-      .delete(`http://localhost:8888/byproduct-disposal/byproduct/${id}`)
-      .pipe(
-        switchMap(() => {
-          return this.byproducts;
-        }),
-        take(1),
-        tap((res) => {
-          const byproducts = res.filter((b) => b.id !== id);
-          this._byproducts.next(byproducts);
-        })
-      );
+      .delete(`http://localhost:8888/byproduct-disposal/byproduct/${id}`);
+      // .pipe(
+      //   switchMap(() => {
+      //     return this.byproducts;
+      //   }),
+      //   take(1),
+      //   tap((res) => {
+      //     const byproducts = res.filter((b) => b.id !== id);
+      //     this._byproducts.next(byproducts);
+      //   })
+      // );
   }
 }

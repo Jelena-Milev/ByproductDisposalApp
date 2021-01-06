@@ -29,3 +29,18 @@ export const addByproductError = createAction(
   '[Byproduct API] Add Byproduct Error',
   props<{ error: any }>()
 );
+
+export const deleteByproduct = createAction(
+  "[Byproducts Table Component] Delete Byproduct",
+  props<{ byproductId: number | string}>()
+);
+
+export const deleteByproductSuccess = createAction(
+  "[Byproducts API] Delete Byproduct Success",
+  props<{ byproductId: number | string}>()
+);
+
+export const deleteByproductError = createAction(
+  "[Byproducts API] Delete Byproduct Error",
+  props<{ error: any }>()
+);

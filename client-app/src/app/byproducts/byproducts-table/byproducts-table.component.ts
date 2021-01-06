@@ -10,7 +10,7 @@ import { ByproductModalComponent } from '../byproduct-modal/byproduct-modal.comp
 import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state';
-import {loadByproducts} from '../state/byproduct.actions';
+import {deleteByproduct, loadByproducts} from '../state/byproduct.actions';
 import {selectByproducts, selectByproductsLoaded} from '../state/byproduct.selectors';
 
 @Component({
@@ -18,7 +18,7 @@ import {selectByproducts, selectByproductsLoaded} from '../state/byproduct.selec
   templateUrl: './byproducts-table.component.html',
   styleUrls: ['./byproducts-table.component.css']
 })
-export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ByproductsTableComponent implements OnInit, AfterViewInit {
 
   byproducts$: Observable<Byproduct[]>;
   byproductsLoaded$: Observable<boolean>;
@@ -41,7 +41,6 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
 
   constructor(
     private dialog: MatDialog,
-    private byproductService: ByproductService,
     private store: Store<AppState>
   ) {
     this.byproducts$ = this.store.select(selectByproducts);
@@ -57,9 +56,6 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnDestroy(): void {
-  }
-
   onEditByproduct(byproduct: Byproduct) {
     const dialogRef = this.dialog.open(ByproductModalComponent, {
       width: '40%',
@@ -68,14 +64,6 @@ export class ByproductsTableComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   onDeleteByproduct(byproduct: Byproduct) {
-    this.byproductService.deleteByproduct(byproduct.id).subscribe(
-      () => {},
-      (error) => {
-        this.dialog.open(ErrorDialogComponent, {
-          width: '40%',
-          data: "Nije moguce obrisati nusproizvod koji je zaveden u izvestaju",
-        });
-      }
-    );
+    this.store.dispatch(deleteByproduct({byproductId: byproduct.id}));
   }
 }

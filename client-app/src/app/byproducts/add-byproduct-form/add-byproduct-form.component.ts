@@ -32,7 +32,6 @@ export class AddByproductFormComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private umService: MeasurementUnitService,
-    private byproductService: ByproductService,
     private store: Store<AppState>
   ) {}
 

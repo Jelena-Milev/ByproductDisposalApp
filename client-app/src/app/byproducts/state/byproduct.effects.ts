@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ByproductService } from '../../service/byproduct.service';
 import * as byproductActions from './byproduct.actions';
-import {switchMap, map, tap, catchError, concatMap} from 'rxjs/operators';
+import { switchMap, map, tap, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import {ErrorDialogComponent} from '../../error-dialog/error-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../../error-dialog/error-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 import * as AddByproductComponent from '../add-byproduct-form/add-byproduct-form.component';
 
 @Injectable()
 export class ByproductEffects {
-  loadByproducts$ = createEffect(() =>
-    this.actions$.pipe(
+  loadByproducts$ = createEffect(() => this.actions$.pipe(
       ofType(byproductActions.loadByproducts),
       switchMap(() => this.byproductsService.fetchByproducts()),
       map((byproducts) =>
@@ -21,8 +20,7 @@ export class ByproductEffects {
     )
   );
 
-  addByproducts$ = createEffect(() =>
-    this.actions$.pipe(
+  addByproducts$ = createEffect(() => this.actions$.pipe(
       ofType(byproductActions.addByproduct),
       concatMap((action) =>
         this.byproductsService.addByproduct(
@@ -38,9 +36,7 @@ export class ByproductEffects {
     )
   );
 
-  addByproductError$ = createEffect(
-    () =>
-      this.actions$.pipe(
+  addByproductError$ = createEffect(() => this.actions$.pipe(
         ofType(byproductActions.addByproductError),
         tap((action) => {
           this.dialog.open(ErrorDialogComponent, {
@@ -48,7 +44,35 @@ export class ByproductEffects {
             data: action.error.error.message,
           });
         })
-      ),{ dispatch: false }
+      ),
+    { dispatch: false }
+  );
+
+  deleteByproduct$ = createEffect(() => {
+    let byproductId: number | string;
+    return this.actions$.pipe(
+      ofType(byproductActions.deleteByproduct),
+      concatMap((action) => {
+        byproductId = action.byproductId;
+        return this.byproductsService.deleteByproduct(action.byproductId);
+      }),
+      map(() => byproductActions.deleteByproductSuccess({ byproductId })),
+      catchError((error) =>
+        of(byproductActions.deleteByproductError({ error }))
+      )
+    );
+  });
+
+  deleteByproductError$ = createEffect(() => this.actions$.pipe(
+        ofType(byproductActions.deleteByproductError),
+        tap((action) => {
+          this.dialog.open(ErrorDialogComponent, {
+            width: '40%',
+            data: action.error.error.message,
+          });
+        })
+      ),
+    { dispatch: false }
   );
 
   constructor(

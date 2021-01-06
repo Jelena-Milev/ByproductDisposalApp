@@ -25,6 +25,9 @@ export const byproductsReducer = createReducer(
   }),
   on(byproductActions.addByproductSuccess, (state, action) => {
     return adapter.addOne(action.savedByproduct, { ...state });
+  }),
+  on(byproductActions.deleteByproductSuccess, (state, action) => {
+    return adapter.removeOne(action.byproductId.toString(), { ...state });
   })
 );
 
