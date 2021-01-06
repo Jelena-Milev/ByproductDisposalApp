@@ -45,7 +45,6 @@ export class ByproductService {
     warehouseId: number,
     measurementUnitId: number
   ) {
-    let newByproduct: Byproduct;
     return this.http
       .patch<Byproduct>(
         `http://localhost:8888/byproduct-disposal/byproduct/${id}`,
@@ -56,36 +55,11 @@ export class ByproductService {
           warehouseId,
           measurementUnitId,
         }
-      )
-      .pipe(
-        switchMap((res) => {
-          newByproduct = res;
-          return this.byproducts;
-        }),
-        take(1),
-        tap((byproducts) => {
-          const alteredByproductIndex = byproducts.findIndex(
-            (b) => b.id === id
-          );
-          const alteredByproducts = [...byproducts];
-          alteredByproducts[alteredByproductIndex] = newByproduct;
-          this._byproducts.next(alteredByproducts);
-        })
       );
   }
 
   deleteByproduct(id: number | string): Observable<Object> {
     return this.http
       .delete(`http://localhost:8888/byproduct-disposal/byproduct/${id}`);
-      // .pipe(
-      //   switchMap(() => {
-      //     return this.byproducts;
-      //   }),
-      //   take(1),
-      //   tap((res) => {
-      //     const byproducts = res.filter((b) => b.id !== id);
-      //     this._byproducts.next(byproducts);
-      //   })
-      // );
   }
 }

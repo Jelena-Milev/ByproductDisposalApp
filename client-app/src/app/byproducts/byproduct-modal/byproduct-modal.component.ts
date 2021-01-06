@@ -13,6 +13,9 @@ import { MeasurementUnit } from 'src/app/model/measurementUnit.model';
 import { mergeMap } from 'rxjs/operators';
 import { ByproductService } from 'src/app/service/byproduct.service';
 import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
+import {editByproduct} from '../state/byproduct.actions';
+import {AppState} from '../../state';
+import {Store} from '@ngrx/store';
 
 @Component({
   selector: 'app-byproduct-modal',
@@ -47,7 +50,7 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private measurementUnitService: MeasurementUnitService,
     private warehouseService: WarehouseService,
-    private byproductService: ByproductService,
+    private store: Store<AppState>,
     public dialogRef: MatDialogRef<ByproductModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Byproduct
   ) {}
@@ -81,22 +84,16 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
     const measurementUnitId = this.editByproductForm.get('measurementUnitId').value;
     const warehouseId = this.editByproductForm.get('warehouseId').value;
     const quantity = this.editByproductForm.get('quantity').value;
-    this.byproductService
-      .editByproduct(
+    this.store.dispatch(
+      editByproduct({
         id,
         name,
         quantity,
         weightPerUM,
         warehouseId,
-        measurementUnitId
-      )
-      .subscribe(() => {
-        this.dialogRef.close();
-      }, (error) => {
-        this.dialog.open(ErrorDialogComponent, {
-          width: '40%',
-          data: error.error.message,
-        });
-      });
+        measurementUnitId,
+      })
+    );
+    this.dialogRef.close();
   }
 }

@@ -31,16 +31,38 @@ export const addByproductError = createAction(
 );
 
 export const deleteByproduct = createAction(
-  "[Byproducts Table Component] Delete Byproduct",
-  props<{ byproductId: number | string}>()
+  '[Byproducts Table Component] Delete Byproduct',
+  props<{ byproductId: number | string }>()
 );
 
 export const deleteByproductSuccess = createAction(
-  "[Byproducts API] Delete Byproduct Success",
-  props<{ byproductId: number | string}>()
+  '[Byproducts API] Delete Byproduct Success',
+  props<{ byproductId: number | string }>()
 );
 
 export const deleteByproductError = createAction(
-  "[Byproducts API] Delete Byproduct Error",
+  '[Byproducts API] Delete Byproduct Error',
+  props<{ error: any }>()
+);
+
+export const editByproduct = createAction(
+  '[Byproduct Modal Component] Edit Byproduct',
+  props<{
+    id: number;
+    name: string;
+    quantity: number;
+    weightPerUM: number;
+    warehouseId: number;
+    measurementUnitId: number;
+  }>()
+);
+
+export const editByproductSuccess = createAction(
+  '[Byproduct API] Edit Byproduct Success',
+  props<{ byproduct: Byproduct }>()
+);
+
+export const editByproductError = createAction(
+  '[Byproduct API] Edit Byproduct Error',
   props<{ error: any }>()
 );

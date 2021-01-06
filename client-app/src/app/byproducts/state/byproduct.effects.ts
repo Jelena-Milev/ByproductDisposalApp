@@ -6,7 +6,6 @@ import { switchMap, map, tap, catchError, concatMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ErrorDialogComponent } from '../../error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import * as AddByproductComponent from '../add-byproduct-form/add-byproduct-form.component';
 
 @Injectable()
 export class ByproductEffects {
@@ -74,6 +73,24 @@ export class ByproductEffects {
       ),
     { dispatch: false }
   );
+
+  editByproduct$ = createEffect(() => this.actions$.pipe(
+    ofType(byproductActions.editByproduct),
+    concatMap(action => this.byproductsService.editByproduct(action.id, action.name, action.quantity, action.weightPerUM, action.warehouseId, action.measurementUnitId)),
+    map(byproduct => byproductActions.editByproductSuccess({byproduct})),
+    catchError((error) => of(byproductActions.editByproductError({ error }))
+    )
+  ));
+
+  editByproductError$ = createEffect(() => this.actions$.pipe(
+    ofType(byproductActions.editByproductError),
+    tap(action => {
+      this.dialog.open(ErrorDialogComponent, {
+        width: '40%',
+        data: action.error.error.message,
+      });
+    })
+  ), {dispatch: false});
 
   constructor(
     private actions$: Actions,

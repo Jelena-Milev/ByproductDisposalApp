@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import {createEntityAdapter, EntityAdapter, EntityState, Update} from '@ngrx/entity';
 import { Byproduct } from '../../model/byproduct.model';
 import * as byproductActions from './byproduct.actions';
 
@@ -28,6 +28,13 @@ export const byproductsReducer = createReducer(
   }),
   on(byproductActions.deleteByproductSuccess, (state, action) => {
     return adapter.removeOne(action.byproductId.toString(), { ...state });
+  }),
+  on(byproductActions.editByproductSuccess, (state, action) => {
+    const update: Update<Byproduct> = {
+      id: action.byproduct.id,
+      changes: action.byproduct
+    }
+    return adapter.updateOne(update, {...state})
   })
 );
 
