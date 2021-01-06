@@ -15,6 +15,7 @@ import { ByproductsModule } from './byproducts/byproducts.module';
 import {EffectsModule} from '@ngrx/effects';
 import {MeasurementUnitEffects} from './state/measurementUnits/measurement-unit.effects';
 import {WarehousesEffects} from './state/warehouses/warehouses.effects';
+import {EmployeeEffects} from './state/employees/employee.effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -34,7 +35,7 @@ import {WarehousesEffects} from './state/warehouses/warehouses.effects';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([MeasurementUnitEffects, WarehousesEffects])
+    EffectsModule.forRoot([MeasurementUnitEffects, WarehousesEffects, EmployeeEffects])
   ],
   providers: [],
   bootstrap: [AppComponent],

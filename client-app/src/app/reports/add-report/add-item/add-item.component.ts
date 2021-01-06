@@ -38,7 +38,6 @@ export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
     'quantityForDisposal',
     'delete',
   ];
-  // private paginator: MatPaginator;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   items: ReportItem[] = [];
@@ -47,15 +46,6 @@ export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
   >();
 
   constructor(private byproductService: ByproductService) {}
-
-  // @ViewChild(MatPaginator) set matPaginator(mp: MatPaginator) {
-  //   this.paginator = mp;
-  //   this.setDataSourceAttributes();
-  // }
-
-  // setDataSourceAttributes() {
-  //   this.dataSource.paginator = this.paginator;
-  // }
 
   ngOnInit(): void {
     this.dataSource.data = this.items;
@@ -67,7 +57,6 @@ export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
     this.byproductService.fetchByproducts().subscribe();
   }

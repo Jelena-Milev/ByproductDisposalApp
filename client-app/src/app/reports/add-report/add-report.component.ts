@@ -10,11 +10,17 @@ import { ReportService } from '../../service/report.service';
 import { Warehouse } from '../../model/warehouse.model';
 import { Employee } from '../../model/employee.model';
 import { ReportItem } from '../../model/reportItem.model';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../state';
+import {loadEmployees} from '../../state/employees/employee.actions';
+import {loadWarehouses} from '../../state/warehouses/warehouses.actions';
+import {selectEmployees} from '../../state/employees/employee.selectors';
+import {selectWarehouses} from '../../state/warehouses/warehouses.selectors';
 
 class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
@@ -25,7 +31,7 @@ class ReportItemDto {
   templateUrl: './add-report.component.html',
   styleUrls: ['./add-report.component.css'],
 })
-export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AddReportComponent implements OnInit {
   reportForm: FormGroup = new FormGroup({
     date: new FormControl(Validators.required),
     utilizationRate: new FormControl('', [
@@ -38,44 +44,24 @@ export class AddReportComponent implements OnInit, OnDestroy, AfterViewInit {
     employee: new FormControl(null, Validators.required),
   });
 
-  warehouses: Warehouse[] = [];
-  employees: Employee[] = [];
-
-  private warehouseSub: Subscription;
-  private employeeSub: Subscription;
+  warehouses$: Observable<Warehouse[]>;
+  employees$: Observable<Employee[]>;
 
   items: ReportItem[] = [];
 
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private warehouseService: WarehouseService,
-    private employeeService: EmployeeService,
-    private reportService: ReportService
-  ) {}
+    private reportService: ReportService,
+    private store: Store<AppState>
+  ) {
+    this.employees$ = this.store.select(selectEmployees);
+    this.warehouses$ = this.store.select(selectWarehouses);
+  }
 
   ngOnInit(): void {
-    this.warehouseSub = this.warehouseService
-      .fetchWarehouses()
-      .subscribe((res) => {
-        this.warehouses = res;
-      });
-
-    this.employeeSub = this.employeeService
-      .fetchEmployees()
-      .subscribe((res) => {
-        this.employees = res;
-      });
-  }
-
-  ngAfterViewInit(): void {
-    this.employeeService.fetchEmployees().subscribe();
-    this.warehouseService.fetchWarehouses().subscribe();
-  }
-
-  ngOnDestroy(): void {
-    this.warehouseSub.unsubscribe();
-    this.employeeSub.unsubscribe();
+    this.store.dispatch(loadEmployees());
+    this.store.dispatch(loadWarehouses());
   }
 
   itemsChanged(items: ReportItem[]){

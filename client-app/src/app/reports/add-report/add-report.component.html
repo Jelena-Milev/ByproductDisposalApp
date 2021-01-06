@@ -27,7 +27,7 @@
       <mat-label>Skladište</mat-label>
       <mat-select matInput formControlName="warehouse">
         <mat-option
-          *ngFor="let warehouse of warehouses"
+          *ngFor="let warehouse of (warehouses$ | async)"
           [value]="warehouse.id"
           >{{ warehouse.name }}</mat-option
         >
@@ -37,7 +37,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Zaposleni</mat-label>
       <mat-select matInput formControlName="employee">
-        <mat-option *ngFor="let employee of employees" [value]="employee.id">{{
+        <mat-option *ngFor="let employee of (employees$ | async)" [value]="employee.id">{{
           employee.firstName + " " + employee.lastName
         }}</mat-option>
       </mat-select>
