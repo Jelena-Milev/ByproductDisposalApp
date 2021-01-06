@@ -11,6 +11,7 @@ import * as fromByproducts from './state';
 import {EffectsModule} from '@ngrx/effects';
 import {ByproductEffects} from './state/byproduct.effects';
 import {byproductsReducer} from './state';
+import {MeasurementUnitEffects} from '../state/measurementUnits/measurement-unit.effects';
 
 @NgModule({
     declarations: [

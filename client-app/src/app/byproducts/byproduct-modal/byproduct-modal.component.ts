@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { forkJoin } from 'rxjs';
 
 import { WarehouseService } from 'src/app/service/warehouse.service';
@@ -16,6 +16,8 @@ import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.componen
 import {editByproduct} from '../state/byproduct.actions';
 import {AppState} from '../../state';
 import {Store} from '@ngrx/store';
+import {loadMeasurementUnits} from '../../state/measurementUnits/measurement-unit.actions';
+import {selectMeasurementUnits} from '../../state/measurementUnits/measurement-unit.selectors';
 
 @Component({
   selector: 'app-byproduct-modal',
@@ -23,10 +25,9 @@ import {Store} from '@ngrx/store';
   styleUrls: ['./byproduct-modal.component.css'],
 })
 export class ByproductModalComponent implements OnInit, OnDestroy {
-  measurementUnits: MeasurementUnit[];
+  measurementUnits$: Observable<MeasurementUnit[]>;
   warehouses: Warehouse[];
 
-  private umSub: Subscription;
   private warehousesSub: Subscription;
 
   editByproductForm: FormGroup = new FormGroup({
@@ -48,19 +49,16 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private measurementUnitService: MeasurementUnitService,
     private warehouseService: WarehouseService,
     private store: Store<AppState>,
     public dialogRef: MatDialogRef<ByproductModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Byproduct
-  ) {}
+  ) {
+    this.measurementUnits$ = this.store.select(selectMeasurementUnits);
+  }
 
   ngOnInit(): void {
-    this.umSub = this.measurementUnitService
-      .fetchMeasurementUnits()
-      .subscribe((result) => {
-        this.measurementUnits = result;
-      });
+    this.store.dispatch(loadMeasurementUnits());
     this.warehousesSub = this.warehouseService
       .fetchWarehouses()
       .subscribe((res) => {
@@ -69,7 +67,6 @@ export class ByproductModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.umSub.unsubscribe();
     this.warehousesSub.unsubscribe();
   }
 

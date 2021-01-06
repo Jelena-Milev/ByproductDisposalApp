@@ -13,6 +13,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { ByproductsModule } from './byproducts/byproducts.module';
 import {EffectsModule} from '@ngrx/effects';
+import {MeasurementUnitEffects} from './state/measurementUnits/measurement-unit.effects';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -32,7 +33,7 @@ import {EffectsModule} from '@ngrx/effects';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([MeasurementUnitEffects])
   ],
   providers: [],
   bootstrap: [AppComponent],

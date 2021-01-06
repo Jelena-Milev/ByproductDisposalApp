@@ -28,7 +28,6 @@ export class ByproductService {
   }
 
   addByproduct(name: string, weightPerUM: number, measurementUnitId: number): Observable<Byproduct> {
-    let newByproduct: Byproduct;
     return this.http
       .post<Byproduct>('http://localhost:8888/byproduct-disposal/byproduct', {
         name,

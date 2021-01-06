@@ -21,7 +21,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Jedinica mere</mat-label>
       <mat-select formControlName="measurementUnitId">
-        <mat-option *ngFor="let um of measurementUnits" [value]="um.id">{{
+        <mat-option *ngFor="let um of (measurementUnits$ | async)" [value]="um.id">{{
           um.name
         }}</mat-option>
       </mat-select>
