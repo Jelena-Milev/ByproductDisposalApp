@@ -8,7 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ByproductModalComponent } from '../byproduct-modal/byproduct-modal.component';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state';
-import {deleteByproduct, loadByproducts} from '../state/byproduct.actions';
+import {deleteByproduct, loadByproducts_BpTable} from '../state/byproduct.actions';
 import {selectByproducts, selectByproductsLoaded} from '../state/byproduct.selectors';
 
 @Component({
@@ -46,7 +46,7 @@ export class ByproductsTableComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadByproducts());
+    this.store.dispatch(loadByproducts_BpTable());
   }
 
   ngAfterViewInit(): void {

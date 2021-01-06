@@ -1,11 +1,7 @@
 import {
   Component,
   OnInit,
-  OnDestroy,
-  AfterViewInit,
 } from '@angular/core';
-import { WarehouseService } from '../../service/warehouse.service';
-import { EmployeeService } from '../../service/employee.service';
 import { ReportService } from '../../service/report.service';
 import { Warehouse } from '../../model/warehouse.model';
 import { Employee } from '../../model/employee.model';
@@ -18,7 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../state';
 import {loadEmployees} from '../../state/employees/employee.actions';
-import {loadWarehouses} from '../../state/warehouses/warehouses.actions';
+import {loadWarehouses_AddReport} from '../../state/warehouses/warehouses.actions';
 import {selectEmployees} from '../../state/employees/employee.selectors';
 import {selectWarehouses} from '../../state/warehouses/warehouses.selectors';
 
@@ -61,7 +57,7 @@ export class AddReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadEmployees());
-    this.store.dispatch(loadWarehouses());
+    this.store.dispatch(loadWarehouses_AddReport());
   }
 
   itemsChanged(items: ReportItem[]){

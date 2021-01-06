@@ -13,7 +13,7 @@ import {Store} from '@ngrx/store';
 import {loadMeasurementUnits_BpModal} from '../../state/measurementUnits/measurement-unit.actions';
 import {selectMeasurementUnits} from '../../state/measurementUnits/measurement-unit.selectors';
 import {selectWarehouses} from '../../state/warehouses/warehouses.selectors';
-import {loadWarehouses} from '../../state/warehouses/warehouses.actions';
+import {loadWarehouses_BpModal} from '../../state/warehouses/warehouses.actions';
 
 @Component({
   selector: 'app-byproduct-modal',
@@ -53,7 +53,7 @@ export class ByproductModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(loadMeasurementUnits_BpModal());
-    this.store.dispatch(loadWarehouses());
+    this.store.dispatch(loadWarehouses_BpModal());
   }
 
   onCancel() {

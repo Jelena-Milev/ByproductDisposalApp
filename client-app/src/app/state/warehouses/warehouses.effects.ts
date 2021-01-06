@@ -8,7 +8,7 @@ import {switchMap, map} from 'rxjs/operators';
 export class WarehousesEffects{
 
   loadWarehouses$ = createEffect(() => this.actions$.pipe(
-    ofType(warehousesActions.loadWarehouses),
+    ofType(warehousesActions.loadWarehouses_BpModal, warehousesActions.loadWarehouses_AddReport),
     switchMap(() => this.warehousesService.fetchWarehouses()),
     map(warehouses => warehousesActions.loadWarehousesSuccess({warehouses}))
   ));

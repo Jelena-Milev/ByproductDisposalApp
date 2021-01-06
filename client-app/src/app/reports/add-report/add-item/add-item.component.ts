@@ -8,27 +8,28 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ByproductService } from 'src/app/service/byproduct.service';
 import { Byproduct } from 'src/app/model/byproduct.model';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { ReportItem } from 'src/app/model/reportItem.model';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../state';
+import {selectByproducts} from '../../../byproducts/state/byproduct.selectors';
+import { loadByproducts_AddReportItem} from '../../../byproducts/state/byproduct.actions';
 
 @Component({
   selector: 'app-add-item',
   templateUrl: './add-item.component.html',
   styleUrls: ['./add-item.component.css'],
 })
-export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
-  byproducts: Byproduct[] = [];
+export class AddItemComponent implements OnInit, AfterViewInit {
+  byproducts$: Observable<Byproduct[]>;
 
   itemForm: FormGroup = new FormGroup({
     byproduct: new FormControl(null, Validators.required),
     quantityForDisposal: new FormControl('', [Validators.required, Validators.min(0.001)]),
   });
-
-  private byproductSub: Subscription;
 
   dataSource = new MatTableDataSource<ReportItem>();
   displayedColumns: string[] = [
@@ -45,23 +46,17 @@ export class AddItemComponent implements OnInit, OnDestroy, AfterViewInit {
     ReportItem[]
   >();
 
-  constructor(private byproductService: ByproductService) {}
+  constructor(private store: Store<AppState>) {
+    this.byproducts$ = this.store.select(selectByproducts);
+  }
 
   ngOnInit(): void {
     this.dataSource.data = this.items;
-    this.byproductSub = this.byproductService
-      .fetchByproducts()
-      .subscribe((res) => {
-        this.byproducts = res;
-      });
+    this.store.dispatch(loadByproducts_AddReportItem());
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.byproductService.fetchByproducts().subscribe();
-  }
-  ngOnDestroy(): void {
-    this.byproductSub.unsubscribe();
   }
 
   onAddItem() {

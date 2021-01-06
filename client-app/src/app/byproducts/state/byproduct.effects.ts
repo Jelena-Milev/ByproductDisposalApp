@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 @Injectable()
 export class ByproductEffects {
   loadByproducts$ = createEffect(() => this.actions$.pipe(
-      ofType(byproductActions.loadByproducts),
+      ofType(byproductActions.loadByproducts_BpTable, byproductActions.loadByproducts_AddReportItem),
       switchMap(() => this.byproductsService.fetchByproducts()),
       map((byproducts) =>
         byproductActions.loadByproductsSuccess({ byproducts })

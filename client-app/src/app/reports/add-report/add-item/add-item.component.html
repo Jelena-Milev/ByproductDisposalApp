@@ -14,7 +14,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Izaberite nusproizvod</mat-label>
       <mat-select matInput formControlName="byproduct">
-        <mat-option *ngFor="let byproduct of byproducts" [value]="byproduct">{{
+        <mat-option *ngFor="let byproduct of (byproducts$ | async)" [value]="byproduct">{{
           byproduct.name + " " + "(" + byproduct.measurementUnit.name + ")"
         }}</mat-option>
       </mat-select>
