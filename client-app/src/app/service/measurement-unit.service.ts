@@ -8,23 +8,13 @@ import { MeasurementUnit } from '../model/measurementUnit.model';
   providedIn: 'root',
 })
 export class MeasurementUnitService {
-  private _measurementUnits = new BehaviorSubject<MeasurementUnit[]>([]);
 
   constructor(private http: HttpClient) {}
-
-  get measurementUnits(): Observable<MeasurementUnit[]> {
-    return this._measurementUnits.asObservable();
-  }
 
   fetchMeasurementUnits() {
     return this.http
       .get<MeasurementUnit[]>(
         'http://localhost:8888/byproduct-disposal/measurement-unit'
-      )
-      .pipe(
-        tap((res) => {
-          this._measurementUnits.next(res);
-        })
       );
   }
 

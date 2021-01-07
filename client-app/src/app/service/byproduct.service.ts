@@ -9,22 +9,12 @@ import { Byproduct } from '../model/byproduct.model';
   providedIn: 'root',
 })
 export class ByproductService {
-  private _byproducts = new BehaviorSubject<Byproduct[]>([]);
 
   constructor(private http: HttpClient) {}
 
-  get byproducts() {
-    return this._byproducts.asObservable();
-  }
-
   fetchByproducts(): Observable<Byproduct[]> {
     return this.http
-      .get<Byproduct[]>('http://localhost:8888/byproduct-disposal/byproduct')
-      .pipe(
-        tap((res) => {
-          this._byproducts.next(res);
-        })
-      );
+      .get<Byproduct[]>('http://localhost:8888/byproduct-disposal/byproduct');
   }
 
   addByproduct(name: string, weightPerUM: number, measurementUnitId: number): Observable<Byproduct> {

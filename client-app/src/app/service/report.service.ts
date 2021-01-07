@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
 
 import { Report } from '../model/report.model';
 
@@ -13,20 +12,23 @@ export class ReportItemDto {
   providedIn: 'root',
 })
 export class ReportService {
-  private _reports = new BehaviorSubject<number[]>([]);
 
   constructor(private http: HttpClient) {}
-
-  get reports() {
-    return this._reports.asObservable();
-  }
 
   fetchReportsNumbers() {
     return this.http
       .get<number[]>('http://localhost:8888/byproduct-disposal/report/numbers')
       .pipe(
-        tap((res) => {
-          this._reports.next(res);
+        map((numbers) => {
+          return numbers.sort((a: number, b: number) => {
+            if (a < b) {
+              return -1;
+            }
+            if (a > b) {
+              return 1;
+            }
+            return 0;
+          });
         })
       );
   }

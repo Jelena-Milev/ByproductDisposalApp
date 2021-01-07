@@ -8,22 +8,12 @@ import { Warehouse } from '../model/warehouse.model';
   providedIn: 'root',
 })
 export class WarehouseService {
-  private _warehouses = new BehaviorSubject<Warehouse[]>([]);
 
   constructor(private http: HttpClient) {}
 
-  get warehouses(): Observable<Warehouse[]> {
-    return this._warehouses.asObservable();
-  }
-
   fetchWarehouses() {
     return this.http
-      .get<Warehouse[]>('http://localhost:8888/byproduct-disposal/warehouse')
-      .pipe(
-        tap((res) => {
-          this._warehouses.next(res);
-        })
-      );
+      .get<Warehouse[]>('http://localhost:8888/byproduct-disposal/warehouse');
   }
 
   fetchById(id: number) {
