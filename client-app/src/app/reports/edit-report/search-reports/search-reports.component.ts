@@ -1,47 +1,35 @@
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import { ReportService } from '../../../service/report.service';
 import { Report } from '../../../model/report.model';
+import {Store} from '@ngrx/store';
+import {AppState} from '../../../state';
+import {selectReportsNumbers, selectSelectedReport} from '../../state/report.selectors';
+import {getReportById, loadReportsNumbers} from '../../state/report.actions';
 
 @Component({
   selector: 'app-search-reports',
   templateUrl: './search-reports.component.html',
   styleUrls: ['./search-reports.component.css'],
 })
-export class SearchReportsComponent implements OnInit, OnDestroy {
-  reportsNumbers: number[] = [];
-  private reportSub: Subscription;
-  report: Report;
+export class SearchReportsComponent implements OnInit {
+  reportsNumbers$: Observable<number[]>;
+  selectedReport$: Observable<Report>;
 
   @Output() selectedReport: EventEmitter<Report> = new EventEmitter<Report>();
 
-  constructor(private reportService: ReportService) {}
+  constructor(private store: Store<AppState>) {
+    this.reportsNumbers$ = this.store.select(selectReportsNumbers);
+    this.selectedReport$ = this.store.select(selectSelectedReport);
+  }
 
   ngOnInit(): void {
-    this.reportSub = this.reportService
-      .fetchReportsNumbers()
-      .subscribe((res) => {
-        this.reportsNumbers = res;
-        this.reportsNumbers.sort((a: number, b: number) => {
-          if (a < b) {
-            return -1;
-          }
-          if (a > b) {
-            return 1;
-          }
-          return 0;
-        });
-      });
+    this.store.dispatch(loadReportsNumbers());
   }
 
-  ngOnDestroy(): void {
-    this.reportSub.unsubscribe();
-  }
 
-  onReportNumberSelected(number: string | number) {
-    this.reportService.fetchByNumber(number).subscribe((res) => {
-      this.report = res;
-      this.selectedReport.emit(this.report);
-    });
+  onReportNumberSelected(id: number) {
+    this.store.dispatch(getReportById({ id }));
+    this.selectedReport$.subscribe(report => this.selectedReport.emit(report));
   }
 }

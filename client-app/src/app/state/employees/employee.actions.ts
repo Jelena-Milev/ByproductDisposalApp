@@ -1,8 +1,12 @@
 import { createAction, props } from '@ngrx/store';
 import { Employee } from '../../model/employee.model';
 
-export const loadEmployees = createAction(
+export const loadEmployees_AddReport = createAction(
   '[Add Report Component] Load Employees'
+);
+
+export const loadEmployees_EditReport = createAction(
+  '[Edit Report Component] Load Employees'
 );
 
 export const loadEmployeesSuccess = createAction(

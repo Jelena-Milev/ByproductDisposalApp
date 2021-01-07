@@ -10,7 +10,7 @@ import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.componen
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state';
-import { loadEmployees } from '../../state/employees/employee.actions';
+import { loadEmployees_AddReport } from '../../state/employees/employee.actions';
 import { loadWarehouses_AddReport } from '../../state/warehouses/warehouses.actions';
 import { selectEmployees } from '../../state/employees/employee.selectors';
 import { selectWarehouses } from '../../state/warehouses/warehouses.selectors';
@@ -54,7 +54,7 @@ export class AddReportComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadEmployees());
+    this.store.dispatch(loadEmployees_AddReport());
     this.store.dispatch(loadWarehouses_AddReport());
   }
 
@@ -64,12 +64,6 @@ export class AddReportComponent implements OnInit {
 
   onSaveReport() {
     const formValue = this.reportForm.value;
-    // const date: Date = this.reportForm.get('date').value;
-    // const utilizationRate: number = this.reportForm.get('utilizationRate')
-    //   .value;
-    // const note: string = this.reportForm.get('note').value;
-    // const warehouseId: number = this.reportForm.get('warehouse').value;
-    // const employeeId: number = this.reportForm.get('employee').value;
     const items: ReportItemDto[] = [];
     this.items.forEach((item) => {
       const itemDto = new ReportItemDto(
@@ -81,34 +75,5 @@ export class AddReportComponent implements OnInit {
     this.store.dispatch(
       addReport({ ...formValue, items })
     );
-    this.clearReportForm();
-    this.reportForm.setValue(formValue);
-    // this.reportService
-    //   .saveReport(date, utilizationRate, note, warehouseId, employeeId, items)
-    //   .subscribe((report) => {
-    //     this.reportForm.get('date').setValue(report.date);
-    //     this.reportForm.get('utilizationRate').setValue(report.utilizationRate);
-    //     this.reportForm.get('note').setValue(report.note);
-    //     this.reportForm.get('warehouse').setValue(report.warehouse.id);
-    //     this.reportForm.get('employee').setValue(report.employee.id);
-    //     this.snackBar.open('Uspešno sačuvan izveštaj broj'+report.id, '', {
-    //       duration: 2000,
-    //     });
-    //     this.reportForm.reset();
-    //     this.reportForm.markAsPristine();
-    //     this.reportForm.markAsUntouched();
-    //   },
-    //   (error) => {
-    //     this.dialog.open(ErrorDialogComponent, {
-    //       width: '40%',
-    //       data: error.error.message,
-    //     });
-    //   });
-  }
-
-  clearReportForm(){
-    this.reportForm.reset();
-    this.reportForm.markAsPristine();
-    this.reportForm.markAsUntouched();
   }
 }

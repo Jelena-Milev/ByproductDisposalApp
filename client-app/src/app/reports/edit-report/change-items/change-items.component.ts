@@ -50,6 +50,7 @@ export class ChangeItemsComponent implements OnInit{
 
 
   setItems(newItems: ReportItem[]){
+    if(newItems == null || newItems.length === 0) return;
     this.items = newItems;
     this.dataSource.data = newItems;
     this.dataSource.paginator = this.paginator;

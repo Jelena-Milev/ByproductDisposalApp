@@ -9,7 +9,7 @@ export class EmployeeEffects {
 
   loadEmployees$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(employeesActions.loadEmployees),
+      ofType(employeesActions.loadEmployees_AddReport, employeesActions.loadEmployees_EditReport),
       switchMap(() => this.employeesService.fetchEmployees()),
       map((employees) => employeesActions.loadEmployeesSuccess({ employees }))
     )

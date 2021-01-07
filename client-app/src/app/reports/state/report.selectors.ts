@@ -10,3 +10,13 @@ export const selectReports = createSelector(
   selectReportsState,
   fromReport.selectAll
 );
+
+export const selectReportsNumbers = createSelector(
+  selectReportsState,
+  (state) => state.reportsNumbers
+);
+
+export const selectSelectedReport = createSelector(
+  selectReportsState,
+  (state) => state.selectedReport
+);

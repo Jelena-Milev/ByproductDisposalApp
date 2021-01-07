@@ -14,7 +14,7 @@
       <mat-label>Izaberite broj izveštaja</mat-label>
       <mat-select matInput>
         <mat-option
-          *ngFor="let number of reportsNumbers"
+          *ngFor="let number of (reportsNumbers$ | async)"
           [value]="number"
           (click)="onReportNumberSelected(number)"
           >{{ number }}</mat-option

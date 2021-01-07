@@ -9,6 +9,10 @@ export const loadWarehouses_AddReport = createAction(
   '[Add Report Component] Load Warehouses'
 );
 
+export const loadWarehouses_EditReport = createAction(
+  '[Edit Report Component] Load Warehouses'
+);
+
 export const loadWarehousesSuccess = createAction(
   '[Warehouse API] Load Warehouses Success',
   props<{ warehouses: Warehouse[] }>()
