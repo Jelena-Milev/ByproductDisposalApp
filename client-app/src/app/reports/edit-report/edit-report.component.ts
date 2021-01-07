@@ -1,14 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ReportService } from '../../service/report.service';
 import { Warehouse } from '../../model/warehouse.model';
 import { Employee } from '../../model/employee.model';
 import { Report } from '../../model/report.model';
 import { ReportItem } from '../../model/reportItem.model';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ErrorDialogComponent } from 'src/app/error-dialog/error-dialog.component';
 import { ChangeItemsComponent } from './change-items/change-items.component';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../state';
@@ -17,6 +15,8 @@ import { selectEmployees } from '../../state/employees/employee.selectors';
 import { loadEmployees_EditReport } from '../../state/employees/employee.actions';
 import { loadWarehouses_EditReport } from '../../state/warehouses/warehouses.actions';
 import { editReport } from '../state/report.actions';
+
+import {cloneDeep} from 'lodash';
 
 class ReportItemDto {
   constructor(public byproductId: number, public quantityForDisposal: number) {}
@@ -66,7 +66,7 @@ export class EditReportComponent implements OnInit {
   }
 
   onReportSelected(selectedReport: Report) {
-    this.selectedReport = selectedReport;
+    this.selectedReport = cloneDeep(selectedReport);
     this.reportForm.get('date').setValue(this.selectedReport?.date);
     this.reportForm
       .get('utilizationRate')

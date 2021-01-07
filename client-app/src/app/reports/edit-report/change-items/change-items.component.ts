@@ -8,6 +8,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatDialog } from '@angular/material/dialog';
 
+import {cloneDeep} from 'lodash';
+
 @Component({
   selector: 'app-change-items',
   templateUrl: './change-items.component.html',
@@ -26,7 +28,7 @@ export class ChangeItemsComponent implements OnInit{
 
   byproducts: Byproduct[] = [];
 
-  @Input() items: ReportItem[] = [];
+  items: ReportItem[] = [];
 
   @Output() itemChanged: EventEmitter<ReportItem[]> = new EventEmitter<ReportItem[]>();
 
@@ -51,8 +53,8 @@ export class ChangeItemsComponent implements OnInit{
 
   setItems(newItems: ReportItem[]){
     if(newItems == null || newItems.length === 0) return;
-    this.items = newItems;
-    this.dataSource.data = newItems;
+    this.items = cloneDeep(newItems);
+    this.dataSource.data = this.items;
     this.dataSource.paginator = this.paginator;
   }
 
@@ -65,6 +67,7 @@ export class ChangeItemsComponent implements OnInit{
   }
 
   onAddItem() {
+    console.log('onAddItem')
     const byproduct = this.itemForm.get('byproduct').value;
     const quantityForDisposal = this.itemForm.get('quantityForDisposal').value;
     const itemIndex: number = this.items.findIndex(

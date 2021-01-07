@@ -1,6 +1,5 @@
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import {Observable, Subscription} from 'rxjs';
-import { ReportService } from '../../../service/report.service';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {Observable} from 'rxjs';
 import { Report } from '../../../model/report.model';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../../state';
