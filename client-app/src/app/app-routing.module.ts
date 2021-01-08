@@ -8,9 +8,15 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'byproducts',
+    loadChildren: () =>
+      import('./byproducts/byproducts.module').then((m) => m.ByproductsModule),
+  },
+  {
     path: 'reports',
-    loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
-  }
+    loadChildren: () =>
+      import('./reports/reports.module').then((m) => m.ReportsModule),
+  },
 ];
 
 @NgModule({

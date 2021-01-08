@@ -4,7 +4,7 @@ import { ByproductsComponent } from './byproducts.component';
 
 const routes: Routes = [
   {
-    path: 'byproducts',
+    path: '',
     component: ByproductsComponent,
   },
 ];

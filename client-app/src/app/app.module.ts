@@ -16,6 +16,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {MeasurementUnitEffects} from './state/measurementUnits/measurement-unit.effects';
 import {WarehousesEffects} from './state/warehouses/warehouses.effects';
 import {EmployeeEffects} from './state/employees/employee.effects';
+import {AuthModule} from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -24,6 +25,7 @@ import {EmployeeEffects} from './state/employees/employee.effects';
     BrowserAnimationsModule,
     MaterialModule,
     AppRoutingModule,
+    AuthModule,
     ByproductsModule,
     StoreModule.forRoot(reducers, {
       runtimeChecks: {

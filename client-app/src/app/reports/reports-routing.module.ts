@@ -6,7 +6,7 @@ import { EditReportComponent } from './edit-report/edit-report.component';
 const ROUTES: Routes = [
   {
     path: '',
-    redirectTo: 'reports/add',
+    redirectTo: 'add',
     pathMatch: 'full',
   },
   {
