@@ -1,1 +1,30 @@
-<p>login works!</p>
+<section>
+<form
+  [formGroup]="loginForm"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="30px"
+>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Korisnicko ime</mat-label>
+    <input matInput type="text" formControlName="username"/>
+    <mat-error>Korisnicko ime ne sme biti krace od 6 karaktera</mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Lozinka</mat-label>
+    <input matInput type="password" formControlName="password"/>
+    <mat-error>Morate uneti lozinku</mat-error>
+  </mat-form-field>
+
+  <button
+    type="button"
+    mat-raised-button
+    (click)="login()"
+    [disabled]="loginForm.invalid"
+  > Prijava
+  </button>
+
+</form>
+</section>

@@ -48,6 +48,7 @@ export class ReportService {
     employeeId: number,
     items: ReportItemDto[]
   ) {
+    console.log('ReportService: update report');
     return this.http.patch<Report>(`http://localhost:8888/byproduct-disposal/report/${id}`, {
       date, utilizationRate, note, warehouseId, employeeId, items
     });

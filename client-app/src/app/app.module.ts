@@ -17,6 +17,8 @@ import {MeasurementUnitEffects} from './state/measurementUnits/measurement-unit.
 import {WarehousesEffects} from './state/warehouses/warehouses.effects';
 import {EmployeeEffects} from './state/employees/employee.effects';
 import {AuthModule} from './auth/auth.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './auth.interceptor';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorDialogComponent],
@@ -39,7 +41,11 @@ import {AuthModule} from './auth/auth.module';
     }),
     EffectsModule.forRoot([MeasurementUnitEffects, WarehousesEffects, EmployeeEffects])
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

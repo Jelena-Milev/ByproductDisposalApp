@@ -96,6 +96,8 @@ export class EditReportComponent implements OnInit {
       );
       items.push(itemDto);
     });
+
+    console.log("EditReportComp: save button pressed");
     this.store.dispatch(editReport({
         id,
         ...formValue,

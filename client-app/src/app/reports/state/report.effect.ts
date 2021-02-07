@@ -21,10 +21,11 @@ export class ReportEffect {
           action.warehouseId,
           action.employeeId,
           action.items
+        ).pipe(
+          map((report) => reportActions.addReportSuccess({ report })),
+          catchError(error => of(reportActions.addReportError({ error })))
         )
-      ),
-      map((report) => reportActions.addReportSuccess({ report })),
-      catchError(error => of(reportActions.addReportError({ error })))
+      )
     )
   );
 
@@ -71,9 +72,11 @@ export class ReportEffect {
       action.warehouseId,
       action.employeeId,
       action.items)
-    ),
-    map(report => reportActions.editReportSuccess({report})),
-    catchError(error => of(reportActions.addReportError({ error })))
+      .pipe(
+        map(report => reportActions.editReportSuccess({report})),
+        catchError(error => of(reportActions.editReportError({ error })))
+      )
+    )
   ));
 
   editReportSuccess$ = createEffect(
