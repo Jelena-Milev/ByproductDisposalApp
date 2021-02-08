@@ -6,15 +6,27 @@ import {
   HttpInterceptor
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import {select, Store} from '@ngrx/store';
+import {AppState} from './state';
+import {selectToken} from './auth/state/auth.selectors';
+import {take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor() {}
+  private authToken$: Observable<string>;
+
+  constructor(private store:Store<AppState>) {
+    this.authToken$ = this.store.pipe(select(selectToken));
+  }
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+    let authToken: string;
+
+    this.authToken$.subscribe(token => authToken = token)
+
     const modifiedRequest = request.clone({
-      headers: request.headers.set("Authorization", `Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkemVjYSIsImF1dGhvcml0aWVzIjpbIlJPTEVfVVNFUiJdLCJpYXQiOjE2MTI3MjExMjksImV4cCI6MTYxMjgwNzUyOX0.YJ4rArA-JEfxG9E0vvMbg53nQRpzwraboD9CcaKKKdLvHDUy3qMDVmZfqgiBbFUXrvCQ8ZqR85_tkXtAd7BTCA`)
+      headers: request.headers.set("Authorization", `Bearer ${authToken}`)
     });
     return next.handle(modifiedRequest);
   }
