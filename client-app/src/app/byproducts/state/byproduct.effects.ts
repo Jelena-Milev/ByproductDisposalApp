@@ -11,11 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 export class ByproductEffects {
   loadByproducts$ = createEffect(() => this.actions$.pipe(
       ofType(byproductActions.loadByproducts_BpTable, byproductActions.loadByproducts_AddReportItem),
-      switchMap(() => this.byproductsService.fetchByproducts()),
-      map((byproducts) =>
-        byproductActions.loadByproductsSuccess({ byproducts })
-      ),
-      catchError((error) => of(byproductActions.loadByproductsError({ error })))
+      switchMap(() => this.byproductsService.fetchByproducts().pipe(
+        map((byproducts) =>
+          byproductActions.loadByproductsSuccess({ byproducts })
+        ),
+        catchError((error) => of(byproductActions.loadByproductsError({ error })))
+      ))
     )
   );
 
@@ -26,12 +27,13 @@ export class ByproductEffects {
           action.name,
           action.weightPerUM,
           action.measurementUnitId
+        ).pipe(
+          map((savedByproduct) =>
+            byproductActions.addByproductSuccess({ savedByproduct })
+          ),
+          catchError((error) => of(byproductActions.addByproductError({ error })))
         )
-      ),
-      map((savedByproduct) =>
-        byproductActions.addByproductSuccess({ savedByproduct })
-      ),
-      catchError((error) => of(byproductActions.addByproductError({ error })))
+      )
     )
   );
 
@@ -53,12 +55,13 @@ export class ByproductEffects {
       ofType(byproductActions.deleteByproduct),
       concatMap((action) => {
         byproductId = action.byproductId;
-        return this.byproductsService.deleteByproduct(action.byproductId);
-      }),
-      map(() => byproductActions.deleteByproductSuccess({ byproductId })),
-      catchError((error) =>
-        of(byproductActions.deleteByproductError({ error }))
-      )
+        return this.byproductsService.deleteByproduct(action.byproductId).pipe(
+          map(() => byproductActions.deleteByproductSuccess({ byproductId })),
+          catchError((error) =>
+            of(byproductActions.deleteByproductError({ error }))
+          )
+        )
+      })
     );
   });
 
@@ -76,11 +79,14 @@ export class ByproductEffects {
 
   editByproduct$ = createEffect(() => this.actions$.pipe(
     ofType(byproductActions.editByproduct),
-    concatMap(action => this.byproductsService.editByproduct(action.id, action.name, action.quantity, action.weightPerUM, action.warehouseId, action.measurementUnitId)),
-    map(byproduct => byproductActions.editByproductSuccess({byproduct})),
-    catchError((error) => of(byproductActions.editByproductError({ error }))
+    concatMap(action => this.byproductsService.
+    editByproduct(action.id, action.name, action.quantity, action.weightPerUM, action.warehouseId, action.measurementUnitId)
+      .pipe(
+        map(byproduct => byproductActions.editByproductSuccess({byproduct})),
+        catchError((error) => of(byproductActions.editByproductError({ error }))
+      )
     )
-  ));
+  )));
 
   editByproductError$ = createEffect(() => this.actions$.pipe(
     ofType(byproductActions.editByproductError),
