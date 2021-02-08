@@ -10,5 +10,5 @@ export const isLoggedIn = createSelector(
 
 export const selectToken = createSelector(
   selectAuthState,
-  authState => authState.user.authToken
+  authState => authState.user ? authState.user.authToken : ""
 )

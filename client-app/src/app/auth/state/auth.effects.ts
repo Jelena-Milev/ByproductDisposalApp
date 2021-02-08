@@ -5,6 +5,8 @@ import * as authActions from './auth.actions';
 import {switchMap, map, catchError, tap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
+import {ErrorDialogComponent} from '../../error-dialog/error-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Injectable()
 export class AuthEffects{
@@ -25,6 +27,17 @@ export class AuthEffects{
     })
   ), {dispatch: false})
 
+  loginError$ = createEffect(
+    () => this.actions$.pipe(ofType(authActions.loginError),
+      tap((action) => {
+        this.dialog.open(ErrorDialogComponent, {
+          width: '40%',
+          data: action.error.error.message,
+        });
+      })),
+    { dispatch: false }
+  );
+
   logout$ = createEffect(() => this.actions$.pipe(
     ofType(authActions.logout),
     tap(() => {
@@ -35,6 +48,7 @@ export class AuthEffects{
 
   constructor(private actions$: Actions,
               private authService: AuthService,
-              private router: Router) {
+              private router: Router,
+              private dialog: MatDialog,) {
   }
 }

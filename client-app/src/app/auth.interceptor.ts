@@ -9,7 +9,6 @@ import { Observable } from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import {AppState} from './state';
 import {selectToken} from './auth/state/auth.selectors';
-import {take, tap} from 'rxjs/operators';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
