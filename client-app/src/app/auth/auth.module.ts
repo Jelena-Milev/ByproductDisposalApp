@@ -7,6 +7,8 @@ import { MaterialModule } from '../material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { StoreModule } from '@ngrx/store';
 import * as fromAuth from './state';
+import {EffectsModule} from '@ngrx/effects';
+import {AuthEffects} from './state/auth.effects';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -17,6 +19,7 @@ import * as fromAuth from './state';
     MaterialModule,
     FlexLayoutModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
+    EffectsModule.forFeature([AuthEffects])
   ],
 })
 export class AuthModule {}

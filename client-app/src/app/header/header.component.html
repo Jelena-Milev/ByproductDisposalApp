@@ -8,10 +8,9 @@
       mat-flat-button
       [routerLink]="['/byproducts']"
       routerLinkActive="router-link-active"
-    >
-      Nusproizvodi
-    </button>
-    <button mat-flat-button [matMenuTriggerFor]="menu">Izveštaji</button>
+      *ngIf = "isLoggedIn$ | async"
+    >Nusproizvodi</button>
+    <button mat-flat-button [matMenuTriggerFor]="menu" *ngIf = "isLoggedIn$ | async">Izveštaji</button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item [routerLink]="['/reports/add']" routerLinkActive="router-link-active">Dodavanje</button>
       <button
@@ -22,6 +21,9 @@
         Izmena
       </button>
     </mat-menu>
+    <button mat-flat-button (click)="logout()"
+    *ngIf = "isLoggedIn$ | async"
+    >Odjava</button>
     <!-- <button
       mat-flat-button
       [routerLink]="['/reports']"
