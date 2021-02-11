@@ -70,7 +70,7 @@ export class ByproductEffects {
         tap((action) => {
           this.dialog.open(ErrorDialogComponent, {
             width: '40%',
-            data: action.error.error.message,
+            data: 'Ne moze se obrisati nusproizvod koji je deo izvestaja',
           });
         })
       ),
